@@ -22,6 +22,8 @@ extension VxContextExtensions on BuildContext {
   MaterialResponsiveUiData get _mdResponsive =>
       MaterialResponsiveUiData.of(this);
 
+  VxNavConfig get vxNav => VxNavigator.of(this);
+
   /// Screen Sizes Extensions for responsive UI
 
   /// Returns Material no. of Columns as per Material Design Guidlines.
