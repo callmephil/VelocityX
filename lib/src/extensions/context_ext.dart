@@ -151,6 +151,10 @@ extension VxContextExtensions on BuildContext {
   /// True if width be larger than 800
   bool get canShowNavRail => screenWidth > 800;
 
+  /// Extension for getting NavigatorState. Use [navigator] now.
+  @Deprecated('Use [navigator] instead. It will be removed soon.')
+  NavigatorState? get nav => Navigator.of(this);
+
   /// Extension for getting Theme
   ThemeData get theme => Theme.of(this);
 
