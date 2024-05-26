@@ -28,8 +28,8 @@ class _HoverToggleState extends State<VxHoverToggle> with MaterialStateMixin {
       size: widget.size,
       child: MouseRegion(
         cursor: isHovered ? SystemMouseCursors.click : MouseCursor.defer,
-        onEnter: (_) => setMaterialState(MaterialState.hovered, true),
-        onExit: (_) => setMaterialState(MaterialState.hovered, false),
+        onEnter: (_) => setMaterialState(WidgetState.hovered, true),
+        onExit: (_) => setMaterialState(WidgetState.hovered, false),
         child: widget.mode == VxHoverMode.replace
             ? _buildReplaceableChildren()
             : _buildChildrenStack(),

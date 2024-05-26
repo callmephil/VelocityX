@@ -98,7 +98,6 @@ class VxInlineBlock extends Flex {
 ///
 /// ![Using the Column in this way creates two short lines of text with a large Flutter underneath.](https://flutter.github.io/assets-for-api-docs/assets/widgets/column.png)
 ///
-//////
 /// ```dart
 /// VStack(
 ///  [
@@ -113,7 +112,8 @@ class VxInlineBlock extends Flex {
 ///   ],
 /// )
 /// ```
-/// /// {@end-tool}
+/// {@end-tool}
+///
 /// {@tool snippet}
 ///
 /// In the sample above, the text and the logo are centered on each line. In the
@@ -451,7 +451,6 @@ class AStack extends StatelessWidget {
   Widget build(BuildContext context) {
     return OverflowBar(
       key: key,
-      clipBehavior: clipBehavior,
       overflowAlignment: overflowAlignment,
       overflowDirection: overflowDirection,
       overflowSpacing: overflowSpacing,

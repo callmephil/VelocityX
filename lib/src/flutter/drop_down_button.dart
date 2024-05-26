@@ -38,6 +38,7 @@ import 'package:velocity_x/src/flutter/builder.dart';
 ///
 /// ![](https://flutter.github.io/assets-for-api-docs/assets/material/dropdown_button.png)
 ///
+/// {@end-tool}
 class VxTextDropDown extends VxWidgetBuilder<StatefulBuilder> {
   VxTextDropDown(
     this._items, {

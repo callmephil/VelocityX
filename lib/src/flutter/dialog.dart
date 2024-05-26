@@ -241,7 +241,7 @@ class _VxDialog extends StatelessWidget {
         child: Container(
           height: 42,
           decoration: BoxDecoration(
-            color: cancelBgColor ?? Theme.of(context).colorScheme.background,
+            color: cancelBgColor ?? Theme.of(context).colorScheme.surface,
             borderRadius: BorderRadius.vertical(
               bottom: Radius.circular(_circular),
             ),
@@ -257,7 +257,7 @@ class _VxDialog extends StatelessWidget {
         onTap: () => onCancel(context),
         child: Container(
           decoration: BoxDecoration(
-            color: cancelBgColor ?? Theme.of(context).colorScheme.background,
+            color: cancelBgColor ?? Theme.of(context).colorScheme.surface,
             borderRadius: BorderRadius.only(
               bottomLeft: Radius.circular(_circular),
             ),
@@ -277,7 +277,7 @@ class _VxDialog extends StatelessWidget {
         onTap: () => onConfirm(context),
         child: Container(
           decoration: BoxDecoration(
-            color: confirmBgColor ?? Theme.of(context).colorScheme.background,
+            color: confirmBgColor ?? Theme.of(context).colorScheme.surface,
             borderRadius:
                 BorderRadius.only(bottomRight: Radius.circular(_circular)),
           ),
@@ -365,7 +365,7 @@ class VxTimerButtonState extends State<VxTimerButton> {
     Widget child = Container(
       height: 42,
       decoration: BoxDecoration(
-        color: widget.bgColor ?? Theme.of(context).colorScheme.background,
+        color: widget.bgColor ?? Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.vertical(
           bottom: Radius.circular(_circular),
         ),

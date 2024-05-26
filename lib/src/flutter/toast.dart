@@ -242,7 +242,7 @@ class _VxToastViewState extends State<_VxToastView>
                 CircularProgressIndicator(
                   strokeWidth: 3.0,
                   valueColor: AlwaysStoppedAnimation(
-                    Theme.of(context).colorScheme.background,
+                    Theme.of(context).colorScheme.surface,
                   ),
                 ),
                 const SizedBox(height: 8),
