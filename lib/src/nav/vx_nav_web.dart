@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 
-import 'html_mock.dart' if (dart.library.js) 'dart:html';
+import 'html_mock.dart' if (dart.library.js) 'package:web/web.dart';
 import 'i_vx_nav.dart';
 
 mixin VxNav {
