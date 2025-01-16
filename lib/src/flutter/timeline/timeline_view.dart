@@ -85,7 +85,7 @@ class VxTimelineView extends StatelessWidget {
             style: TextStyle(
               color: descriptionColor ?? Colors.black,
             ),
-            textScaleFactor: 1.25,
+            textScaler: TextScaler.linear(1.25),
           ),
         )
       ],

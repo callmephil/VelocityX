@@ -27,8 +27,6 @@ class VxArcClipper extends CustomClipper<Path> {
         return _getBottomPath(size);
       case VxEdge.left:
         return _getLeftPath(size);
-      default:
-        return _getRightPath(size);
     }
   }
 

@@ -301,7 +301,7 @@ extension VxExtensionList<T> on List<T> {
     return result;
   }
 
-  /// List<int> toUtf8
+  /// `List<int>` toUtf8
   String? get toUtf8 {
     if (T != int) {
       return null;

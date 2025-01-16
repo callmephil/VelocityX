@@ -359,8 +359,6 @@ class VxFilter extends VxWidgetBuilder<Widget> {
       case VxColorFilter.polaroid:
         myMatrix = _polaroid;
         break;
-      default:
-        myMatrix = _noFilter;
     }
     return this;
   }
