@@ -3,6 +3,14 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 class VxAnimatedHeightView<T extends Widget> extends StatefulWidget {
+  const VxAnimatedHeightView({
+    super.key,
+    required this.pageViewChild,
+    required this.computeAspectRadio,
+    this.notifyScroll,
+    required this.itemCount,
+    this.currentPageIndex,
+  }) : assert(itemCount > 0);
   final T pageViewChild;
 
   final double Function(int? currentIndex) computeAspectRadio;
@@ -12,15 +20,6 @@ class VxAnimatedHeightView<T extends Widget> extends StatefulWidget {
   final int itemCount;
 
   final int? currentPageIndex;
-
-  const VxAnimatedHeightView(
-      {super.key,
-      required this.pageViewChild,
-      required this.computeAspectRadio,
-      this.notifyScroll,
-      required this.itemCount,
-      this.currentPageIndex})
-      : assert(itemCount > 0);
 
   @override
   State<StatefulWidget> createState() {
@@ -46,8 +45,8 @@ class _VxAnimatedHeightViewState extends State<VxAnimatedHeightView> {
 
   @override
   void dispose() {
-    super.dispose();
     _streamController?.close();
+    super.dispose();
   }
 
   @override
@@ -84,12 +83,11 @@ class _VxAnimatedHeightViewState extends State<VxAnimatedHeightView> {
   }
 
   void _computeRadioToRadio(ScrollNotification scroll) {
-    final int beforeIndex = _currentIndex!;
+    final beforeIndex = _currentIndex!;
     int nextIndex;
 
     // Selected left margin
-    final double currentLeftPixels =
-        beforeIndex * scroll.metrics.viewportDimension;
+    final currentLeftPixels = beforeIndex * scroll.metrics.viewportDimension;
 
     //Swipe right
     if (scroll.metrics.pixels > currentLeftPixels) {
@@ -102,19 +100,19 @@ class _VxAnimatedHeightViewState extends State<VxAnimatedHeightView> {
     }
     nextIndex = nextIndex.clamp(0, widget.itemCount - 1);
 
-//    print(
+    //    print(
 //        "compute ,beforeIndex is $beforeIndex , nextIndex is $nextIndex");
 
-    final double beforeRadio = getRadio(beforeIndex);
-    final double nextRadio = getRadio(nextIndex);
+    final beforeRadio = getRadio(beforeIndex);
+    final nextRadio = getRadio(nextIndex);
 
-    final double animationValue = beforeRadio +
+    final animationValue = beforeRadio +
         (nextRadio - beforeRadio) *
             ((scroll.metrics.pixels -
                         beforeIndex * scroll.metrics.viewportDimension)
                     .abs() /
                 scroll.metrics.viewportDimension);
-//    print(
+    //    print(
 //        "compute currentRadio is ${beforeRadio},nextRadio is ${nextRadio}  new radio is $animationValue，scroll.metrics.pixels is ${scroll.metrics.pixels} ,"
 //            "beforeIndex is $beforeIndex,nextIndex is $nextIndex, animation is ${((scroll.metrics.pixels -
 //            beforeIndex * scroll.metrics.viewportDimension)
@@ -127,7 +125,7 @@ class _VxAnimatedHeightViewState extends State<VxAnimatedHeightView> {
     if (_hisAspectRadioList[index] > 0) {
       return _hisAspectRadioList[index];
     }
-    final double radio = widget.computeAspectRadio(index);
+    final radio = widget.computeAspectRadio(index);
     _hisAspectRadioList[index] = radio;
     return radio;
   }

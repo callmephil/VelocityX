@@ -7,6 +7,55 @@ enum VxTextFieldBorderType { none, roundLine, underLine }
 
 /// An easy to use implementation of [TextField] with ready to use props.
 class VxTextField extends StatefulWidget {
+  const VxTextField({
+    super.key,
+    this.controller,
+    this.hint,
+    this.hintStyle,
+    this.value,
+    this.clear = true,
+    this.isPassword = false,
+    this.obscureText = false,
+    this.borderType = VxTextFieldBorderType.underLine,
+    this.maxLine = 1,
+    this.maxLength,
+    this.textAlign = TextAlign.left,
+    this.fillColor,
+    this.borderColor,
+    this.prefixIcon,
+    this.height = 40,
+    this.icon,
+    this.borderRadius,
+    this.contentPaddingLeft,
+    this.contentPaddingTop,
+    this.keyboardType,
+    this.textInputAction,
+    this.inputFormatters,
+    this.onChanged,
+    this.onSubmitted,
+    this.onEditingComplete,
+    this.focusNode,
+    this.counterText,
+    this.autofocus = false,
+    this.style,
+    this.labelText,
+    this.labelStyle,
+    this.cursorColor,
+    this.suffixColor,
+    this.autocorrect = true,
+    this.cursorHeight,
+    this.cursorRadius,
+    this.cursorWidth = 2.0,
+    this.enableSuggestions = true,
+    this.enabled,
+    this.showCursor,
+    this.contextMenuBuilder,
+    this.onSaved,
+    this.validator,
+    this.autovalidateMode,
+    this.readOnly = false,
+    this.initialValue,
+  }) : assert(initialValue == null || controller == null);
   final TextEditingController? controller;
   final String? hint;
 
@@ -57,56 +106,6 @@ class VxTextField extends StatefulWidget {
   final String? Function(String?)? validator;
   final AutovalidateMode? autovalidateMode;
   final String? initialValue;
-
-  const VxTextField({
-    super.key,
-    this.controller,
-    this.hint,
-    this.hintStyle,
-    this.value,
-    this.clear = true,
-    this.isPassword = false,
-    this.obscureText = false,
-    this.borderType = VxTextFieldBorderType.underLine,
-    this.maxLine = 1,
-    this.maxLength,
-    this.textAlign = TextAlign.left,
-    this.fillColor,
-    this.borderColor,
-    this.prefixIcon,
-    this.height = 40,
-    this.icon,
-    this.borderRadius,
-    this.contentPaddingLeft,
-    this.contentPaddingTop,
-    this.keyboardType,
-    this.textInputAction,
-    this.inputFormatters,
-    this.onChanged,
-    this.onSubmitted,
-    this.onEditingComplete,
-    this.focusNode,
-    this.counterText,
-    this.autofocus = false,
-    this.style,
-    this.labelText,
-    this.labelStyle,
-    this.cursorColor,
-    this.suffixColor,
-    this.autocorrect = true,
-    this.cursorHeight,
-    this.cursorRadius,
-    this.cursorWidth = 2.0,
-    this.enableSuggestions = true,
-    this.enabled,
-    this.showCursor,
-    this.contextMenuBuilder,
-    this.onSaved,
-    this.validator,
-    this.autovalidateMode,
-    this.readOnly = false,
-    this.initialValue,
-  }) : assert(initialValue == null || controller == null);
 
   @override
   VxTextFieldState createState() => VxTextFieldState();
@@ -192,22 +191,20 @@ class VxTextFieldState extends State<VxTextField> {
 
   /// Suffix widget to show
   Widget? suffixView() {
-    final List<Widget> children = [];
-    final String tempValue = controller!.text;
+    final children = <Widget>[];
+    final tempValue = controller!.text;
     final double tempSize = math.min(widget.height / 2, 24);
-    final Color tempColor =
+    final tempColor =
         widget.suffixColor ?? Theme.of(context).iconTheme.color ?? Colors.black;
 
     // Clear Button
     if (widget.clear && focusNode!.hasFocus && (tempValue.isNotEmpty)) {
-      children.add(GestureDetector(
-        onTap: clear,
-        child: Icon(
-          Icons.clear,
-          size: tempSize,
-          color: tempColor,
+      children.add(
+        GestureDetector(
+          onTap: clear,
+          child: Icon(Icons.clear, size: tempSize, color: tempColor),
         ),
-      ));
+      );
     }
 
     // Password Button
@@ -215,14 +212,16 @@ class VxTextFieldState extends State<VxTextField> {
       if (children.isNotEmpty) {
         children.add(const SizedBox(width: 8));
       }
-      children.add(GestureDetector(
-        onTap: togglePwd,
-        child: Icon(
-          obscureText ? Icons.visibility : Icons.visibility_off,
-          size: tempSize,
-          color: tempColor,
+      children.add(
+        GestureDetector(
+          onTap: togglePwd,
+          child: Icon(
+            obscureText ? Icons.visibility : Icons.visibility_off,
+            size: tempSize,
+            color: tempColor,
+          ),
         ),
-      ));
+      );
     }
 
     if (children.isNotEmpty) {
@@ -264,7 +263,7 @@ class VxTextFieldState extends State<VxTextField> {
   /// Non-filled decoration
 
   InputBorder? getInputBorder() {
-    final Color tempColor =
+    final tempColor =
         widget.borderColor ?? Theme.of(context).scaffoldBackgroundColor;
     if (widget.borderType == VxTextFieldBorderType.none) {
       return InputBorder.none;
@@ -272,19 +271,17 @@ class VxTextFieldState extends State<VxTextField> {
       if (widget.maxLine == null) {
         return OutlineInputBorder(
           gapPadding: 0,
-          borderSide: const BorderSide(color: Colors.transparent, width: 1),
-          borderRadius: BorderRadius.circular(getBorderRadius()),
-        );
-      } else {
-        return OutlineInputBorder(
-          gapPadding: 0,
-          borderSide: BorderSide(color: tempColor, width: 1),
+          borderSide: const BorderSide(color: Colors.transparent),
           borderRadius: BorderRadius.circular(getBorderRadius()),
         );
       }
+      return OutlineInputBorder(
+        gapPadding: 0,
+        borderSide: BorderSide(color: tempColor),
+        borderRadius: BorderRadius.circular(getBorderRadius()),
+      );
     } else if (widget.borderType == VxTextFieldBorderType.underLine) {
-      return UnderlineInputBorder(
-          borderSide: BorderSide(color: tempColor, width: 1));
+      return UnderlineInputBorder(borderSide: BorderSide(color: tempColor));
     }
     return null;
   }
@@ -292,12 +289,11 @@ class VxTextFieldState extends State<VxTextField> {
   /// Fill decoration
 
   BoxDecoration? getBoxDecoration() {
-    final Color tempColor =
-        widget.borderColor ?? Theme.of(context).primaryColor;
+    final tempColor = widget.borderColor ?? Theme.of(context).primaryColor;
     if (widget.borderType == VxTextFieldBorderType.roundLine) {
       return BoxDecoration(
         color: widget.fillColor,
-        border: Border.all(color: tempColor, width: 1),
+        border: Border.all(color: tempColor),
         borderRadius: BorderRadius.circular(getBorderRadius()),
       );
     }

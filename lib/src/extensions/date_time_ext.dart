@@ -19,13 +19,14 @@ extension VxDateTimeExtension on DateTime {
   ///Helps in converting the [DateTime] to readable Time Ago format of String.
   ///
   String timeAgo(
-      {DateTime? clock, bool? enableFromNow, bool useShortForm = false}) {
+      {DateTime? clock, bool? enableFromNow, bool useShortForm = false,}) {
     final mIsFromNowEnabled = enableFromNow ?? false;
     final mLanguage = English(shortForm: useShortForm);
     final mClock = clock ?? DateTime.now();
     var deltaTime = mClock.millisecondsSinceEpoch - millisecondsSinceEpoch;
 
-    String pfx, sfx;
+    String pfx;
+    String sfx;
 
     if (mIsFromNowEnabled && deltaTime < 0) {
       deltaTime = isBefore(mClock) ? deltaTime : deltaTime.abs();
@@ -76,11 +77,11 @@ extension VxDateTimeExtension on DateTime {
 extension VxHumanizedDuration on Duration {
   String toHumanizedString() {
     final seconds = '${inSeconds % 60}'.padLeft(2, '0');
-    String minutes = '${inMinutes % 60}';
+    var minutes = '${inMinutes % 60}';
     if (inHours > 0 || inMinutes == 0) {
       minutes = minutes.padLeft(2, '0');
     }
-    String value = '$minutes:$seconds';
+    var value = '$minutes:$seconds';
     if (inHours > 0) {
       value = '$inHours:$minutes:$seconds';
     }

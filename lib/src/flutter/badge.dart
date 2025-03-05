@@ -22,18 +22,6 @@ enum VxBadgePosition { left, right, leftTop, rightTop, leftBottom, rightBottom }
 /// VxBadge widget for using common badges as number or dot.
 
 class VxBadge extends StatelessWidget {
-  final VxBadgeType type;
-  final Color? color;
-  final TextStyle? textStyle;
-  final int? count;
-  final bool limit;
-  final Widget? child;
-  final double? size;
-  final VxBadgePosition position;
-
-  /// To provide an optional widget like an Icon
-  final Widget? optionalWidget;
-
   const VxBadge({
     super.key,
     required this.child,
@@ -46,6 +34,17 @@ class VxBadge extends StatelessWidget {
     this.optionalWidget,
     this.position = VxBadgePosition.rightTop,
   });
+  final VxBadgeType type;
+  final Color? color;
+  final TextStyle? textStyle;
+  final int? count;
+  final bool limit;
+  final Widget? child;
+  final double? size;
+  final VxBadgePosition position;
+
+  /// To provide an optional widget like an Icon
+  final Widget? optionalWidget;
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +57,7 @@ class VxBadge extends StatelessWidget {
   /// Get the number to show in the badge
   String getNumber() {
     if (count == null) {
-      return "";
+      return '';
     } else if (limit && count! > 99) {
       return '99+';
     }
@@ -73,68 +72,39 @@ class VxBadge extends StatelessWidget {
   /// Get the Vx Round type whether [VxBadgeType.point] or [VxBadgeType.ellipse] or [VxBadgeType.round]
   Widget getVxRound() {
     if (type == VxBadgeType.point) {
-      return VxRound(
-        type: VxRoundType.point,
-        size: size,
-        color: color,
-      );
+      return VxRound(size: size, color: color);
     } else if (type == VxBadgeType.round) {
       return VxRound(
         type: VxRoundType.round,
         color: color,
         size: size,
-        child: optionalWidget ??
-            Text(
-              getNumber(),
-              style: getTextStyle(),
-            ),
-      );
-    } else {
-      return VxRound(
-        type: VxRoundType.ellipse,
-        color: color,
-        size: size,
-        child: optionalWidget ??
-            Text(
-              getNumber(),
-              style: getTextStyle(),
-            ),
+        child: optionalWidget ?? Text(getNumber(), style: getTextStyle()),
       );
     }
+    return VxRound(
+      type: VxRoundType.ellipse,
+      color: color,
+      size: size,
+      child: optionalWidget ?? Text(getNumber(), style: getTextStyle()),
+    );
   }
 
   /// Get the position view
   Widget positionView() {
-    final List<Widget> children = [];
+    final children = <Widget>[];
     children.add(child!);
     if (position == VxBadgePosition.left) {
       children.insert(0, getVxRound());
     } else if (position == VxBadgePosition.right) {
       children.add(getVxRound());
     } else if (position == VxBadgePosition.leftTop) {
-      children.add(Positioned(
-        top: 0,
-        left: 0,
-        child: getVxRound(),
-      ));
+      children.add(Positioned(top: 0, left: 0, child: getVxRound()));
     } else if (position == VxBadgePosition.rightTop) {
-      children.add(Positioned(
-        top: 0,
-        right: 0,
-        child: getVxRound(),
-      ));
+      children.add(Positioned(top: 0, right: 0, child: getVxRound()));
     } else if (position == VxBadgePosition.leftBottom) {
-      children.add(Positioned(
-        bottom: 0,
-        left: 0,
-        child: getVxRound(),
-      ));
+      children.add(Positioned(bottom: 0, left: 0, child: getVxRound()));
     } else if (position == VxBadgePosition.rightBottom) {
-      children.add(Positioned(
-        bottom: 0,
-        right: 0,
-        child: getVxRound(),
-      ));
+      children.add(Positioned(bottom: 0, right: 0, child: getVxRound()));
     }
 
     if (position == VxBadgePosition.left || position == VxBadgePosition.right) {
@@ -143,11 +113,8 @@ class VxBadge extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: children,
       );
-    } else {
-      return Stack(
-        children: children,
-      );
     }
+    return Stack(children: children);
   }
 }
 

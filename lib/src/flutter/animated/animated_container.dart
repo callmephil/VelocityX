@@ -12,6 +12,7 @@
  */
 
 import 'package:flutter/material.dart';
+import 'package:velocity_x/src/flutter/builder.dart';
 import 'package:velocity_x/src/flutter/velocityx_mixins/alignment_mixin.dart';
 import 'package:velocity_x/src/flutter/velocityx_mixins/color_mixin.dart';
 import 'package:velocity_x/src/flutter/velocityx_mixins/curves_mixin.dart';
@@ -23,8 +24,6 @@ import 'package:velocity_x/src/flutter/velocityx_mixins/render_mixin.dart';
 import 'package:velocity_x/src/flutter/velocityx_mixins/round_mixin.dart';
 import 'package:velocity_x/src/flutter/velocityx_mixins/shadow_mixin.dart';
 import 'package:velocity_x/velocity_x.dart';
-
-import '../builder.dart';
 
 ///
 /// [VxAnimatedBox] is similar to [AnimatedContainer] with the advantages of [VxBox]
@@ -106,7 +105,7 @@ class VxAnimatedBox extends VxWidgetBuilder<Widget>
   VxAnimatedBox sizePCT(
           {required BuildContext context,
           required double widthPCT,
-          required double heightPCT}) =>
+          required double heightPCT,}) =>
       this
         .._width = context.percentWidth * widthPCT
         .._height = context.percentHeight * heightPCT;
@@ -130,7 +129,7 @@ class VxAnimatedBox extends VxWidgetBuilder<Widget>
   VxAnimatedBox border(
       {Color color = Colors.black,
       double width = 1.0,
-      BorderStyle style = BorderStyle.solid}) {
+      BorderStyle style = BorderStyle.solid,}) {
     _border = Border.all(color: color, width: width, style: style);
     return this;
   }
@@ -201,11 +200,9 @@ class VxAnimatedBox extends VxWidgetBuilder<Widget>
   VxAnimatedBox shadowOutline({Color? outlineColor}) {
     _boxShadow = [
       BoxShadow(
-        color: outlineColor?.withOpacity(0.5) ??
+        color: outlineColor?.withValues(alpha: 0.5) ??
             const Color.fromRGBO(66, 153, 225, 0.5),
-        blurRadius: 0.0,
-        spreadRadius: 3.0,
-        offset: const Offset(0.0, 0.0),
+        spreadRadius: 3,
       ),
     ];
 
@@ -218,7 +215,7 @@ class VxAnimatedBox extends VxWidgetBuilder<Widget>
   VxAnimatedBox neumorphic(
           {Color? color,
           VxCurve curve = VxCurve.concave,
-          double elevation = 12.0}) =>
+          double elevation = 12.0,}) =>
       this
         .._velocityNeumorph =
             velocityDecoration((color ?? velocityColor)!, curve, elevation);
@@ -260,7 +257,7 @@ class VxAnimatedBox extends VxWidgetBuilder<Widget>
                   gradient: velocityGradient ?? _gradient,
                   image: _bgImage,
                 ),
-        child: child);
+        child: child,);
   }
 }
 

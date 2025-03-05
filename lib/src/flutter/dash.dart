@@ -4,15 +4,16 @@ import 'package:flutter/material.dart';
 /// VelocityX widget to show Dashes with gaps if needed. It can be vertical or horizontal.
 ///
 class VxDash extends StatelessWidget {
-  const VxDash(
-      {super.key,
-      this.direction = Axis.horizontal,
-      this.dashColor = Colors.black,
-      this.length = 200,
-      this.dashGap = 3,
-      this.dashLength = 6,
-      this.dashThickness = 1,
-      this.dashBorderRadius = 0});
+  const VxDash({
+    super.key,
+    this.direction = Axis.horizontal,
+    this.dashColor = Colors.black,
+    this.length = 200,
+    this.dashGap = 3,
+    this.dashLength = 6,
+    this.dashThickness = 1,
+    this.dashBorderRadius = 0,
+  });
 
   /// Direction of the dash. Default is horizontal
   final Axis direction;
@@ -38,41 +39,38 @@ class VxDash extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final dashes = <Widget>[];
-    final double n = (length + dashGap) / (dashGap + dashLength);
-    final int newN = n.round();
-    final double newDashGap = (length - dashLength * newN) / (newN - 1);
+    final n = (length + dashGap) / (dashGap + dashLength);
+    final newN = n.round();
+    final newDashGap = (length - dashLength * newN) / (newN - 1);
     for (var i = newN; i > 0; i--) {
       dashes.add(step(i, newDashGap));
     }
     if (direction == Axis.horizontal) {
-      return SizedBox(
-          width: length,
-          child: Row(
-            children: dashes,
-          ));
-    } else {
-      return Column(children: dashes);
+      return SizedBox(width: length, child: Row(children: dashes));
     }
+    return Column(children: dashes);
   }
 
   /// Method to create step
   Widget step(int index, double newDashGap) {
-    final bool isHorizontal = direction == Axis.horizontal;
+    final isHorizontal = direction == Axis.horizontal;
     return Padding(
-        padding: EdgeInsets.fromLTRB(
-            0,
-            0,
-            isHorizontal && index != 1 ? newDashGap : 0,
-            isHorizontal || index == 1 ? 0 : newDashGap),
-        child: SizedBox(
-          width: isHorizontal ? dashLength : dashThickness,
-          height: isHorizontal ? dashThickness : dashLength,
-          child: DecoratedBox(
-            decoration: BoxDecoration(
-                color: dashColor,
-                borderRadius:
-                    BorderRadius.all(Radius.circular(dashBorderRadius))),
+      padding: EdgeInsets.fromLTRB(
+        0,
+        0,
+        isHorizontal && index != 1 ? newDashGap : 0,
+        isHorizontal || index == 1 ? 0 : newDashGap,
+      ),
+      child: SizedBox(
+        width: isHorizontal ? dashLength : dashThickness,
+        height: isHorizontal ? dashThickness : dashLength,
+        child: DecoratedBox(
+          decoration: BoxDecoration(
+            color: dashColor,
+            borderRadius: BorderRadius.all(Radius.circular(dashBorderRadius)),
           ),
-        ));
+        ),
+      ),
+    );
   }
 }

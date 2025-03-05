@@ -21,7 +21,7 @@ T? guard<T>(T Function() callback, [T? defaultValue]) {
 ///Originally available at https://pub.dev/packages/guard
 
 Future<T?> asyncGuard<T>(Future<T> Function() callback,
-    [T? defaultValue]) async {
+    [T? defaultValue,]) async {
   T? result;
 
   try {

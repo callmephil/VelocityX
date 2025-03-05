@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 
-import 'vx_arc.dart';
+import 'package:velocity_x/src/flutter/clippers/vx_arc.dart';
 
 /// Defines the corners of the child widget
 enum VxDiagonalPosition { topLeft, topRight, bottomLeft, bottomRight }
@@ -10,7 +10,7 @@ enum VxDiagonalPosition { topLeft, topRight, bottomLeft, bottomRight }
 ///Diagonal clipping starts from the [position] in the [axis]
 ///ends up [clipHeight] distance from the opposite [position]
 class VxDiagonalClipper extends CustomClipper<Path> {
-  VxDiagonalClipper(this.clipHeight, this.position, this.axis);
+  const VxDiagonalClipper(this.clipHeight, this.position, this.axis);
 
   ///The height that the diagonal angle sees
   final double clipHeight;
@@ -38,13 +38,13 @@ class VxDiagonalClipper extends CustomClipper<Path> {
   Path _getTopLeftPath(Size size) {
     final path = Path();
     if (axis == Axis.horizontal) {
-      path.lineTo(0.0, size.height);
+      path.lineTo(0, size.height);
       path.lineTo(size.width, size.height);
       path.lineTo(size.width, clipHeight);
     } else {
       path.lineTo(clipHeight, size.height);
       path.lineTo(size.width, size.height);
-      path.lineTo(size.width, 0.0);
+      path.lineTo(size.width, 0);
     }
     path.close();
     return path;
@@ -53,14 +53,14 @@ class VxDiagonalClipper extends CustomClipper<Path> {
   Path _getTopRightPath(Size size) {
     final path = Path();
     if (axis == Axis.horizontal) {
-      path.moveTo(0.0, clipHeight);
-      path.lineTo(0.0, size.height);
+      path.moveTo(0, clipHeight);
+      path.lineTo(0, size.height);
       path.lineTo(size.width, size.height);
-      path.lineTo(size.width, 0.0);
+      path.lineTo(size.width, 0);
     } else {
-      path.lineTo(size.width, 0.0);
+      path.lineTo(size.width, 0);
       path.lineTo(size.width - clipHeight, size.height);
-      path.lineTo(0.0, size.height);
+      path.lineTo(0, size.height);
     }
     path.close();
     return path;
@@ -69,13 +69,13 @@ class VxDiagonalClipper extends CustomClipper<Path> {
   Path _getBottomLeftPath(Size size) {
     final path = Path();
     if (axis == Axis.horizontal) {
-      path.lineTo(0.0, size.height);
+      path.lineTo(0, size.height);
       path.lineTo(size.width, size.height - clipHeight);
-      path.lineTo(size.width, 0.0);
+      path.lineTo(size.width, 0);
     } else {
-      path.moveTo(0.0, size.height);
-      path.lineTo(clipHeight, 0.0);
-      path.lineTo(size.width, 0.0);
+      path.moveTo(0, size.height);
+      path.lineTo(clipHeight, 0);
+      path.lineTo(size.width, 0);
       path.lineTo(size.width, size.height);
     }
     path.close();
@@ -85,13 +85,13 @@ class VxDiagonalClipper extends CustomClipper<Path> {
   Path _getBottomRightPath(Size size) {
     final path = Path();
     if (axis == Axis.horizontal) {
-      path.lineTo(0.0, size.height - clipHeight);
+      path.lineTo(0, size.height - clipHeight);
       path.lineTo(size.width, size.height);
-      path.lineTo(size.width, 0.0);
+      path.lineTo(size.width, 0);
     } else {
-      path.lineTo(size.width - clipHeight, 0.0);
+      path.lineTo(size.width - clipHeight, 0);
       path.lineTo(size.width, size.height);
-      path.lineTo(0.0, size.height);
+      path.lineTo(0, size.height);
     }
     path.close();
     return path;
@@ -99,7 +99,7 @@ class VxDiagonalClipper extends CustomClipper<Path> {
 
   @override
   bool shouldReclip(CustomClipper<Path> oldClipper) {
-    final VxDiagonalClipper oldie = oldClipper as VxDiagonalClipper;
+    final oldie = oldClipper as VxDiagonalClipper;
     return position != oldie.position ||
         clipHeight != oldie.clipHeight ||
         axis != oldie.axis;
@@ -107,13 +107,14 @@ class VxDiagonalClipper extends CustomClipper<Path> {
 }
 
 class VxDiagonal extends StatelessWidget {
-  const VxDiagonal(
-      {super.key,
-      required this.child,
-      required this.clipHeight,
-      this.position = VxDiagonalPosition.bottomLeft,
-      this.axis = Axis.horizontal,
-      this.clipShadows = const []});
+  const VxDiagonal({
+    super.key,
+    required this.child,
+    required this.clipHeight,
+    this.position = VxDiagonalPosition.bottomLeft,
+    this.axis = Axis.horizontal,
+    this.clipShadows = const [],
+  });
 
   final Widget child;
 
@@ -134,10 +135,7 @@ class VxDiagonal extends StatelessWidget {
     final clipper = VxDiagonalClipper(clipHeight, position, axis);
     return CustomPaint(
       painter: VxClipShadowPainter(clipper, clipShadows),
-      child: ClipPath(
-        clipper: clipper,
-        child: child,
-      ),
+      child: ClipPath(clipper: clipper, child: child),
     );
   }
 }

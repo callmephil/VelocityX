@@ -60,10 +60,15 @@ extension VxNumExtension on num {
   }
 
   /// Create a List of the specified length
-  List<T> generate<T>(T Function(int index) generator,
-          {bool growable = true}) =>
-      List<T>.generate(toInt(), (int index) => generator(index),
-          growable: growable);
+  List<T> generate<T>(
+    T Function(int index) generator, {
+    bool growable = true,
+  }) =>
+      List.generate(
+        toInt(),
+        (int index) => generator(index),
+        growable: growable,
+      );
 
   String padLeft(int width, [String padding = ' ']) =>
       toString().padLeft(width, padding);
@@ -100,41 +105,32 @@ extension VxNumExtension on num {
 
   /// Format numeric currency
   String get numCurrency =>
-      intl.NumberFormat.currency(customPattern: "#,##0.00").format(this);
+      intl.NumberFormat.currency(customPattern: '#,##0.00').format(this);
 
   /// Format numeric currency with provided locale
-  String numCurrencyWithLocale({String locale = "en_US"}) =>
-      intl.NumberFormat.currency(
-        locale: locale,
-      ).format(this);
+  String numCurrencyWithLocale({String locale = 'en_US'}) =>
+      intl.NumberFormat.currency(locale: locale).format(this);
 
   ///Widgets
 
   ///
   ///Converts the number into a [SizedBox] with the width as that number.
   ///
-  Widget get widthBox => SizedBox(
-        width: toDouble(),
-      );
+  Widget get widthBox => SizedBox(width: toDouble());
 
   ///
   ///Converts the number into a [SizedBox] with the height as that number.
   ///
-  Widget get heightBox => SizedBox(
-        height: toDouble(),
-      );
+  Widget get heightBox => SizedBox(height: toDouble());
 
   ///
   ///Converts the number into a [SizedBox] with the width & height as that number.
   ///
-  Widget get squareBox => SizedBox(
-        height: toDouble(),
-        width: toDouble(),
-      );
+  Widget get squareBox => SizedBox(height: toDouble(), width: toDouble());
 
   /// get file size for a number
   String toFileSize() {
-    num size = this;
+    var size = this;
     if (size < 1024) {
       return '${size}B';
     } else if (size >= 1024 && size < pow(1024, 2)) {
@@ -152,7 +148,7 @@ extension VxNumExtension on num {
 
   /// DateTime from microseconds
   DateTime? fromMicrosecondsSinceEpoch({bool isUtc = false}) {
-    num n = this;
+    var n = this;
     if (n is! int) n = n.toInt();
     if (n.toString().length != 16) return null;
     return DateTime.fromMicrosecondsSinceEpoch(n, isUtc: isUtc);
@@ -160,7 +156,7 @@ extension VxNumExtension on num {
 
   /// DateTime from milliseconds
   DateTime? fromMillisecondsSinceEpoch({bool isUtc = false}) {
-    num n = this;
+    var n = this;
     if (n is! int) n = n.toInt();
     if (n.toString().length != 13) return null;
     return DateTime.fromMillisecondsSinceEpoch(n, isUtc: isUtc);
@@ -177,7 +173,7 @@ extension VxIntExtension on int {
   /// ```dart
   /// 5.range; // (0, 1, 2, 3, 4)
   /// ```
-  Iterable<int> get range => Iterable<int>.generate(this);
+  Iterable<int> get range => Iterable.generate(this);
 
   /// Returns an iterable from [this] inclusive to [end] exclusive.
   ///
@@ -197,14 +193,15 @@ extension VxIntExtension on int {
   Iterable<int> to(int end, {int by = 1}) {
     if (by < 1) {
       throw ArgumentError(
-          'Invalid step size: $by. Step size must be greater than 0');
+        'Invalid step size: $by. Step size must be greater than 0',
+      );
     }
     final count = ((end - this).abs() / by).ceil();
     // Explicit type declaration required for function argument.
-    final int Function(int) generator = this >= end
+    final generator = this >= end
         ? (index) => this - (by * index)
         : (index) => this + (by * index);
-    return Iterable<int>.generate(count, generator);
+    return Iterable.generate(count, generator);
   }
 
   /// Returns [Duration] of [this] in days.

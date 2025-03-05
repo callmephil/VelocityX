@@ -16,11 +16,10 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:velocity_x/src/extensions/string_ext.dart';
 import 'package:velocity_x/src/flutter/builder.dart';
+import 'package:velocity_x/src/flutter/nothing.dart';
 import 'package:velocity_x/src/flutter/velocityx_mixins/color_mixin.dart';
 import 'package:velocity_x/src/flutter/velocityx_mixins/render_mixin.dart';
 import 'package:velocity_x/src/velocity_xx.dart';
-
-import 'nothing.dart';
 
 /// Creates a [AutoSizeText] widget with a [TextSpan].
 @protected
@@ -35,28 +34,31 @@ class VxRichText extends VxWidgetBuilder<Widget>
     setChildToColor(this);
   }
 
-  String? _text, _fontFamily;
+  String? _text;
+  String? _fontFamily;
   List<TextSpan>? _textSpanChildren;
   FontWeight? _fontWeight;
   TextAlign? _textAlign;
-  double? _scaleFactor,
-      _wordSpacing,
-      _fontSize,
-      _letterSpacing,
-      _lineHeight,
-      _maxFontSize,
-      _stepGranularity,
-      _minFontSize;
+  double? _scaleFactor;
+  double? _wordSpacing;
+  double? _fontSize;
+  double? _letterSpacing;
+  double? _lineHeight;
+  double? _maxFontSize;
+  double? _stepGranularity;
+  double? _minFontSize;
   int? _maxLines;
   FontStyle? _fontStyle;
   TextDecoration? _decoration;
   GestureRecognizer? _gestureRecognizer;
-  TextStyle? _textStyle, _themedStyle;
+  TextStyle? _textStyle;
+  TextStyle? _themedStyle;
   StrutStyle? _strutStyle;
   TextOverflow? _overflow;
   TextBaseline? _textBaseline;
   Widget? _replacement;
-  bool? _softWrap, _wrapWords;
+  bool? _softWrap;
+  bool? _wrapWords;
   bool _isIntrinsic = false;
 
   /// Set tap func
@@ -319,7 +321,7 @@ class VxRichText extends VxWidgetBuilder<Widget>
       _fontSizedText(child: this, scaleFactor: value);
 
   VxRichText _fontSizedText(
-      {required double scaleFactor, required VxRichText child}) {
+      {required double scaleFactor, required VxRichText child,}) {
     _scaleFactor = scaleFactor;
     return this;
   }
@@ -367,7 +369,7 @@ class VxRichText extends VxWidgetBuilder<Widget>
       _fontWeightedText(child: this, weight: FontWeight.w900);
 
   VxRichText _fontWeightedText(
-      {required FontWeight weight, required VxRichText child}) {
+      {required FontWeight weight, required VxRichText child,}) {
     _fontWeight = weight;
     return this;
   }
@@ -493,14 +495,19 @@ class VelocityXTextSpan extends VxTextSpanBuilder
     setChildToColor(this);
   }
 
-  String? _text, _fontFamily;
+  String? _text;
+  String? _fontFamily;
   GestureRecognizer? _gestureRecognizer;
   TextDecoration? _decoration;
   FontWeight? _fontWeight;
-  double? _fontSize, _letterSpacing, _lineHeight, _wordSpacing;
+  double? _fontSize;
+  double? _letterSpacing;
+  double? _lineHeight;
+  double? _wordSpacing;
   FontStyle? _fontStyle;
   List<TextSpan>? _textSpanChildren;
-  TextStyle? _textStyle, _themedStyle;
+  TextStyle? _textStyle;
+  TextStyle? _themedStyle;
   TextBaseline? _textBaseline;
 
   /// Set tap func
@@ -681,7 +688,7 @@ class VelocityXTextSpan extends VxTextSpanBuilder
       _fontWeightedText(child: this, weight: FontWeight.w900);
 
   VelocityXTextSpan _fontWeightedText(
-      {required FontWeight weight, required VelocityXTextSpan child}) {
+      {required FontWeight weight, required VelocityXTextSpan child,}) {
     _fontWeight = weight;
     return this;
   }

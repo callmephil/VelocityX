@@ -13,7 +13,7 @@
  */
 
 import 'package:flutter/material.dart';
-import 'builder.dart';
+import 'package:velocity_x/src/flutter/builder.dart';
 
 /// Center the widget
 extension CenterExtension on Widget {

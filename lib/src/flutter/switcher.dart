@@ -15,6 +15,16 @@ enum VxPageState {
 }
 
 class VxStateSwitcher extends StatefulWidget {
+  const VxStateSwitcher({
+    super.key,
+    this.pageState,
+    this.onRetry,
+    this.skeleton,
+    this.emptyView,
+    this.errorView,
+    this.child,
+  });
+
   /// page status
   final VxPageState? pageState;
 
@@ -32,16 +42,6 @@ class VxStateSwitcher extends StatefulWidget {
 
   /// Subassembly
   final Widget? child;
-
-  const VxStateSwitcher({
-    super.key,
-    this.pageState,
-    this.onRetry,
-    this.skeleton,
-    this.emptyView,
-    this.errorView,
-    this.child,
-  });
 
   @override
   VxStateSwitcherState createState() => VxStateSwitcherState();
@@ -90,12 +90,13 @@ class VxStateSwitcherState extends State<VxStateSwitcher> {
         }
         return getStatePage(
           placeholder: ElevatedButton(
-              onPressed: () {
-                setState(() => _pageState = VxPageState.loading);
-                widget.onRetry?.call();
-              },
-              child: const Text("Retry")),
-          text: "Nothing to show",
+            onPressed: () {
+              setState(() => _pageState = VxPageState.loading);
+              widget.onRetry?.call();
+            },
+            child: const Text('Retry'),
+          ),
+          text: 'Nothing to show',
         );
 
       /// error page
@@ -104,13 +105,14 @@ class VxStateSwitcherState extends State<VxStateSwitcher> {
           return widget.errorView;
         }
         return getStatePage(
-          text: "Some error occured, please try again",
+          text: 'Some error occured, please try again',
           placeholder: ElevatedButton(
-              onPressed: () {
-                setState(() => _pageState = VxPageState.loading);
-                widget.onRetry?.call();
-              },
-              child: const Text("Retry")),
+            onPressed: () {
+              setState(() => _pageState = VxPageState.loading);
+              widget.onRetry?.call();
+            },
+            child: const Text('Retry'),
+          ),
         );
 
       /// Normal content page
@@ -122,12 +124,9 @@ class VxStateSwitcherState extends State<VxStateSwitcher> {
   /// Loading
   Widget _getIndicator(BuildContext context) {
     return Theme.of(context).platform == TargetPlatform.iOS
-        ? const CupertinoActivityIndicator(
-            animating: true,
-            radius: 16.0,
-          )
+        ? const CupertinoActivityIndicator(radius: 16)
         : CircularProgressIndicator(
-            strokeWidth: 2.0,
+            strokeWidth: 2,
             valueColor: AlwaysStoppedAnimation(Theme.of(context).primaryColor),
           );
   }
@@ -138,10 +137,7 @@ class VxStateSwitcherState extends State<VxStateSwitcher> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text(
-            text,
-            style: const TextStyle(fontSize: 16),
-          ),
+          Text(text, style: const TextStyle(fontSize: 16)),
           const SizedBox(height: 15),
           placeholder!,
         ],
@@ -152,12 +148,8 @@ class VxStateSwitcherState extends State<VxStateSwitcher> {
 
 /// VxSwitcher can be used for Desktop and mobile platforms to change the state using AnimatedSwitcher in case of using mobile.
 class VxSwitcher extends StatelessWidget {
+  const VxSwitcher({super.key, required this.child});
   final Widget child;
-
-  const VxSwitcher({
-    super.key,
-    required this.child,
-  });
 
   @override
   Widget build(BuildContext context) {

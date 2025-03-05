@@ -3,9 +3,8 @@ import 'dart:collection';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:velocity_x/src/nav/i_vx_nav.dart';
 import 'package:velocity_x/velocity_x.dart';
-
-import 'i_vx_nav.dart';
 
 /// allow you to interact with the List of [pages]
 class VxNavConfig extends ChangeNotifier {
@@ -28,7 +27,7 @@ class VxNavConfig extends ChangeNotifier {
   Completer<dynamic>? _boolResultCompleter;
 
   Future<void> _setNewRoutePath(Uri uri, dynamic params) {
-    bool findRoute = false;
+    var findRoute = false;
     for (var i = 0; i < routes.keys.length; i++) {
       final key = routes.keys.elementAt(i);
       if (key.matchAsPrefix(uri.path)?.group(0) == uri.path) {
@@ -40,7 +39,7 @@ class VxNavConfig extends ChangeNotifier {
         _uris.add(uri);
         if (observers != null) {
           for (final observer in observers!) {
-            observer.didChangeRoute(uri, routes[key]!(uri, params), "push");
+            observer.didChangeRoute(uri, routes[key]!(uri, params), 'push');
           }
         }
         findRoute = true;
@@ -50,17 +49,13 @@ class VxNavConfig extends ChangeNotifier {
     if (!findRoute) {
       var page = pageNotFound?.call(uri, params);
       page ??= const MaterialPage(
-        child: Scaffold(
-          body: Center(
-            child: Text('Page not found'),
-          ),
-        ),
+        child: Scaffold(body: Center(child: Text('Page not found'))),
       );
       _pages.add(page);
       _uris.add(uri);
       if (observers != null) {
         for (final observer in observers!) {
-          observer.didChangeRoute(uri, page, "push");
+          observer.didChangeRoute(uri, page, 'push');
         }
       }
     }
@@ -105,7 +100,7 @@ class VxNavConfig extends ChangeNotifier {
 
   /// Push multiple [Uri] at once
   Future<void> pushAll(List<Uri> uris, {List<dynamic>? params}) async {
-    int index = 0;
+    var index = 0;
     for (final uri in uris) {
       // ignore: unnecessary_type_check
       if (params != null && params is List) {
@@ -138,7 +133,7 @@ class VxNavConfig extends ChangeNotifier {
       }
       if (observers != null) {
         for (final observer in observers!) {
-          observer.didChangeRoute(uri, page, "pop");
+          observer.didChangeRoute(uri, page, 'pop');
         }
       }
       notifyListeners();
@@ -154,7 +149,7 @@ class VxNavConfig extends ChangeNotifier {
     }
     if (observers != null) {
       for (final observer in observers!) {
-        observer.didChangeRoute(uri, page, "pop");
+        observer.didChangeRoute(uri, page, 'pop');
       }
     }
     notifyListeners();
@@ -191,7 +186,7 @@ class VxNavConfig extends ChangeNotifier {
     }
     if (observers != null) {
       for (final observer in observers!) {
-        observer.didChangeRoute(_uris.first, _pages.first, "pop");
+        observer.didChangeRoute(_uris.first, _pages.first, 'pop');
       }
     }
     notifyListeners();

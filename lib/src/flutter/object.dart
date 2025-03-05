@@ -108,23 +108,16 @@ extension VxObjectExtensions on Widget {
   Widget objectCover({Key? key}) => FittedBox(
         key: key,
         fit: BoxFit.cover,
-        alignment: Alignment.center,
         child: this,
       );
 
   /// Can be used to wrap as a contain fit of the FittedBox.
-  Widget objectContain({Key? key}) => FittedBox(
-        key: key,
-        fit: BoxFit.contain,
-        alignment: Alignment.center,
-        child: this,
-      );
+  Widget objectContain({Key? key}) => FittedBox(key: key, child: this);
 
   /// Can be used to wrap as a fill fit of the FittedBox.
   Widget objectFill({Key? key}) => FittedBox(
         key: key,
         fit: BoxFit.fill,
-        alignment: Alignment.center,
         child: this,
       );
 
@@ -132,7 +125,6 @@ extension VxObjectExtensions on Widget {
   Widget objectScaleDown({Key? key}) => FittedBox(
         key: key,
         fit: BoxFit.scaleDown,
-        alignment: Alignment.center,
         child: this,
       );
 
@@ -140,16 +132,11 @@ extension VxObjectExtensions on Widget {
   Widget objectNone({Key? key}) => FittedBox(
         key: key,
         fit: BoxFit.none,
-        alignment: Alignment.center,
         child: this,
       );
 
   /// Can be used to align a widget to topleft.
-  Align objectTopLeft({
-    Key? key,
-    double? heightFactor,
-    double? widthFactor,
-  }) =>
+  Align objectTopLeft({Key? key, double? heightFactor, double? widthFactor}) =>
       Align(
         key: key,
         alignment: Alignment.topLeft,
@@ -243,14 +230,9 @@ extension VxObjectExtensions on Widget {
       );
 
   /// Can be used to align a widget to center.
-  Align objectCenter({
-    Key? key,
-    double? heightFactor,
-    double? widthFactor,
-  }) =>
+  Align objectCenter({Key? key, double? heightFactor, double? widthFactor}) =>
       Align(
         key: key,
-        alignment: Alignment.center,
         heightFactor: heightFactor,
         widthFactor: widthFactor,
         child: this,

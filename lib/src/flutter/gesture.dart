@@ -15,8 +15,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:vector_math/vector_math_64.dart' as v3;
-
-import 'builder.dart';
+import 'package:velocity_x/src/flutter/builder.dart';
 
 /// A widget that detects gestures.
 ///
@@ -88,13 +87,15 @@ class VelocityXInkWellBuilder extends VxWidgetBuilder<Widget> {
       this.._splashColor = color;
 
   /// On clicking two times.
-  VelocityXInkWellBuilder mdDoubleClick(
-          {required FnBuilderCallback onDoubleClick}) =>
+  VelocityXInkWellBuilder mdDoubleClick({
+    required FnBuilderCallback onDoubleClick,
+  }) =>
       this.._onDoubleClick = onDoubleClick;
 
   /// On long pressing.
-  VelocityXInkWellBuilder mdLongClick(
-          {required FnBuilderCallback onLongClick}) =>
+  VelocityXInkWellBuilder mdLongClick({
+    required FnBuilderCallback onLongClick,
+  }) =>
       this.._onLongClick = onLongClick;
 
   @override
@@ -147,9 +148,11 @@ extension VxGestureExtensions on Widget {
   VelocityXInkWellBuilder mdLongClick(FnBuilderCallback onClick) =>
       VelocityXInkWellBuilder.mdLongClick(this, onClick);
 
-  Widget onTap(VoidCallback? onTap,
-      {Key? key,
-      HitTestBehavior hitTestBehavior = HitTestBehavior.deferToChild}) {
+  Widget onTap(
+    VoidCallback? onTap, {
+    Key? key,
+    HitTestBehavior hitTestBehavior = HitTestBehavior.deferToChild,
+  }) {
     return MouseRegion(
       key: key,
       cursor: SystemMouseCursors.click,
@@ -162,16 +165,14 @@ extension VxGestureExtensions on Widget {
   }
 
   InkWell onInkTap(VoidCallback? onTap, {Key? key}) {
-    return InkWell(
-      key: key,
-      onTap: onTap,
-      child: this,
-    );
+    return InkWell(key: key, onTap: onTap, child: this);
   }
 
-  Widget onDoubleTap(VoidCallback? onDoubleTap,
-      {Key? key,
-      HitTestBehavior hitTestBehavior = HitTestBehavior.deferToChild}) {
+  Widget onDoubleTap(
+    VoidCallback? onDoubleTap, {
+    Key? key,
+    HitTestBehavior hitTestBehavior = HitTestBehavior.deferToChild,
+  }) {
     return MouseRegion(
       key: key,
       cursor: SystemMouseCursors.click,
@@ -184,15 +185,14 @@ extension VxGestureExtensions on Widget {
   }
 
   InkWell onInkDoubleTap(VoidCallback? onDoubleTap, {Key? key}) {
-    return InkWell(
-      key: key,
-      onDoubleTap: onDoubleTap,
-      child: this,
-    );
+    return InkWell(key: key, onDoubleTap: onDoubleTap, child: this);
   }
 
-  Widget onLongPress(VoidCallback? onLongPress, Key? key,
-      {HitTestBehavior hitTestBehavior = HitTestBehavior.deferToChild}) {
+  Widget onLongPress(
+    VoidCallback? onLongPress,
+    Key? key, {
+    HitTestBehavior hitTestBehavior = HitTestBehavior.deferToChild,
+  }) {
     return MouseRegion(
       key: key,
       cursor: SystemMouseCursors.click,
@@ -205,57 +205,41 @@ extension VxGestureExtensions on Widget {
   }
 
   InkWell onInkLongPress(VoidCallback? onLongPress, {Key? key}) {
-    return InkWell(
-      key: key,
-      onLongPress: onLongPress,
-      child: this,
-    );
+    return InkWell(key: key, onLongPress: onLongPress, child: this);
   }
 
   ///it is very much like onTap extension but when you put your finger on it, its color will change,
   ///and you can decide that whether it will have a touchFeedBack (vibration on your phone)
   ///
 
-  Widget onFeedBackTap(VoidCallback? onTap,
-      {Key? key,
-      HitTestBehavior hitTestBehavior = HitTestBehavior.deferToChild,
-      bool touchFeedBack = false}) {
+  Widget onFeedBackTap(
+    VoidCallback? onTap, {
+    Key? key,
+    HitTestBehavior hitTestBehavior = HitTestBehavior.deferToChild,
+    bool touchFeedBack = false,
+  }) {
     return _CallbackButton(
       key: key,
       onTap: onTap,
       needHaptic: touchFeedBack,
       hitTestBehavior: hitTestBehavior,
-      normalColor: Colors.transparent,
-      pressedColor: Colors.black12,
       child: this,
     );
   }
 
   /// Mouse Region Hover
   MouseRegion onMouseHover(PointerHoverEventListener? onHover, {Key? key}) {
-    return MouseRegion(
-      key: key,
-      onHover: onHover,
-      child: this,
-    );
+    return MouseRegion(key: key, onHover: onHover, child: this);
   }
 
   /// Mouse Region Enter
   MouseRegion onMouseEnter(PointerEnterEventListener? onEnter, {Key? key}) {
-    return MouseRegion(
-      key: key,
-      onEnter: onEnter,
-      child: this,
-    );
+    return MouseRegion(key: key, onEnter: onEnter, child: this);
   }
 
   /// Mouse Region Exit
   MouseRegion onMouseExit(PointerExitEventListener? onExit, {Key? key}) {
-    return MouseRegion(
-      key: key,
-      onExit: onExit,
-      child: this,
-    );
+    return MouseRegion(key: key, onExit: onExit, child: this);
   }
 
   /// Mouse Region Enter & Exit
@@ -273,13 +257,14 @@ extension VxGestureExtensions on Widget {
   }
 
   /// [MouseRegion] Full Widget
-  MouseRegion mouseRegion(
-      {Key? key,
-      PointerHoverEventListener? onHover,
-      PointerEnterEventListener? onEnter,
-      PointerExitEventListener? onExit,
-      MouseCursor mouseCursor = MouseCursor.defer,
-      bool opaque = true}) {
+  MouseRegion mouseRegion({
+    Key? key,
+    PointerHoverEventListener? onHover,
+    PointerEnterEventListener? onEnter,
+    PointerExitEventListener? onExit,
+    MouseCursor mouseCursor = MouseCursor.defer,
+    bool opaque = true,
+  }) {
     return MouseRegion(
       key: key,
       onHover: onHover,
@@ -293,21 +278,21 @@ extension VxGestureExtensions on Widget {
 }
 
 class _CallbackButton extends StatefulWidget {
+  const _CallbackButton({
+    super.key,
+    this.onTap,
+    this.child,
+    this.needHaptic = false,
+    this.hitTestBehavior,
+    this.normalColor,
+    this.pressedColor,
+  });
   final VoidCallback? onTap;
   final Widget? child;
   final Color? normalColor;
   final Color? pressedColor;
   final bool needHaptic;
   final HitTestBehavior? hitTestBehavior;
-
-  const _CallbackButton(
-      {super.key,
-      this.onTap,
-      this.child,
-      this.normalColor = Colors.transparent,
-      this.pressedColor = Colors.black12,
-      this.needHaptic = false,
-      this.hitTestBehavior});
 
   @override
   _CallbackButtonState createState() => _CallbackButtonState();
@@ -326,10 +311,7 @@ class _CallbackButtonState extends State<_CallbackButton> {
         onTapDown: handleTapDown,
         onTapUp: handleTapUp,
         onTapCancel: handleCancel,
-        child: Container(
-          color: bgColor,
-          child: widget.child,
-        ),
+        child: Container(color: bgColor, child: widget.child),
       ),
     );
   }
@@ -501,7 +483,7 @@ class VxZoomState extends State<VxZoom> with TickerProviderStateMixin {
     _matrix = Matrix4.identity();
 
     // create an matrix of where the image is on the screen for the overlay
-    final renderBox = context.findRenderObject() as RenderBox;
+    final renderBox = context.findRenderObject()! as RenderBox;
     final position = renderBox.localToGlobal(Offset.zero);
 
     _transformMatrix = Matrix4.translation(
@@ -526,7 +508,7 @@ class VxZoomState extends State<VxZoom> with TickerProviderStateMixin {
       v3.Vector3(translationDelta.dx, translationDelta.dy, 0),
     );
 
-    final renderBox = context.findRenderObject() as RenderBox;
+    final renderBox = context.findRenderObject()! as RenderBox;
     final focalPoint = renderBox.globalToLocal(
       details.focalPoint - translationDelta,
     );
@@ -557,10 +539,8 @@ class VxZoomState extends State<VxZoom> with TickerProviderStateMixin {
     if (!_isZooming || _controllerReset.isAnimating) {
       return;
     }
-    _animationReset = Matrix4Tween(
-      begin: _matrix,
-      end: Matrix4.identity(),
-    ).animate(
+    _animationReset =
+        Matrix4Tween(begin: _matrix, end: Matrix4.identity()).animate(
       CurvedAnimation(
         parent: _controllerReset,
         curve: widget.animationCurve,
@@ -575,20 +555,18 @@ class VxZoomState extends State<VxZoom> with TickerProviderStateMixin {
     return IgnorePointer(
       child: Stack(
         children: [
-          ModalBarrier(
-            color: widget.modalBarrierColor,
-          ),
+          ModalBarrier(color: widget.modalBarrierColor),
           _VxTransformWidget(
             key: _transformWidget,
             matrix: _transformMatrix,
             child: widget.child,
-          )
+          ),
         ],
       ),
     );
   }
 
-  Future<void> show() async {
+  void show() {
     if (!_isZooming) {
       final overlayState = Overlay.of(context);
       _overlayEntry = OverlayEntry(builder: _build);
@@ -596,7 +574,7 @@ class VxZoomState extends State<VxZoom> with TickerProviderStateMixin {
     }
   }
 
-  Future<void> hide() async {
+  void hide() {
     setState(() {
       _isZooming = false;
     });

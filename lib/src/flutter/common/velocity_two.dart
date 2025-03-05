@@ -18,6 +18,24 @@ import 'package:velocity_x/src/extensions/num_ext.dart';
 /// Can be used for two texts together vertically or horizontally.
 ///
 class VxTwo extends StatelessWidget {
+  const VxTwo({
+    super.key,
+    required this.title,
+    this.titleFontSize = 16.0,
+    this.titleColor = Colors.black,
+    required this.subtitle,
+    this.subtitle2,
+    this.subtitle3,
+    this.subtitleFontSize = 14.0,
+    this.subtitleColor,
+    this.isSubtitleBold = false,
+    this.isHorizontal = false,
+    this.crossAxisAlignment = CrossAxisAlignment.start,
+    this.mainAxisAlignment = MainAxisAlignment.start,
+    this.mainAxisSize = MainAxisSize.min,
+    this.maxLinesSubtitle = 1,
+  });
+
   ///
   /// Title text
   ///
@@ -47,24 +65,6 @@ class VxTwo extends StatelessWidget {
   final MainAxisAlignment mainAxisAlignment;
   final MainAxisSize mainAxisSize;
   final int maxLinesSubtitle;
-
-  const VxTwo({
-    super.key,
-    required this.title,
-    this.titleFontSize = 16.0,
-    this.titleColor = Colors.black,
-    required this.subtitle,
-    this.subtitle2,
-    this.subtitle3,
-    this.subtitleFontSize = 14.0,
-    this.subtitleColor,
-    this.isSubtitleBold = false,
-    this.isHorizontal = false,
-    this.crossAxisAlignment = CrossAxisAlignment.start,
-    this.mainAxisAlignment = MainAxisAlignment.start,
-    this.mainAxisSize = MainAxisSize.min,
-    this.maxLinesSubtitle = 1,
-  });
   @override
   Widget build(BuildContext context) {
     final list = [
@@ -90,7 +90,7 @@ class VxTwo extends StatelessWidget {
           textBaseline: TextBaseline.alphabetic,
           color: subtitleColor,
         ),
-      )
+      ),
     ];
     if (isHorizontal) {
       return Row(
@@ -100,15 +100,14 @@ class VxTwo extends StatelessWidget {
         crossAxisAlignment: crossAxisAlignment,
         children: list,
       );
-    } else {
-      return Column(
-        key: key,
-        mainAxisSize: mainAxisSize,
-        mainAxisAlignment: mainAxisAlignment,
-        crossAxisAlignment: crossAxisAlignment,
-        children: list,
-      );
     }
+    return Column(
+      key: key,
+      mainAxisSize: mainAxisSize,
+      mainAxisAlignment: mainAxisAlignment,
+      crossAxisAlignment: crossAxisAlignment,
+      children: list,
+    );
   }
 }
 
@@ -116,21 +115,16 @@ class VxTwo extends StatelessWidget {
 /// Can be used for two widgets together vertically.
 ///
 class VxTwoColumn extends StatelessWidget {
+  const VxTwoColumn({super.key, required this.top, required this.bottom});
   final Widget top;
   final Widget bottom;
-
-  const VxTwoColumn({super.key, required this.top, required this.bottom});
 
   @override
   Widget build(BuildContext context) {
     return Column(
       key: key,
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        top,
-        10.heightBox,
-        bottom,
-      ],
+      children: [top, 10.heightBox, bottom],
     );
   }
 }
@@ -139,10 +133,9 @@ class VxTwoColumn extends StatelessWidget {
 /// Can be used for two widgets together horizontally.
 ///
 class VxTwoRow extends StatelessWidget {
+  const VxTwoRow({super.key, required this.left, required this.right});
   final Widget left;
   final Widget right;
-
-  const VxTwoRow({super.key, required this.left, required this.right});
 
   @override
   Widget build(BuildContext context) {
@@ -150,11 +143,7 @@ class VxTwoRow extends StatelessWidget {
       key: key,
       direction: Axis.horizontal,
       mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        left,
-        10.widthBox,
-        right,
-      ],
+      children: [left, 10.widthBox, right],
     );
   }
 }

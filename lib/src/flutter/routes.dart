@@ -7,10 +7,11 @@ extension VxRoutesWidgetsExtension on Widget {
     /// Navigator.push(context, YourPage().cupertinoRoute());
     ///
     return CupertinoPageRoute(
-        fullscreenDialog: fullscreenDialog,
-        builder: (ctx) {
-          return this;
-        });
+      fullscreenDialog: fullscreenDialog,
+      builder: (ctx) {
+        return this;
+      },
+    );
   }
 
   /// Example:
@@ -18,10 +19,11 @@ extension VxRoutesWidgetsExtension on Widget {
   ///
   MaterialPageRoute materialRoute({bool fullscreenDialog = false}) {
     return MaterialPageRoute(
-        fullscreenDialog: fullscreenDialog,
-        builder: (ctx) {
-          return this;
-        });
+      fullscreenDialog: fullscreenDialog,
+      builder: (ctx) {
+        return this;
+      },
+    );
   }
 
   /// Best for showing zoomed/version of widgets like images
@@ -49,13 +51,10 @@ extension VxRoutesWidgetsExtension on Widget {
 
   Tween<RelativeRect> _createTween(BuildContext context) {
     final windowSize = MediaQuery.sizeOf(context);
-    final box = context.findRenderObject() as RenderBox;
+    final box = context.findRenderObject()! as RenderBox;
     final rect = box.localToGlobal(Offset.zero) & box.size;
     final relativeRect = RelativeRect.fromSize(rect, windowSize);
 
-    return RelativeRectTween(
-      begin: relativeRect,
-      end: RelativeRect.fill,
-    );
+    return RelativeRectTween(begin: relativeRect, end: RelativeRect.fill);
   }
 }

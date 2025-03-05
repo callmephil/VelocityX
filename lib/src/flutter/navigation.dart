@@ -49,7 +49,7 @@ class VxAdaptiveNavigation extends StatelessWidget {
                       .map((e) => NavigationRailDestination(
                             icon: e.icon,
                             label: Text(e.label),
-                          ))
+                          ),)
                       .toList(),
                   selectedIndex: selectedIndex,
                   onDestinationSelected: onDestinationSelected,

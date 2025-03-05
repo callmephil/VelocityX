@@ -63,16 +63,14 @@ class VxCircle extends StatelessWidget with VxShadowMixin<VxCircle> {
   @override
   Widget build(BuildContext context) {
     assert(debugCheckHasMediaQuery(context));
-    final ThemeData theme = Theme.of(context);
-    Color? effectiveBackgroundColor = backgroundColor;
+    final theme = Theme.of(context);
+    var effectiveBackgroundColor = backgroundColor;
     if (effectiveBackgroundColor == null) {
       switch (theme.brightness) {
         case Brightness.dark:
           effectiveBackgroundColor = theme.primaryColorLight;
-          break;
         case Brightness.light:
           effectiveBackgroundColor = theme.primaryColorDark;
-          break;
       }
     }
 
@@ -151,16 +149,14 @@ class VxCapsule extends StatelessWidget with VxShadowMixin<VxCapsule> {
   @override
   Widget build(BuildContext context) {
     assert(debugCheckHasMediaQuery(context));
-    final ThemeData theme = Theme.of(context);
-    Color? effectiveBackgroundColor = backgroundColor;
+    final theme = Theme.of(context);
+    var effectiveBackgroundColor = backgroundColor;
     if (effectiveBackgroundColor == null) {
       switch (theme.brightness) {
         case Brightness.dark:
           effectiveBackgroundColor = theme.primaryColorLight;
-          break;
         case Brightness.light:
           effectiveBackgroundColor = theme.primaryColorDark;
-          break;
       }
     }
 
@@ -170,15 +166,16 @@ class VxCapsule extends StatelessWidget with VxShadowMixin<VxCapsule> {
       duration: kThemeChangeDuration,
       decoration: customDecoration ??
           BoxDecoration(
-              border: border,
-              borderRadius: BorderRadius.circular(
-                  MediaQuery.sizeOf(context).shortestSide / 2),
-              color: effectiveBackgroundColor,
-              shape: BoxShape.rectangle,
-              gradient: gradient,
-              image: backgroundImage,
-              backgroundBlendMode: blendMode,
-              boxShadow: velocityShadow ?? shadows ?? kElevationToShadow[0]),
+            border: border,
+            borderRadius: BorderRadius.circular(
+              MediaQuery.sizeOf(context).shortestSide / 2,
+            ),
+            color: effectiveBackgroundColor,
+            gradient: gradient,
+            image: backgroundImage,
+            backgroundBlendMode: blendMode,
+            boxShadow: velocityShadow ?? shadows ?? kElevationToShadow[0],
+          ),
       child: child,
     );
   }
@@ -242,16 +239,14 @@ class VxEllipse extends StatelessWidget with VxShadowMixin<VxEllipse> {
     final width0 = width ?? MediaQuery.sizeOf(context).shortestSide;
     final height0 = height ?? MediaQuery.sizeOf(context).shortestSide / 4;
     assert(debugCheckHasMediaQuery(context));
-    final ThemeData theme = Theme.of(context);
-    Color? effectiveBackgroundColor = backgroundColor;
+    final theme = Theme.of(context);
+    var effectiveBackgroundColor = backgroundColor;
     if (effectiveBackgroundColor == null) {
       switch (theme.brightness) {
         case Brightness.dark:
           effectiveBackgroundColor = theme.primaryColorLight;
-          break;
         case Brightness.light:
           effectiveBackgroundColor = theme.primaryColorDark;
-          break;
       }
     }
 
@@ -264,7 +259,6 @@ class VxEllipse extends StatelessWidget with VxShadowMixin<VxEllipse> {
             border: border,
             borderRadius: BorderRadius.all(Radius.elliptical(width0, height0)),
             color: effectiveBackgroundColor,
-            shape: BoxShape.rectangle,
             boxShadow: velocityShadow ?? shadows ?? kElevationToShadow[0],
             gradient: gradient,
             image: backgroundImage,
@@ -329,16 +323,14 @@ class VxBevel extends StatelessWidget with VxShadowMixin<VxBevel> {
     final width0 = width ?? MediaQuery.sizeOf(context).shortestSide;
     final height0 = height ?? MediaQuery.sizeOf(context).shortestSide / 4;
     assert(debugCheckHasMediaQuery(context));
-    final ThemeData theme = Theme.of(context);
-    Color? effectiveBackgroundColor = backgroundColor;
+    final theme = Theme.of(context);
+    var effectiveBackgroundColor = backgroundColor;
     if (effectiveBackgroundColor == null) {
       switch (theme.brightness) {
         case Brightness.dark:
           effectiveBackgroundColor = theme.primaryColorLight;
-          break;
         case Brightness.light:
           effectiveBackgroundColor = theme.primaryColorDark;
-          break;
       }
     }
 
@@ -349,10 +341,8 @@ class VxBevel extends StatelessWidget with VxShadowMixin<VxBevel> {
       decoration: ShapeDecoration(
         shape: BeveledRectangleBorder(
           side: borderSide ??
-              const BorderSide(width: 0.0, color: Colors.transparent),
-          borderRadius: BorderRadius.circular(
-            radius ?? 10.0,
-          ),
+              const BorderSide(width: 0, color: Colors.transparent),
+          borderRadius: BorderRadius.circular(radius ?? 10.0),
         ),
         shadows: velocityShadow ?? shadows ?? kElevationToShadow[0],
         color: effectiveBackgroundColor,
@@ -418,16 +408,14 @@ class VxContinuousRectangle extends StatelessWidget
     final width0 = width ?? MediaQuery.sizeOf(context).shortestSide;
     final height0 = height ?? MediaQuery.sizeOf(context).shortestSide / 4;
     assert(debugCheckHasMediaQuery(context));
-    final ThemeData theme = Theme.of(context);
-    Color? effectiveBackgroundColor = backgroundColor;
+    final theme = Theme.of(context);
+    var effectiveBackgroundColor = backgroundColor;
     if (effectiveBackgroundColor == null) {
       switch (theme.brightness) {
         case Brightness.dark:
           effectiveBackgroundColor = theme.primaryColorLight;
-          break;
         case Brightness.light:
           effectiveBackgroundColor = theme.primaryColorDark;
-          break;
       }
     }
 
@@ -438,7 +426,7 @@ class VxContinuousRectangle extends StatelessWidget
       decoration: ShapeDecoration(
         shape: ContinuousRectangleBorder(
           side: borderSide ??
-              const BorderSide(width: 0.0, color: Colors.transparent),
+              const BorderSide(width: 0, color: Colors.transparent),
           borderRadius: BorderRadius.circular(radius ?? 10.0),
         ),
         shadows: velocityShadow ?? shadows ?? kElevationToShadow[0],
@@ -486,16 +474,14 @@ class VxTriangle extends StatelessWidget {
     final width0 = width ?? MediaQuery.sizeOf(context).shortestSide / 2;
     final height0 = height ?? MediaQuery.sizeOf(context).shortestSide / 2;
     assert(debugCheckHasMediaQuery(context));
-    final ThemeData theme = Theme.of(context);
-    Color? effectiveBackgroundColor = backgroundColor;
+    final theme = Theme.of(context);
+    var effectiveBackgroundColor = backgroundColor;
     if (effectiveBackgroundColor == null) {
       switch (theme.brightness) {
         case Brightness.dark:
           effectiveBackgroundColor = theme.primaryColorLight;
-          break;
         case Brightness.light:
           effectiveBackgroundColor = theme.primaryColorDark;
-          break;
       }
     }
 
@@ -505,8 +491,11 @@ class VxTriangle extends StatelessWidget {
       duration: kThemeChangeDuration,
       child: CustomPaint(
         size: Size(width0, height0),
-        painter: _VxTriangle(effectiveBackgroundColor,
-            strokeWidth: strokeWidth, isStroke: strokeWidth != null),
+        painter: _VxTriangle(
+          effectiveBackgroundColor,
+          strokeWidth: strokeWidth,
+          isStroke: strokeWidth != null,
+        ),
         child: child,
       ),
     );
@@ -551,16 +540,14 @@ class VxTicket extends StatelessWidget {
     final width0 = width ?? MediaQuery.sizeOf(context).shortestSide;
     final height0 = height ?? MediaQuery.sizeOf(context).shortestSide / 4;
     assert(debugCheckHasMediaQuery(context));
-    final ThemeData theme = Theme.of(context);
-    Color? effectiveBackgroundColor = backgroundColor;
+    final theme = Theme.of(context);
+    var effectiveBackgroundColor = backgroundColor;
     if (effectiveBackgroundColor == null) {
       switch (theme.brightness) {
         case Brightness.dark:
           effectiveBackgroundColor = theme.primaryColorLight;
-          break;
         case Brightness.light:
           effectiveBackgroundColor = theme.primaryColorDark;
-          break;
       }
     }
 
@@ -579,16 +566,15 @@ class VxTicket extends StatelessWidget {
 }
 
 class _VxTriangle extends CustomPainter {
-  final Color? color;
-  final double? strokeWidth;
-
-  final bool isStroke;
-
-  _VxTriangle(
+  const _VxTriangle(
     this.color, {
     this.strokeWidth = 0.0,
     this.isStroke = false,
   });
+  final Color? color;
+  final double? strokeWidth;
+
+  final bool isStroke;
   @override
   void paint(Canvas canvas, Size size) {
     final path = Path();
@@ -614,18 +600,17 @@ class _VxTriangle extends CustomPainter {
 }
 
 class _VxTicketClipper extends CustomClipper<Path> {
+  const _VxTicketClipper({this.isTwoSide = false, this.isHardEdge = false});
   final bool isTwoSide;
   final bool isHardEdge;
-
-  _VxTicketClipper({this.isTwoSide = false, this.isHardEdge = false});
   @override
   Path getClip(Size size) {
-    final Path path = Path();
-    path.lineTo(0.0, size.height);
+    final path = Path();
+    path.lineTo(0, size.height);
     double x = 0;
-    double y = size.height;
-    final double yControlPoint = size.height * .85;
-    final double increment = size.width / (isHardEdge ? 20 : 12);
+    var y = size.height;
+    final yControlPoint = size.height * .85;
+    final increment = size.width / (isHardEdge ? 20 : 12);
     while (x < size.width) {
       if (isHardEdge) {
         x += increment;
@@ -633,11 +618,15 @@ class _VxTicketClipper extends CustomClipper<Path> {
         path.lineTo(x, y);
       } else {
         path.quadraticBezierTo(
-            x + increment / 2, yControlPoint, x + increment, y);
+          x + increment / 2,
+          yControlPoint,
+          x + increment,
+          y,
+        );
         x += increment;
       }
     }
-    path.lineTo(size.width, 0.0);
+    path.lineTo(size.width, 0);
     if (isTwoSide && !isHardEdge) {
       while (x > 0) {
         if (isHardEdge) {
@@ -646,7 +635,11 @@ class _VxTicketClipper extends CustomClipper<Path> {
           // path.lineTo(x, y);
         } else {
           path.quadraticBezierTo(
-              x - increment / 2, size.height * .15, x - increment, 0);
+            x - increment / 2,
+            size.height * .15,
+            x - increment,
+            0,
+          );
           x -= increment;
         }
       }

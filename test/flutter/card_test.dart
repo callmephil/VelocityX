@@ -16,13 +16,13 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 void main() {
-  group("Group all card tests", () {
-    testWidgets("Card creates card widget", (WidgetTester tester) async {
-      const Key key = Key('key');
+  group('Group all card tests', () {
+    testWidgets('Card creates card widget', (WidgetTester tester) async {
+      const key = Key('key');
       await tester.pumpWidget(Directionality(
         textDirection: TextDirection.ltr,
         child: const Text('VelocityX').card.make(key: key),
-      ));
+      ),);
 
       expect(find.byKey(key), findsOneWidget);
     });
@@ -31,17 +31,17 @@ void main() {
       await tester.pumpWidget(Directionality(
         textDirection: TextDirection.ltr,
         child: const Text('Velocity').card.p16.make(),
-      ));
+      ),);
 
-      expect(tester.getTopLeft(find.byType(Card)), const Offset(0.0, 0.0));
-      expect(tester.getTopLeft(find.byType(Text)), const Offset(16.0, 16.0));
+      expect(tester.getTopLeft(find.byType(Card)), const Offset(0, 0));
+      expect(tester.getTopLeft(find.byType(Text)), const Offset(16, 16));
     });
 
     testWidgets('Card Widget responds to color', (WidgetTester tester) async {
       await tester.pumpWidget(Directionality(
         textDirection: TextDirection.ltr,
         child: const Text('Velocity').card.blue600.make(),
-      ));
+      ),);
 
       expect(tester.widget<Card>(find.byType(Card)).color, Vx.blue600);
     });
@@ -51,7 +51,7 @@ void main() {
       await tester.pumpWidget(Directionality(
         textDirection: TextDirection.ltr,
         child: const Text('Velocity').card.zero.make(),
-      ));
+      ),);
 
       expect(tester.widget<Card>(find.byType(Card)).elevation, 0);
     });
@@ -61,7 +61,7 @@ void main() {
       await tester.pumpWidget(Directionality(
         textDirection: TextDirection.ltr,
         child: const Text('Velocity').card.elevation(20).make(),
-      ));
+      ),);
 
       expect(tester.widget<Card>(find.byType(Card)).elevation, 20);
     });
@@ -71,11 +71,11 @@ void main() {
       await tester.pumpWidget(Directionality(
         textDirection: TextDirection.ltr,
         child: const Text('Velocity').card.withRounded(value: 15).make(),
-      ));
+      ),);
 
       final roundedRectangleBorder = tester
           .widget<Card>(find.byType(Card))
-          .shape as RoundedRectangleBorder;
+          .shape! as RoundedRectangleBorder;
       expect(roundedRectangleBorder.borderRadius, BorderRadius.circular(15));
     });
   });

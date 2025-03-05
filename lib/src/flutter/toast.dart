@@ -52,7 +52,6 @@ mixin VxToast {
       position: position,
       pdHorizontal: pdHorizontal,
       pdVertical: pdVertical,
-      type: VxToastType.text,
     );
   }
 
@@ -91,22 +90,23 @@ Function _showToast(
   VxToastType type = VxToastType.text,
 }) {
   /// Overlay state for showing toast as overlay
-  final OverlayState overlayState = Overlay.of(context);
+  final overlayState = Overlay.of(context);
 
-  final GlobalKey<_VxToastViewState> key = GlobalKey();
+  final key = GlobalKey<_VxToastViewState>();
 
-  final OverlayEntry overlayEntry = OverlayEntry(
-      builder: (BuildContext context) => _VxToastView(
-            msg,
-            key: key,
-            bgColor: bgColor,
-            textColor: textColor,
-            textSize: textSize,
-            toastPosition: position,
-            pdHorizontal: pdHorizontal,
-            pdVertical: pdVertical,
-            type: type,
-          ));
+  final overlayEntry = OverlayEntry(
+    builder: (BuildContext context) => _VxToastView(
+      msg,
+      key: key,
+      bgColor: bgColor,
+      textColor: textColor,
+      textSize: textSize,
+      toastPosition: position,
+      pdHorizontal: pdHorizontal,
+      pdVertical: pdVertical,
+      type: type,
+    ),
+  );
 
   /// Inserting the overlay entry to the state
   overlayState.insert(overlayEntry);
@@ -125,6 +125,18 @@ Function _showToast(
 }
 
 class _VxToastView extends StatefulWidget {
+  const _VxToastView(
+    this.msg, {
+    super.key,
+    this.bgColor,
+    this.textColor,
+    this.textSize,
+    this.toastPosition,
+    this.pdHorizontal,
+    this.pdVertical,
+    this.type,
+  });
+
   /// Message to show for the toast
   final String? msg;
 
@@ -148,18 +160,6 @@ class _VxToastView extends StatefulWidget {
 
   /// Toast type. It can be [VxToastType.text] or [VxToastType.loading]
   final VxToastType? type;
-
-  const _VxToastView(
-    this.msg, {
-    super.key,
-    this.bgColor,
-    this.textColor,
-    this.textSize,
-    this.toastPosition,
-    this.pdHorizontal,
-    this.pdVertical,
-    this.type,
-  });
 
   @override
   _VxToastViewState createState() => _VxToastViewState();
@@ -197,10 +197,7 @@ class _VxToastViewState extends State<_VxToastView>
         widget.type == VxToastType.loading) {
       return toastView;
     }
-    return Positioned(
-      top: buildToastPosition(context),
-      child: toastView,
-    );
+    return Positioned(top: buildToastPosition(context), child: toastView);
   }
 
   /// Building the toast widget
@@ -237,10 +234,9 @@ class _VxToastViewState extends State<_VxToastView>
             ),
             child: Column(
               mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
+              children: [
                 CircularProgressIndicator(
-                  strokeWidth: 3.0,
+                  strokeWidth: 3,
                   valueColor: AlwaysStoppedAnimation(
                     Theme.of(context).colorScheme.surface,
                   ),
@@ -253,7 +249,7 @@ class _VxToastViewState extends State<_VxToastView>
                     color: widget.textColor ??
                         Theme.of(context).textTheme.bodyLarge!.color,
                   ),
-                )
+                ),
               ],
             ),
           ),
@@ -311,15 +307,17 @@ extension VxToastExtension on BuildContext {
     double pdHorizontal = 20,
     double pdVertical = 10,
   }) =>
-      VxToast.show(this,
-          msg: msg,
-          bgColor: bgColor,
-          pdHorizontal: pdHorizontal,
-          pdVertical: pdVertical,
-          position: position,
-          showTime: showTime,
-          textColor: textColor,
-          textSize: textSize);
+      VxToast.show(
+        this,
+        msg: msg,
+        bgColor: bgColor,
+        pdHorizontal: pdHorizontal,
+        pdVertical: pdVertical,
+        position: position,
+        showTime: showTime,
+        textColor: textColor,
+        textSize: textSize,
+      );
 
   /// Show loading dialog
   Function showLoading({
@@ -330,11 +328,13 @@ extension VxToastExtension on BuildContext {
     double pdHorizontal = 20,
     double pdVertical = 10,
   }) =>
-      VxToast.showLoading(this,
-          msg: msg,
-          bgColor: bgColor,
-          pdHorizontal: pdHorizontal,
-          pdVertical: pdVertical,
-          textColor: textColor,
-          textSize: textSize);
+      VxToast.showLoading(
+        this,
+        msg: msg,
+        bgColor: bgColor,
+        pdHorizontal: pdHorizontal,
+        pdVertical: pdVertical,
+        textColor: textColor,
+        textSize: textSize,
+      );
 }

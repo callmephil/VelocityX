@@ -5,15 +5,6 @@ typedef VxPageBuilder = Page Function(Uri uri, dynamic params);
 
 class VxNavigator extends RouterDelegate<Uri>
     with ChangeNotifier, PopNavigatorRouterDelegateMixin<Uri> {
-  static VxNavConfig of(BuildContext context) {
-    return (Router.of(context).routerDelegate as VxNavigator).routeManager;
-  }
-
-  @override
-  final navigatorKey = GlobalKey<NavigatorState>();
-
-  final List<VxObserver>? observers;
-  late VxNavConfig routeManager;
   VxNavigator({
     required Map<Pattern, VxPageBuilder> routes,
     VxPageBuilder? notFoundPage,
@@ -33,6 +24,15 @@ class VxNavigator extends RouterDelegate<Uri>
       routeManager.push(uri);
     }
   }
+  static VxNavConfig of(BuildContext context) {
+    return (Router.of(context).routerDelegate as VxNavigator).routeManager;
+  }
+
+  @override
+  final navigatorKey = GlobalKey<NavigatorState>();
+
+  final List<VxObserver>? observers;
+  late VxNavConfig routeManager;
 
   /// get the current route [Uri]
   /// this is show by the browser if your app run in the browser
@@ -54,9 +54,7 @@ class VxNavigator extends RouterDelegate<Uri>
   Widget build(BuildContext context) {
     return Navigator(
       key: navigatorKey,
-      pages: [
-        for (final page in routeManager.pages) page,
-      ],
+      pages: [for (final page in routeManager.pages) page],
       onPopPage: (route, result) {
         if (!route.didPop(result)) {
           return false;
@@ -70,11 +68,9 @@ class VxNavigator extends RouterDelegate<Uri>
       observers: observers != null
           ? [
               HeroController(),
-              VxRelayingNavigatorObserver(
-                () sync* {
-                  yield* observers!;
-                },
-              )
+              VxRelayingNavigatorObserver(() sync* {
+                yield* observers!;
+              }),
             ]
           : [HeroController()],
     );

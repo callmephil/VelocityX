@@ -27,9 +27,9 @@ mixin VxNeuMixin {
     final color0 = color;
     final emboss = curveType == VxCurve.emboss;
 
-    Color colorValue = color0;
+    var colorValue = color0;
 
-    List<BoxShadow> shadowList = [
+    var shadowList = [
       BoxShadow(
         color: _getNeuColor(color0, emboss ? 0 - elevation : elevation - 30),
         offset: Offset(0 - elevation, 0 - elevation),
@@ -39,7 +39,7 @@ mixin VxNeuMixin {
         color: _getNeuColor(color0, emboss ? elevation : 0 - elevation),
         offset: Offset(elevation, elevation),
         blurRadius: elevation,
-      )
+      ),
     ];
 
     if (emboss) {
@@ -61,28 +61,19 @@ mixin VxNeuMixin {
     switch (curveType) {
       case VxCurve.concave:
         _gradient = _getConcaveGradients(colorValue, elevation);
-        break;
       case VxCurve.convex:
         _gradient = _getConvexGradients(colorValue, elevation);
-        break;
       case VxCurve.emboss:
       case VxCurve.flat:
         _gradient = _getFlatGradients(colorValue, elevation);
-        break;
     }
-    return VxNeumorph(
-      shadowList,
-      _gradient,
-    );
+    return VxNeumorph(shadowList, _gradient);
   }
 
   Gradient _getFlatGradients(Color baseColor, double depth) => LinearGradient(
         begin: Alignment.topLeft,
         end: Alignment.bottomRight,
-        colors: [
-          baseColor,
-          baseColor,
-        ],
+        colors: [baseColor, baseColor],
       );
 
   Gradient _getConcaveGradients(Color baseColor, double depth) =>
@@ -105,10 +96,10 @@ mixin VxNeuMixin {
       );
 
   Color _getNeuColor(Color baseColor, double amount) {
-    Map<String, int> colors = {
+    var colors = {
       'r': baseColor.red,
       'g': baseColor.green,
-      'b': baseColor.blue
+      'b': baseColor.blue,
     };
 
     colors = colors.map((key, value) {

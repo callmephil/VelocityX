@@ -16,13 +16,12 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:velocity_x/src/flutter/builder.dart';
+import 'package:velocity_x/src/flutter/velocityx_mixins/color_mixin.dart';
+import 'package:velocity_x/src/flutter/velocityx_mixins/padding_mixin.dart';
 import 'package:velocity_x/src/flutter/velocityx_mixins/render_mixin.dart';
+import 'package:velocity_x/src/flutter/velocityx_mixins/round_mixin.dart';
 import 'package:velocity_x/velocity_x.dart';
-
-import 'builder.dart';
-import 'velocityx_mixins/color_mixin.dart';
-import 'velocityx_mixins/padding_mixin.dart';
-import 'velocityx_mixins/round_mixin.dart';
 
 /// A material design card: a panel with slightly rounded corners and an
 /// elevation shadow.
@@ -44,9 +43,7 @@ class VxCard extends VxWidgetBuilder<Widget>
         VxRenderMixin<VxCard> {
   /// Creates a material design card.
   ///
-  VxCard(
-    this._child,
-  ) {
+  VxCard(this._child) {
     setChildToColor(this);
     setChildToPad(this);
     setChildToRound(this);
@@ -55,7 +52,7 @@ class VxCard extends VxWidgetBuilder<Widget>
   final Widget _child;
 
   Color? _shadowColor;
-  double _elevation = 1.0;
+  double _elevation = 1;
   ShapeBorder? _shape;
   Clip? _clip;
   bool? _borderOnForeground;
@@ -144,7 +141,8 @@ class VxCard extends VxWidgetBuilder<Widget>
       shape: (roundedValue != null)
           ? RoundedRectangleBorder(
               borderRadius:
-                  radiusGeometry ?? BorderRadius.circular(roundedValue!))
+                  radiusGeometry ?? BorderRadius.circular(roundedValue!),
+            )
           : _shape,
       shadowColor: _shadowColor,
       child: _child,
@@ -256,30 +254,39 @@ class VxFlipState extends State<VxFlip> with SingleTickerProviderStateMixin {
 
   @override
   void initState() {
-    isFront = widget.initialFront;
     super.initState();
+    isFront = widget.initialFront;
     widget.onVxFlipState?.call(this);
     _initController();
   }
 
   void _initController() {
     controller = AnimationController(
-        value: isFront ? 0.0 : 1.0, duration: widget.duration, vsync: this);
+      value: isFront ? 0.0 : 1.0,
+      duration: widget.duration,
+      vsync: this,
+    );
     _frontRotation = TweenSequence([
       TweenSequenceItem<double>(
-          tween: Tween(begin: 0.0, end: pi / 2)
-              .chain(CurveTween(curve: Curves.easeIn)),
-          weight: 50.0),
+        tween: Tween(begin: 0, end: pi / 2)
+            .chain(CurveTween(curve: Curves.easeIn)),
+        weight: 50,
+      ),
       TweenSequenceItem<double>(
-          tween: ConstantTween<double>(pi / 2), weight: 50.0)
+        tween: ConstantTween<double>(pi / 2),
+        weight: 50,
+      ),
     ]).animate(controller);
     _backRotation = TweenSequence([
       TweenSequenceItem<double>(
-          tween: ConstantTween<double>(pi / 2), weight: 50.0),
+        tween: ConstantTween<double>(pi / 2),
+        weight: 50,
+      ),
       TweenSequenceItem<double>(
-          tween: Tween(begin: -pi / 2, end: 0.0)
-              .chain(CurveTween(curve: Curves.easeOut)),
-          weight: 50.0)
+        tween: Tween(begin: -pi / 2, end: 0)
+            .chain(CurveTween(curve: Curves.easeOut)),
+        weight: 50,
+      ),
     ]).animate(controller);
   }
 
@@ -320,48 +327,55 @@ class VxFlipState extends State<VxFlip> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     final child = Stack(
-        alignment: widget.alignment!,
-        fit: StackFit.passthrough,
-        children: [
-          _buildContent(true, widget.fill == VxFill.front),
-          _buildContent(false, widget.fill == VxFill.back),
-        ]);
+      alignment: widget.alignment!,
+      fit: StackFit.passthrough,
+      children: [
+        _buildContent(true, widget.fill == VxFill.front),
+        _buildContent(false, widget.fill == VxFill.back),
+      ],
+    );
     if (widget.touchFlip) {
       return GestureDetector(
-          behavior: HitTestBehavior.translucent,
-          onTap: animateToggle,
-          child: child);
+        behavior: HitTestBehavior.translucent,
+        onTap: animateToggle,
+        child: child,
+      );
     }
     return child;
   }
 
   Widget _buildContent(bool front, bool isFill) {
     final card = IgnorePointer(
-        ignoring: front ? !isFront : isFront,
-        child: _animationCard(front ? widget.front : widget.back,
-            front ? _frontRotation : _backRotation));
+      ignoring: front ? !isFront : isFront,
+      child: _animationCard(
+        front ? widget.front : widget.back,
+        front ? _frontRotation : _backRotation,
+      ),
+    );
     if (isFill) return Positioned.fill(child: card);
     return card;
   }
 
   Widget _animationCard(Widget child, Animation<double> animation) =>
       AnimatedBuilder(
-          animation: animation,
-          builder: (_, Widget? child) {
-            var transform = Matrix4.identity();
-            transform.setEntry(3, 2, 0.001);
-            if (widget.direction == Axis.vertical) {
-              transform.rotateX(animation.value);
-            } else {
-              transform.rotateY(animation.value);
-            }
-            return Transform(
-                transform: transform,
-                filterQuality: FilterQuality.none,
-                alignment: FractionalOffset.center,
-                child: child);
-          },
-          child: child);
+        animation: animation,
+        builder: (_, Widget? child) {
+          final transform = Matrix4.identity();
+          transform.setEntry(3, 2, 0.001);
+          if (widget.direction == Axis.vertical) {
+            transform.rotateX(animation.value);
+          } else {
+            transform.rotateY(animation.value);
+          }
+          return Transform(
+            transform: transform,
+            filterQuality: FilterQuality.none,
+            alignment: FractionalOffset.center,
+            child: child,
+          );
+        },
+        child: child,
+      );
 
   @override
   void dispose() {
@@ -385,19 +399,18 @@ class VxFlipState extends State<VxFlip> with SingleTickerProviderStateMixin {
   /// Triggers a flip animation that reverses after the duration
   /// and will run for `total`
   /// If awaited, returns after animation completes.
-  Future<void> hint(
-      {Duration duration = const Duration(milliseconds: 150),
-      Duration? total}) async {
+  Future<void> hint({
+    Duration duration = const Duration(milliseconds: 150),
+    Duration? total,
+  }) async {
     if (controller.isAnimating || controller.value != 0) return;
     final durationTotal = total ?? controller.duration;
     final completer = Completer();
-    Duration? original = controller.duration;
+    final original = controller.duration;
     controller.duration = durationTotal;
     await controller.forward();
     Timer(duration, () {
-      controller.reverse().whenComplete(() {
-        completer.complete();
-      });
+      controller.reverse().whenComplete(completer.complete);
       controller.duration = original;
     });
     await completer.future;

@@ -92,10 +92,7 @@ extension VxSizedBoxExtension on Widget {
       );
 
   /// [SizedBox] widget with a specified [width] percentage
-  Widget wPCT({
-    required BuildContext context,
-    required double widthPCT,
-  }) =>
+  Widget wPCT({required BuildContext context, required double widthPCT}) =>
       SizedBox(
         key: key,
         width: context.percentWidth * widthPCT,
@@ -265,11 +262,7 @@ extension VxSizedBoxExtension on Widget {
 
   ///All available heights
   /// [SizedBox] widget with a specified [height]
-  Widget h(double height) => SizedBox(
-        key: key,
-        height: height,
-        child: this,
-      );
+  Widget h(double height) => SizedBox(key: key, height: height, child: this);
 
   /// [SizedBox] widget with a specified [height] percentage
   Widget hPCT({required BuildContext context, required double heightPCT}) =>
@@ -451,10 +444,11 @@ extension VxSizedBoxExtension on Widget {
       );
 
   /// [SizedBox] widget with a specified [width] & [height] percentage
-  Widget whPCT(
-          {required BuildContext context,
-          required double widthPCT,
-          required double heightPCT}) =>
+  Widget whPCT({
+    required BuildContext context,
+    required double widthPCT,
+    required double heightPCT,
+  }) =>
       SizedBox(
         key: key,
         width: context.percentWidth * widthPCT,
@@ -649,11 +643,12 @@ extension VxSizedBoxExtension on Widget {
       );
 
   /// Extension for [FractionallySizedBox]
-  Widget fractionalBox(
-          {Key? key,
-          required double heightFactor,
-          required double widthFactor,
-          Alignment? alignment}) =>
+  Widget fractionalBox({
+    Key? key,
+    required double heightFactor,
+    required double widthFactor,
+    Alignment? alignment,
+  }) =>
       FractionallySizedBox(
         key: key,
         heightFactor: heightFactor,
@@ -667,20 +662,14 @@ extension VxSizedBoxExtension on Widget {
 /// [SizedBox] widget with specific [width]
 ///
 class WidthBox extends StatelessWidget {
-  const WidthBox(
-    this.width, {
-    super.key,
-  });
+  const WidthBox(this.width, {super.key});
 
   /// Give [width] of the [SizedBox]
   final double width;
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: width,
-      key: key,
-    );
+    return SizedBox(width: width, key: key);
   }
 }
 
@@ -688,20 +677,14 @@ class WidthBox extends StatelessWidget {
 /// [SizedBox] widget with specific [height]
 ///
 class HeightBox extends StatelessWidget {
-  const HeightBox(
-    this.height, {
-    super.key,
-  });
+  const HeightBox(this.height, {super.key});
 
   /// Give [height] of the [SizedBox]
   final double height;
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: height,
-      key: key,
-    );
+    return SizedBox(height: height, key: key);
   }
 }
 
@@ -709,19 +692,12 @@ class HeightBox extends StatelessWidget {
 /// [SizedBox] widget with equal [width] & [height]
 ///
 class SquareBox extends StatelessWidget {
-  const SquareBox(
-    this.size, {
-    super.key,
-  });
+  const SquareBox(this.size, {super.key});
 
   /// Give [size] of the [SizedBox]
   final double size;
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: size,
-      height: size,
-      key: key,
-    );
+    return SizedBox(width: size, height: size, key: key);
   }
 }

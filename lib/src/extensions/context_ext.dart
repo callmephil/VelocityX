@@ -129,10 +129,11 @@ extension VxContextExtensions on BuildContext {
       (screenSize.width - ((screenSize.width / 100) * reducedBy)) / dividedBy;
 
   /// Divide the height proportionally by the given value
-  double ratio(
-          {double dividedBy = 1,
-          double reducedByW = 0.0,
-          double reducedByH = 0.0}) =>
+  double ratio({
+    double dividedBy = 1,
+    double reducedByW = 0.0,
+    double reducedByH = 0.0,
+  }) =>
       heightTransformer(dividedBy: dividedBy, reducedBy: reducedByH) /
       widthTransformer(dividedBy: dividedBy, reducedBy: reducedByW);
 
@@ -265,7 +266,10 @@ extension VxContextExtensions on BuildContext {
   /// Pushes and replacing the built widget to the screen using the material fade in animation
   void nextReplacementPage(Widget page, {bool maintainState = true}) =>
       _nextReplacementPage(
-          context: this, page: page, maintainState: maintainState);
+        context: this,
+        page: page,
+        maintainState: maintainState,
+      );
 
   /// Removing all the widgets till defined rule, and pushes the built widget to the screen using the material fade in animation
   void nextAndRemoveUntilPage(Widget page) =>
@@ -308,27 +312,36 @@ extension VxContextExtensions on BuildContext {
   ScaffoldState get vxscaffold => Scaffold.of(this);
 }
 
-Future<void> _nextPage(
-        {required BuildContext context,
-        required Widget page,
-        bool maintainState = true}) async =>
-    await Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => page,
-          maintainState: maintainState,
-        ));
-Future<void> _nextReplacementPage(
-        {required BuildContext context,
-        required Widget page,
-        bool maintainState = true}) async =>
-    await Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => page,
-          maintainState: maintainState,
-        ));
-Future<void> _nextAndRemoveUntilPage(
-        {required BuildContext context, required Widget page}) async =>
-    await Navigator.pushAndRemoveUntil(context,
-        MaterialPageRoute(builder: (context) => page), (route) => false);
+Future<void> _nextPage({
+  required BuildContext context,
+  required Widget page,
+  bool maintainState = true,
+}) =>
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => page,
+        maintainState: maintainState,
+      ),
+    );
+Future<void> _nextReplacementPage({
+  required BuildContext context,
+  required Widget page,
+  bool maintainState = true,
+}) =>
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => page,
+        maintainState: maintainState,
+      ),
+    );
+Future<void> _nextAndRemoveUntilPage({
+  required BuildContext context,
+  required Widget page,
+}) =>
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(builder: (context) => page),
+      (route) => false,
+    );

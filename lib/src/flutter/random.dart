@@ -14,17 +14,17 @@ mixin _RandomColor {
 /// A Container Widget that takes up a given [width] and [height] and paints itself with a
 /// random color.
 class VxRandomBox extends StatefulWidget {
-  final double? width;
-  final double? height;
-  final Widget? child;
-  final bool changeOnRedraw;
 
   const VxRandomBox(
       {super.key,
       this.width,
       this.height,
       this.child,
-      this.changeOnRedraw = true});
+      this.changeOnRedraw = true,});
+  final double? width;
+  final double? height;
+  final Widget? child;
+  final bool changeOnRedraw;
 
   @override
   VxRandomBoxState createState() => VxRandomBoxState();
@@ -53,7 +53,7 @@ class VxRandomBoxState extends State<VxRandomBox> {
 ///Random Color box extension method
 extension VxRandomContainerWidgetExtension on Widget {
   VxRandomBox randomBox(
-          {double? width, double? height, bool changeOnRedraw = true}) =>
+          {double? width, double? height, bool changeOnRedraw = true,}) =>
       VxRandomBox(
         height: height,
         width: width,

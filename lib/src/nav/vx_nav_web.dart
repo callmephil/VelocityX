@@ -1,8 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 
-import 'html_mock.dart' if (dart.library.js) 'package:web/web.dart';
-import 'i_vx_nav.dart';
+import 'package:velocity_x/src/nav/html_mock.dart'
+    if (dart.library.js) 'package:web/web.dart';
+import 'package:velocity_x/src/nav/i_vx_nav.dart';
 
 mixin VxNav {
   static HashUrlStrategy? _urlStrategy;
@@ -35,10 +36,7 @@ mixin VxNav {
     historyProvider!.replaceState(
       null,
       '',
-      makeUrl(
-        path: route.path,
-        queryParameters: route.queryParameters,
-      ),
+      makeUrl(path: route.path, queryParameters: route.queryParameters),
     );
   }
 
@@ -61,6 +59,7 @@ mixin VxNav {
 }
 
 class BrowserHistoryProvider implements HistoryProvider {
+  const BrowserHistoryProvider();
   @override
   void replaceState(dynamic data, String title, String? url) {
     window.history.replaceState(data, title, url);

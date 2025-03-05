@@ -5,7 +5,7 @@ enum VxEdge { top, right, bottom, left }
 enum VxArcType { convey, convex }
 
 class VxArcClipper extends CustomClipper<Path> {
-  VxArcClipper(this.height, this.edge, this.arcType);
+  const VxArcClipper(this.height, this.edge, this.arcType);
 
   ///The height of the arc
   final double height;
@@ -33,23 +33,39 @@ class VxArcClipper extends CustomClipper<Path> {
   Path _getBottomPath(Size size) {
     final path = Path();
     if (arcType == VxArcType.convex) {
-      path.lineTo(0.0, size.height - height);
+      path.lineTo(0, size.height - height);
       //Adds a quadratic bezier segment that curves from the current point
       //to the given point (x2,y2), using the control point (x1,y1).
       path.quadraticBezierTo(
-          size.width / 4, size.height, size.width / 2, size.height);
+        size.width / 4,
+        size.height,
+        size.width / 2,
+        size.height,
+      );
       path.quadraticBezierTo(
-          size.width * 3 / 4, size.height, size.width, size.height - height);
+        size.width * 3 / 4,
+        size.height,
+        size.width,
+        size.height - height,
+      );
 
-      path.lineTo(size.width, 0.0);
+      path.lineTo(size.width, 0);
     } else {
-      path.moveTo(0.0, size.height);
-      path.quadraticBezierTo(size.width / 4, size.height - height,
-          size.width / 2, size.height - height);
+      path.moveTo(0, size.height);
       path.quadraticBezierTo(
-          size.width * 3 / 4, size.height - height, size.width, size.height);
-      path.lineTo(size.width, 0.0);
-      path.lineTo(0.0, 0.0);
+        size.width / 4,
+        size.height - height,
+        size.width / 2,
+        size.height - height,
+      );
+      path.quadraticBezierTo(
+        size.width * 3 / 4,
+        size.height - height,
+        size.width,
+        size.height,
+      );
+      path.lineTo(size.width, 0);
+      path.lineTo(0, 0);
     }
     path.close();
 
@@ -59,18 +75,18 @@ class VxArcClipper extends CustomClipper<Path> {
   Path _getTopPath(Size size) {
     final path = Path();
     if (arcType == VxArcType.convex) {
-      path.moveTo(0.0, height);
+      path.moveTo(0, height);
 
-      path.quadraticBezierTo(size.width / 4, 0.0, size.width / 2, 0.0);
-      path.quadraticBezierTo(size.width * 3 / 4, 0.0, size.width, height);
+      path.quadraticBezierTo(size.width / 4, 0, size.width / 2, 0);
+      path.quadraticBezierTo(size.width * 3 / 4, 0, size.width, height);
 
       path.lineTo(size.width, size.height);
-      path.lineTo(0.0, size.height);
+      path.lineTo(0, size.height);
     } else {
       path.quadraticBezierTo(size.width / 4, height, size.width / 2, height);
-      path.quadraticBezierTo(size.width * 3 / 4, height, size.width, 0.0);
+      path.quadraticBezierTo(size.width * 3 / 4, height, size.width, 0);
       path.lineTo(size.width, size.height);
-      path.lineTo(0.0, size.height);
+      path.lineTo(0, size.height);
     }
     path.close();
 
@@ -80,18 +96,18 @@ class VxArcClipper extends CustomClipper<Path> {
   Path _getLeftPath(Size size) {
     final path = Path();
     if (arcType == VxArcType.convex) {
-      path.moveTo(height, 0.0);
+      path.moveTo(height, 0);
 
-      path.quadraticBezierTo(0.0, size.height / 4, 0.0, size.height / 2);
-      path.quadraticBezierTo(0.0, size.height * 3 / 4, height, size.height);
+      path.quadraticBezierTo(0, size.height / 4, 0, size.height / 2);
+      path.quadraticBezierTo(0, size.height * 3 / 4, height, size.height);
 
       path.lineTo(size.width, size.height);
-      path.lineTo(size.width, 0.0);
+      path.lineTo(size.width, 0);
     } else {
       path.quadraticBezierTo(height, size.height / 4, height, size.height / 2);
-      path.quadraticBezierTo(height, size.height * 3 / 4, 0.0, size.height);
+      path.quadraticBezierTo(height, size.height * 3 / 4, 0, size.height);
       path.lineTo(size.width, size.height);
-      path.lineTo(size.width, 0.0);
+      path.lineTo(size.width, 0);
     }
     path.close();
 
@@ -101,23 +117,39 @@ class VxArcClipper extends CustomClipper<Path> {
   Path _getRightPath(Size size) {
     final path = Path();
     if (arcType == VxArcType.convex) {
-      path.moveTo(size.width - height, 0.0);
+      path.moveTo(size.width - height, 0);
 
       path.quadraticBezierTo(
-          size.width, size.height / 4, size.width, size.height / 2);
+        size.width,
+        size.height / 4,
+        size.width,
+        size.height / 2,
+      );
       path.quadraticBezierTo(
-          size.width, size.height * 3 / 4, size.width - height, size.height);
+        size.width,
+        size.height * 3 / 4,
+        size.width - height,
+        size.height,
+      );
 
-      path.lineTo(0.0, size.height);
-      path.lineTo(0.0, 0.0);
+      path.lineTo(0, size.height);
+      path.lineTo(0, 0);
     } else {
-      path.moveTo(size.width, 0.0);
-      path.quadraticBezierTo(size.width - height, size.height / 4,
-          size.width - height, size.height / 2);
+      path.moveTo(size.width, 0);
       path.quadraticBezierTo(
-          size.width - height, size.height * 3 / 4, size.width, size.height);
-      path.lineTo(0.0, size.height);
-      path.lineTo(0.0, 0.0);
+        size.width - height,
+        size.height / 4,
+        size.width - height,
+        size.height / 2,
+      );
+      path.quadraticBezierTo(
+        size.width - height,
+        size.height * 3 / 4,
+        size.width,
+        size.height,
+      );
+      path.lineTo(0, size.height);
+      path.lineTo(0, 0);
     }
     path.close();
 
@@ -126,7 +158,7 @@ class VxArcClipper extends CustomClipper<Path> {
 
   @override
   bool shouldReclip(CustomClipper<Path> oldClipper) {
-    final VxArcClipper oldie = oldClipper as VxArcClipper;
+    final oldie = oldClipper as VxArcClipper;
     return height != oldie.height ||
         arcType != oldie.arcType ||
         edge != oldie.edge;
@@ -134,13 +166,14 @@ class VxArcClipper extends CustomClipper<Path> {
 }
 
 class VxArc extends StatelessWidget {
-  const VxArc(
-      {super.key,
-      required this.height,
-      required this.child,
-      this.edge = VxEdge.bottom,
-      this.arcType = VxArcType.convex,
-      this.clipShadows = const []});
+  const VxArc({
+    super.key,
+    required this.height,
+    required this.child,
+    this.edge = VxEdge.bottom,
+    this.arcType = VxArcType.convex,
+    this.clipShadows = const [],
+  });
 
   /// The widget which one of [edge]s is going to be clippddddded as arc
   final Widget child;
@@ -162,26 +195,26 @@ class VxArc extends StatelessWidget {
     final clipper = VxArcClipper(height, edge, arcType);
     return CustomPaint(
       painter: VxClipShadowPainter(clipper, clipShadows),
-      child: ClipPath(
-        clipper: clipper,
-        child: child,
-      ),
+      child: ClipPath(clipper: clipper, child: child),
     );
   }
 }
 
 class VxClipShadowPainter extends CustomPainter {
+  const VxClipShadowPainter(this.clipper, this.clipShadows);
   final CustomClipper<Path> clipper;
   final List<VxClipShadow> clipShadows;
-
-  VxClipShadowPainter(this.clipper, this.clipShadows);
 
   @override
   void paint(Canvas canvas, Size size) {
     // ignore: avoid_function_literals_in_foreach_calls
     clipShadows.forEach((VxClipShadow shadow) {
       canvas.drawShadow(
-          clipper.getClip(size), shadow.color, shadow.elevation, true);
+        clipper.getClip(size),
+        shadow.color,
+        shadow.elevation,
+        true,
+      );
     });
   }
 
@@ -192,8 +225,7 @@ class VxClipShadowPainter extends CustomPainter {
 }
 
 class VxClipShadow {
+  const VxClipShadow({required this.color, this.elevation = 5});
   final Color color;
   final double elevation;
-
-  VxClipShadow({required this.color, this.elevation = 5});
 }

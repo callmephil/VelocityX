@@ -10,15 +10,18 @@ extension VxGlobalKeyExtension on GlobalKey {
   /// screenshot
   /// format image format
   /// pixelRatio screenshot resolution ratio
-  Future<ByteData?> screenshots(
-      {ui.ImageByteFormat? format, double? pixelRatio}) async {
-    final RenderRepaintBoundary boundary =
-        currentContext!.findRenderObject() as RenderRepaintBoundary;
-    final ui.Image image = await boundary.toImage(
-        pixelRatio: pixelRatio ??
-            WidgetsBinding
-                .instance.platformDispatcher.implicitView!.devicePixelRatio);
-    final ByteData? byteData =
+  Future<ByteData?> screenshots({
+    ui.ImageByteFormat? format,
+    double? pixelRatio,
+  }) async {
+    final boundary =
+        currentContext!.findRenderObject()! as RenderRepaintBoundary;
+    final image = await boundary.toImage(
+      pixelRatio: pixelRatio ??
+          WidgetsBinding
+              .instance.platformDispatcher.implicitView!.devicePixelRatio,
+    );
+    final byteData =
         await image.toByteData(format: format ?? ui.ImageByteFormat.rawRgba);
 
     /// Uint8List uint8list = byteData.buffer.asUint8List();
@@ -32,11 +35,11 @@ extension VxFutureFunctionExtension on Future Function() {
   /// Throttle function
   /// When an event is triggered, the target operation is executed immediately, and then the event is only responded to after the asynchronous method completes execution.
   Function throttle() {
-    bool enable = _vxfuncThrottle[hashCode] ?? true;
+    final enable = _vxfuncThrottle[hashCode] ?? true;
     void func() {
       if (enable) {
         _vxfuncThrottle[hashCode] = false;
-        this.call().then((_) {
+        this().then((_) {
           _vxfuncThrottle[hashCode] = false;
         }).whenComplete(() {
           _vxfuncThrottle.remove(hashCode);
@@ -59,7 +62,7 @@ extension VxFunctionExtension on Function {
     Timer? timer;
     return () {
       if (timer?.isActive ?? false) timer?.cancel();
-      timer = Timer(delay, () => this.call());
+      timer = Timer(delay, () => this());
     };
   }
 
@@ -69,11 +72,11 @@ extension VxFunctionExtension on Function {
   /// If another event is triggered within 1000ms, the event is ignored.
   /// If the delay of 1000ms expires, the event is not ignored, and the target operation is executed immediately. Then, another 1000ms delay is started.
   Function() throttle([Duration delay = const Duration(seconds: 1)]) {
-    bool enable = _vxfuncThrottle[hashCode] ?? true;
+    final enable = _vxfuncThrottle[hashCode] ?? true;
     return () {
       if (enable) {
         _vxfuncThrottle[hashCode] = false;
-        this.call();
+        this();
         delay.delayed(() {
           _vxfuncThrottle.remove(hashCode);
         });
@@ -89,16 +92,15 @@ extension VxDurationExtension on Duration {
   /// print('- finish wait $_delay');
   /// print('+ callback in 700ms');
   Future<T> delayed<T>([FutureOr<T> Function()? callback]) =>
-      Future<T>.delayed(this, callback);
+      Future.delayed(this, callback);
 
   /// Timer
-  Timer timer([Function? function]) {
-    late Timer timer;
-    timer = Timer(this, () {
-      if (function != null) function.call();
+  Timer timer([void Function()? function]) {
+    final timer = Timer(Duration.zero, () {});
+    return Timer(this, () {
+      function?.call();
       timer.cancel();
     });
-    return timer;
   }
 
   /// Periodic Timer
@@ -114,9 +116,10 @@ extension VxColorExtension on Color {
   bool get isTransparent => alpha == 0;
 
   /// Get the swatch of the color
-  MaterialColor get swatch =>
-      Colors.primaries.firstWhere((Color c) => c.value == value,
-          orElse: () => MaterialColor(value, getMaterialColorValues));
+  MaterialColor get swatch => Colors.primaries.firstWhere(
+        (Color c) => c.value == value,
+        orElse: () => MaterialColor(value, getMaterialColorValues),
+      );
 
   /// Get MaterialColor values from the current color
   Map<int, Color> get getMaterialColorValues => {
@@ -139,13 +142,12 @@ extension VxColorExtension on Color {
 
   /// Get the color with brightness of the current color
   Color get withBrightness {
-    final Brightness brightness =
+    final brightness =
         WidgetsBinding.instance.platformDispatcher.platformBrightness;
     if (brightness == Brightness.light) {
       return this;
-    } else {
-      return getMaterialColorValues[800]!;
     }
+    return getMaterialColorValues[800]!;
   }
 
   /// Prefixes a hash sign if [leadingHashSign] is set to `true` and returns the hexadecimal string value of the color.

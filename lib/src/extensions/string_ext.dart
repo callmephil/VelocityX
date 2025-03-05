@@ -27,10 +27,10 @@ extension VxStringExtension on String {
       : this;
 
   ///Removes first element
-  String get eliminateFirst => length > 1 ? substring(1, length) : "";
+  String get eliminateFirst => length > 1 ? substring(1, length) : '';
 
   ///Removes last element
-  String get eliminateLast => length > 1 ? substring(0, length - 1) : "";
+  String get eliminateLast => length > 1 ? substring(0, length - 1) : '';
 
   /// Return a bool if the string is null or empty
   bool get isEmpty => trimLeft().isEmpty;
@@ -39,18 +39,19 @@ extension VxStringExtension on String {
   /// Uses regex to check if the provided string is a valid email address or not
   ///
   bool validateEmail() => RegExp(
-          r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-      .hasMatch(this);
+        r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+",
+      ).hasMatch(this);
 
   /// Check if String is Right to Left Language
   bool isRtlLanguage() {
     final rtlLocaleRegex = RegExp(
-        r'^(ar|dv|he|iw|fa|nqo|ps|sd|ug|ur|yi|.*[-_]'
-        r'(Arab|Hebr|Thaa|Nkoo|Tfng))(?!.*[-_](Latn|Cyrl)($|-|_))'
-        r'($|-|_)',
-        caseSensitive: false);
+      '^(ar|dv|he|iw|fa|nqo|ps|sd|ug|ur|yi|.*[-_]'
+      r'(Arab|Hebr|Thaa|Nkoo|Tfng))(?!.*[-_](Latn|Cyrl)($|-|_))'
+      r'($|-|_)',
+      caseSensitive: false,
+    );
 
-    final bool rtlCheck = rtlLocaleRegex.hasMatch(this);
+    final rtlCheck = rtlLocaleRegex.hasMatch(this);
 
     return rtlCheck;
   }
@@ -58,12 +59,12 @@ extension VxStringExtension on String {
   /// Returns the string if it is not `null`, or the empty string otherwise
   String get orEmpty => this;
 
-// if the string is empty perform an action
-  String ifEmpty(Function action) => isEmpty ? action() : this;
+  // if the string is empty perform an action
+  String ifEmpty(String Function() action) => isEmpty ? action() : this;
 
   /// Returns a String without white space at all
   /// "hello world" // helloworld
-  String removeAllWhiteSpace() => replaceAll(RegExp(r"\s+\b|\b\s"), "");
+  String removeAllWhiteSpace() => replaceAll(RegExp(r'\s+\b|\b\s'), '');
 
   /// Returns true if s is neither null, empty nor is solely made of whitespace characters.
   bool get isNotBlank => trim().isNotEmpty;
@@ -109,21 +110,17 @@ extension VxStringExtension on String {
 
   /// Format numeric currency
   String get numCurrency =>
-      intl.NumberFormat.currency(customPattern: "#,##0.00")
-          .format(double.tryParse(this))
-          .toString();
+      intl.NumberFormat.currency(customPattern: '#,##0.00')
+          .format(double.tryParse(this));
 
   /// Format numeric currency with provided locale
-  String numCurrencyWithLocale({String locale = "en_US"}) =>
-      intl.NumberFormat.currency(
-        locale: locale,
-      ).format(double.tryParse(this)).toString();
+  String numCurrencyWithLocale({String locale = 'en_US'}) =>
+      intl.NumberFormat.currency(locale: locale).format(double.tryParse(this));
 
   ///Capitalize all words inside a string
   String allWordsCapitilize() {
     return toLowerCase().split(' ').map((word) {
-      final String leftText =
-          (word.length > 1) ? word.substring(1, word.length) : '';
+      final leftText = (word.length > 1) ? word.substring(1, word.length) : '';
       return word[0].toUpperCase() + leftText;
     }).join(' ');
   }
@@ -186,11 +183,11 @@ extension VxStringExtension on String {
 
   /// Checks the validity of the credit/debit card number using the Luhn algorithm.
   bool isCreditCardValid() {
-    int sum = 0;
-    bool alternate = false;
+    var sum = 0;
+    var alternate = false;
 
-    for (int i = length - 1; i >= 0; i--) {
-      int digit = int.parse(this[i]);
+    for (var i = length - 1; i >= 0; i--) {
+      var digit = int.parse(this[i]);
 
       if (alternate) {
         digit *= 2;
@@ -215,7 +212,7 @@ extension VxStringExtension on String {
   /// '123abc'.isNumber(); // false
   /// ```
   bool isNumber() {
-    final isMatch = RegExp("[0-9]").hasMatch(this);
+    final isMatch = RegExp('[0-9]').hasMatch(this);
     return isMatch;
   }
 
@@ -233,14 +230,14 @@ extension VxStringExtension on String {
   }
 
   bool isLetter() {
-    final isMatch = RegExp("[A-Za-z]").hasMatch(this);
+    final isMatch = RegExp('[A-Za-z]').hasMatch(this);
     return isMatch;
   }
 
   bool isSymbol() {
-    const String pattern =
+    const pattern =
         "[`~!@#\$%^&*()_-+=<>?:\"{}|,.///;'\\[]·~！@#￥%……&*（）——-+={}|《》？：“”【】、；‘’，。、]";
-    for (int i = 0; i < length; i++) {
+    for (var i = 0; i < length; i++) {
       if (pattern.contains(this[i])) {
         return true;
       }
@@ -268,7 +265,7 @@ extension VxStringExtension on String {
   /// Convert DateString to DateTime Object
   DateTime? toDate() {
     try {
-      final DateTime st = DateTime.parse(this);
+      final st = DateTime.parse(this);
       return st;
       // ignore: unused_catch_clause
     } on FormatException catch (e) {
@@ -321,8 +318,10 @@ extension VxStringExtension on String {
   String get capitalized => this[0].toUpperCase() + substring(1);
 
   /// from fooBar to foo_bar
-  String get snakeCase => replaceAllMapped(_camelCaseMatcher,
-      (match) => '${match.start == 0 ? '' : '_'}${match[0]!.toLowerCase()}');
+  String get snakeCase => replaceAllMapped(
+        _camelCaseMatcher,
+        (match) => '${match.start == 0 ? '' : '_'}${match[0]!.toLowerCase()}',
+      );
 
   /// Base64 encryption
   String get toEncodedBase64 => base64Encode(utf8.encode(this));
@@ -332,8 +331,8 @@ extension VxStringExtension on String {
 
   /// utf8ToList
   List<int> get utf8ToList {
-    final List<int> words = length.generate((_) => 0);
-    for (int i = 0; i < length; i++) {
+    final words = length.generate((_) => 0);
+    for (var i = 0; i < length; i++) {
       words[i >> 2] |= (codeUnitAt(i) & 0xff).toSigned(32) <<
           (24 - (i % 4) * 8).toSigned(32);
     }
@@ -345,9 +344,11 @@ extension VxStringExtension on String {
 
   /// Add pattern every x bits
   String formatDigitPattern({int digit = 4, String pattern = ' '}) {
-    String text = this;
+    var text = this;
     text = text.replaceAllMapped(
-        RegExp('(.{$digit})'), (Match match) => '${match.group(0)}$pattern');
+      RegExp('(.{$digit})'),
+      (Match match) => '${match.group(0)}$pattern',
+    );
     if (text.endsWith(pattern)) {
       text = text.substring(0, text.length - 1);
     }
@@ -355,9 +356,12 @@ extension VxStringExtension on String {
   }
 
   /// Add pattern every x bits, starting from the end
-  String formatDigitPatternEnd(String text,
-      {int digit = 4, String pattern = ' '}) {
-    String temp = reverse();
+  String formatDigitPatternEnd(
+    String text, {
+    int digit = 4,
+    String pattern = ' ',
+  }) {
+    var temp = reverse();
     temp = formatDigitPattern(digit: digit, pattern: pattern);
     temp = reverse();
     return temp;
@@ -402,8 +406,7 @@ extension VxDurationString on String {
         minutes: int.parse(chunks[1].trim()),
         seconds: int.parse(chunks[2].trim()),
       );
-    } else {
-      throw Exception('Invalid duration string: $this');
     }
+    throw Exception('Invalid duration string: $this');
   }
 }

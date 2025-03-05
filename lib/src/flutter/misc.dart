@@ -15,15 +15,6 @@ import 'package:flutter/material.dart';
 
 /// A widget that displays a statistic with an icon.
 class VxStat extends StatelessWidget {
-  final String label;
-  final String value;
-  final IconData icon;
-  final Color iconColor;
-  final Color labelColor;
-  final Color valueColor;
-  final TextStyle? labelStyle;
-  final TextStyle? valueStyle;
-
   const VxStat({
     super.key,
     required this.label,
@@ -35,18 +26,21 @@ class VxStat extends StatelessWidget {
     this.labelStyle,
     this.valueStyle,
   });
+  final String label;
+  final String value;
+  final IconData icon;
+  final Color iconColor;
+  final Color labelColor;
+  final Color valueColor;
+  final TextStyle? labelStyle;
+  final TextStyle? valueStyle;
 
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Icon(
-          icon,
-          color: iconColor,
-        ),
-        const SizedBox(width: 8.0),
+        Icon(icon, color: iconColor),
+        const SizedBox(width: 8),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

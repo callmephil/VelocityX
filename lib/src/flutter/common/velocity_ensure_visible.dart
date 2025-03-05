@@ -97,20 +97,18 @@ class VxEnsureVisibleWhenFocusedState extends State<VxEnsureVisibleWhenFocused>
   ///
   Future<void> _keyboardToggled() async {
     if (mounted) {
-      final EdgeInsets edgeInsets = MediaQuery.viewInsetsOf(context);
+      final edgeInsets = MediaQuery.viewInsetsOf(context);
       while (mounted && MediaQuery.viewInsetsOf(context) == edgeInsets) {
         await Future.delayed(const Duration(milliseconds: 10));
       }
     }
-
-    return;
   }
 
   Future<void> _ensureVisible() async {
     // Wait for the keyboard to come into view
     await Future.any([
       Future.delayed(const Duration(milliseconds: 300)),
-      _keyboardToggled()
+      _keyboardToggled(),
     ]);
 
     // No need to go any further if the node has not the focus
@@ -120,8 +118,8 @@ class VxEnsureVisibleWhenFocusedState extends State<VxEnsureVisibleWhenFocused>
 
     // Find the object which has the focus
     // ignore: use_build_context_synchronously
-    final RenderObject? object = context.findRenderObject();
-    final RenderAbstractViewport viewport = RenderAbstractViewport.of(object);
+    final object = context.findRenderObject();
+    final viewport = RenderAbstractViewport.of(object);
 
     // If we are not working in a Scrollable, skip this routine
     // ignore: unnecessary_null_comparison
@@ -131,17 +129,16 @@ class VxEnsureVisibleWhenFocusedState extends State<VxEnsureVisibleWhenFocused>
 
     // Get the Scrollable state (in order to retrieve its offset)
     // ignore: use_build_context_synchronously
-    final ScrollableState scrollableState = Scrollable.of(context);
+    final scrollableState = Scrollable.of(context);
 
     // Get its offset
-    final ScrollPosition position = scrollableState.position;
+    final position = scrollableState.position;
     double alignment;
 
-    if (position.pixels > viewport.getOffsetToReveal(object!, 0.0).offset) {
+    if (position.pixels > viewport.getOffsetToReveal(object!, 0).offset) {
       // Move down to the top of the viewport
       alignment = 0.0;
-    } else if (position.pixels <
-        viewport.getOffsetToReveal(object, 1.0).offset) {
+    } else if (position.pixels < viewport.getOffsetToReveal(object, 1).offset) {
       // Move up to the bottom of the viewport
       alignment = 1.0;
     } else {

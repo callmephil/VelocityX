@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:velocity_x/src/extensions/iterable_ext.dart';
 import 'package:velocity_x/src/extensions/string_ext.dart';
@@ -32,28 +30,29 @@ class _VxJsonState extends State<VxJson> {
 
   @override
   Widget build(BuildContext context) => VxUniversal(
-      margin: const EdgeInsets.fromLTRB(10, 0, 0, 0),
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: children);
+        margin: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: children,
+      );
 
   List<Widget> get children {
-    final List<Widget> list = <Widget>[];
+    final list = <Widget>[];
     widget.json.builderEntry((MapEntry<dynamic, dynamic> entry) {
       final dynamic key = entry.key;
       final dynamic content = entry.value;
-      final List<Widget> row = <Widget>[];
+      final row = <Widget>[];
       if (isTap(content)) {
-        row.add(VxToggleRotate(
-            rad: pi / 2,
-            clockwise: true,
+        row.add(
+          VxToggleRotate(
             isRotate: (mapFlag[key.toString()]) ?? false,
-            child: const Icon(Icons.arrow_right_rounded, size: 18)));
+            child: const Icon(Icons.arrow_right_rounded, size: 18),
+          ),
+        );
       } else {
         row.add(const SizedBox(width: 14));
       }
-      row.addAll(<Widget>[
+      row.addAll([
         (widget.isList || isTap(content) ? '[$key]:' : ' $key :')
-            .toString()
             .text
             .fontWeight(FontWeight.w400)
             .color(content == null ? Vx.zinc500 : Vx.pink500)
@@ -63,9 +62,10 @@ class _VxJsonState extends State<VxJson> {
           VxToast.show(context, msg: 'Copied $key');
         }),
         const SizedBox(width: 4),
-        getValueWidget(content)
+        getValueWidget(content),
       ]);
-      list.add(VxUniversal(
+      list.add(
+        VxUniversal(
           direction: Axis.horizontal,
           addInkWell: true,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -75,7 +75,9 @@ class _VxJsonState extends State<VxJson> {
                   mapFlag[key.toString()] = !(mapFlag[key.toString()] ?? false);
                   setState(() {});
                 },
-          children: row));
+          children: row,
+        ),
+      );
       list.add(const SizedBox(height: 4));
       if ((mapFlag[key.toString()]) ?? false) {
         list.add(getContentWidget(content));
@@ -91,8 +93,8 @@ class _VxJsonState extends State<VxJson> {
           : VxJson({content.runtimeType: content.toString()});
 
   Widget getValueWidget(dynamic content) {
-    String text = '';
-    Color color = Colors.transparent;
+    var text = '';
+    var color = Colors.transparent;
     if (content == null) {
       text = 'null';
       color = Vx.zinc500;
@@ -108,7 +110,7 @@ class _VxJsonState extends State<VxJson> {
     } else if (content is List) {
       text = content.isEmpty
           ? 'Array[0]'
-          : 'Array<${content.runtimeType.toString()}>[${content.length}]';
+          : 'Array<${content.runtimeType}>[${content.length}]';
       color = Vx.zinc500;
     } else {
       text = 'Object';

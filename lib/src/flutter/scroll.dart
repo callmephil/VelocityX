@@ -24,14 +24,13 @@ extension ScrollExtension on Widget {
           {Key? key,
           ScrollController? controller,
           ScrollPhysics? physics,
-          EdgeInsetsGeometry? padding}) =>
+          EdgeInsetsGeometry? padding,}) =>
       SingleChildScrollView(
           key: key,
-          scrollDirection: Axis.vertical,
           controller: controller,
           physics: physics,
           padding: padding,
-          child: this);
+          child: this,);
 
   ///
   /// Extension method to directly access [SingleChildScrollView] horizontally with any widget without wrapping or with dot operator.
@@ -40,7 +39,7 @@ extension ScrollExtension on Widget {
           {Key? key,
           ScrollController? controller,
           ScrollPhysics? physics,
-          EdgeInsetsGeometry? padding}) =>
+          EdgeInsetsGeometry? padding,}) =>
       SingleChildScrollView(
         key: key,
         scrollDirection: Axis.horizontal,
@@ -52,12 +51,12 @@ extension ScrollExtension on Widget {
 extension VxScrollControllerExtension on ScrollController {
   void animToTop() {
     animateTo(0,
-        duration: const Duration(milliseconds: 300), curve: Curves.decelerate);
+        duration: const Duration(milliseconds: 300), curve: Curves.decelerate,);
   }
 
   void animToBottom() {
     animateTo(position.maxScrollExtent,
-        duration: const Duration(milliseconds: 300), curve: Curves.decelerate);
+        duration: const Duration(milliseconds: 300), curve: Curves.decelerate,);
   }
 
   void jumpToTop() {
@@ -73,10 +72,6 @@ extension VxScrollControllerExtension on ScrollController {
 /// Widget to directly access [SingleChildScrollView] vertically.
 ///
 class VxScrollVertical extends StatelessWidget {
-  final ScrollController? controller;
-  final ScrollPhysics? physics;
-  final EdgeInsetsGeometry? padding;
-  final Widget? child;
 
   const VxScrollVertical({
     super.key,
@@ -85,12 +80,15 @@ class VxScrollVertical extends StatelessWidget {
     this.padding,
     this.child,
   });
+  final ScrollController? controller;
+  final ScrollPhysics? physics;
+  final EdgeInsetsGeometry? padding;
+  final Widget? child;
 
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       key: key,
-      scrollDirection: Axis.vertical,
       controller: controller,
       physics: physics,
       padding: padding,
@@ -103,10 +101,6 @@ class VxScrollVertical extends StatelessWidget {
 /// Widget to directly access [SingleChildScrollView] horizontally.
 ///
 class VxScrollHorizontal extends StatelessWidget {
-  final ScrollController? controller;
-  final ScrollPhysics? physics;
-  final EdgeInsetsGeometry? padding;
-  final Widget? child;
 
   const VxScrollHorizontal({
     super.key,
@@ -115,6 +109,10 @@ class VxScrollHorizontal extends StatelessWidget {
     this.padding,
     this.child,
   });
+  final ScrollController? controller;
+  final ScrollPhysics? physics;
+  final EdgeInsetsGeometry? padding;
+  final Widget? child;
 
   @override
   Widget build(BuildContext context) {

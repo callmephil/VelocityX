@@ -15,10 +15,10 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 void main() {
-  group("Group all gesture tests", () {
+  group('Group all gesture tests', () {
     testWidgets('onTap for GestureDetector is working correctly',
         (WidgetTester tester) async {
-      bool didTap = false;
+      var didTap = false;
       await tester.pumpWidget(Directionality(
         textDirection: TextDirection.ltr,
         child: Material(
@@ -29,7 +29,7 @@ void main() {
               .make()
               .centered(),
         ),
-      ));
+      ),);
 
       expect(didTap, isFalse);
       await tester.tap(find.text('VelocityX'));
@@ -39,7 +39,7 @@ void main() {
 
     testWidgets('onLongPress for GestureDetector is working correctly',
         (WidgetTester tester) async {
-      bool didLongPress = false;
+      var didLongPress = false;
       await tester.pumpWidget(Directionality(
         textDirection: TextDirection.ltr,
         child: Material(
@@ -50,7 +50,7 @@ void main() {
               .make()
               .centered(),
         ),
-      ));
+      ),);
 
       expect(didLongPress, isFalse);
       await tester.longPress(find.text('VelocityX'));
@@ -60,7 +60,7 @@ void main() {
 
     testWidgets('onTap for InkWell is working correctly',
         (WidgetTester tester) async {
-      bool didTap = false;
+      var didTap = false;
       await tester.pumpWidget(Directionality(
         textDirection: TextDirection.ltr,
         child: Material(
@@ -71,7 +71,7 @@ void main() {
               .make()
               .centered(),
         ),
-      ));
+      ),);
 
       expect(didTap, isFalse);
       await tester.tap(find.text('VelocityX'));
@@ -81,7 +81,7 @@ void main() {
 
     testWidgets('onLongPress for InkWell is working correctly',
         (WidgetTester tester) async {
-      bool didLongPress = false;
+      var didLongPress = false;
       await tester.pumpWidget(Directionality(
         textDirection: TextDirection.ltr,
         child: Material(
@@ -92,7 +92,7 @@ void main() {
               .make()
               .centered(),
         ),
-      ));
+      ),);
 
       expect(didLongPress, isFalse);
       await tester.longPress(find.text('VelocityX'));

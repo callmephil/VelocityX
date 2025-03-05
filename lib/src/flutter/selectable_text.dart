@@ -13,10 +13,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:velocity_x/src/extensions/string_ext.dart';
+import 'package:velocity_x/src/flutter/builder.dart';
+import 'package:velocity_x/src/flutter/velocityx_mixins/color_mixin.dart';
 import 'package:velocity_x/src/velocity_xx.dart';
-
-import 'builder.dart';
-import 'velocityx_mixins/color_mixin.dart';
 
 /// A run of selectable text with a single style.
 ///
@@ -55,10 +54,15 @@ class VxSelectableTextBuilder extends VxWidgetBuilder<SelectableText>
     setChildToColor(this);
   }
 
-  String? _text, _fontFamily;
+  String? _text;
+  String? _fontFamily;
   FontWeight? _fontWeight;
   TextAlign? _textAlign;
-  double? _fontSize, _letterSpacing, _lineHeight, _scaleFactor, _wordSpacing;
+  double? _fontSize;
+  double? _letterSpacing;
+  double? _lineHeight;
+  double? _scaleFactor;
+  double? _wordSpacing;
   int? _maxLines;
   FontStyle? _fontStyle;
   TextStyle? _textStyle;
@@ -213,7 +217,7 @@ class VxSelectableTextBuilder extends VxWidgetBuilder<SelectableText>
       _fontSizedText(child: this, scaleFactor: 4);
 
   VxSelectableTextBuilder _fontSizedText(
-      {required double scaleFactor, required VxSelectableTextBuilder child}) {
+      {required double scaleFactor, required VxSelectableTextBuilder child,}) {
     _scaleFactor = scaleFactor;
     return this;
   }
@@ -255,7 +259,7 @@ class VxSelectableTextBuilder extends VxWidgetBuilder<SelectableText>
       _fontWeightedText(child: this, weight: FontWeight.w900);
 
   VxSelectableTextBuilder _fontWeightedText(
-      {required FontWeight weight, required VxSelectableTextBuilder child}) {
+      {required FontWeight weight, required VxSelectableTextBuilder child,}) {
     _fontWeight = weight;
     return this;
   }
@@ -344,7 +348,7 @@ class VxSelectableTextBuilder extends VxWidgetBuilder<SelectableText>
 
   //Added context menu builder
   VxSelectableTextBuilder contextMenuBuilder(
-          Widget Function(BuildContext, EditableTextState) menuBuilder) =>
+          Widget Function(BuildContext, EditableTextState) menuBuilder,) =>
       this.._contextMenuBuilder = menuBuilder;
 
   @override
@@ -367,7 +371,6 @@ class VxSelectableTextBuilder extends VxWidgetBuilder<SelectableText>
       textAlign: _textAlign,
       maxLines: _maxLines,
       onTap: _onTap as void Function()?,
-      enableInteractiveSelection: true,
       showCursor: _showCursor ?? false,
       textScaler:
           _scaleFactor == null ? null : TextScaler.linear(_scaleFactor!),

@@ -28,7 +28,7 @@ extension VxIterableBasics<E> on Iterable<E> {
   /// [1, 2, 3].one((e) => e > 1); // >1 element satisfies. Returns false.
   /// ```
   bool one(bool Function(E element) test) {
-    bool foundOne = false;
+    var foundOne = false;
     for (final e in this) {
       if (test(e)) {
         if (foundOne) {
@@ -75,7 +75,7 @@ extension VxIterableBasics<E> on Iterable<E> {
       return true;
     }
     if (collapseDuplicates) {
-      return Set<E>.from(this).containsAll(Set<E>.from(other));
+      return Set<E>.of(this).containsAll(Set<E>.of(other));
     }
 
     final thisElementCounts = _elementCountsIn<E>(this);
@@ -130,7 +130,7 @@ extension IterableBasics2<T> on Iterable<T> {
   /// ```
   double sumByDouble(num Function(T) selector) {
     ArgumentError.checkNotNull(selector, 'selector');
-    return map(selector).fold(0.0, (prev, curr) => prev + curr);
+    return map(selector).fold(0, (prev, curr) => prev + curr);
   }
 
   /// Returns the average value (arithmetic mean) of all values produces by the
@@ -331,8 +331,10 @@ extension IterableBasics2<T> on Iterable<T> {
   ///        valueTransform: (p) => p.name);
   /// // map = {'young': ['John', 'Carl'], 'old': ['Peter', 'Sarah']}
   /// ```
-  Map<K, List<V>> groupBy<K, V>(K Function(T element) keySelector,
-      {V Function(T element)? valueTransform}) {
+  Map<K, List<V>> groupBy<K, V>(
+    K Function(T element) keySelector, {
+    V Function(T element)? valueTransform,
+  }) {
     ArgumentError.checkNotNull(keySelector);
 
     valueTransform ??= (element) => element as V;
@@ -412,7 +414,8 @@ extension IterableBasics2<T> on Iterable<T> {
       return null;
     }
     return reduce(
-        (value, element) => comparator(value, element) < 0 ? value : element);
+      (value, element) => comparator(value, element) < 0 ? value : element,
+    );
   }
 
   /// Returns the maximum value based on the [comparator] function.
@@ -428,7 +431,8 @@ extension IterableBasics2<T> on Iterable<T> {
       return null;
     }
     return reduce(
-        (value, element) => comparator(value, element) > 0 ? value : element);
+      (value, element) => comparator(value, element) > 0 ? value : element,
+    );
   }
 
   /// Returns this as sorted list using the [comparator] function.
@@ -482,9 +486,8 @@ extension IterableBasics2<T> on Iterable<T> {
   int? get lastIndex {
     if (isNotEmpty) {
       return length - 1;
-    } else {
-      return null;
     }
+    return null;
   }
 
   /// Lazily returns all values without the first one.
@@ -788,8 +791,10 @@ extension VxExtensionMap<K, V> on Map<K, V> {
   }
 
   /// update map and return new map
-  Map<K, V> updateAllT(V Function(K key, V value) update,
-      {bool isUpdate = true}) {
+  Map<K, V> updateAllT(
+    V Function(K key, V value) update, {
+    bool isUpdate = true,
+  }) {
     if (isUpdate) {
       updateAll(update);
     }
@@ -797,8 +802,12 @@ extension VxExtensionMap<K, V> on Map<K, V> {
   }
 
   /// update map and return new map
-  Map<K, V> updateT(K key, V Function(V value) update,
-      {V Function()? ifAbsent, bool isUpdate = true}) {
+  Map<K, V> updateT(
+    K key,
+    V Function(V value) update, {
+    V Function()? ifAbsent,
+    bool isUpdate = true,
+  }) {
     if (isUpdate) {
       this.update(key, update, ifAbsent: ifAbsent);
     }

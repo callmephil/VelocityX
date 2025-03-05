@@ -63,9 +63,9 @@ mixin VxDrawer {
     bool showMask = false,
     bool autoHide = true,
   }) {
-    final OverlayState overlayState = Overlay.of(context);
+    final overlayState = Overlay.of(context);
 
-    final GlobalKey<_VxDrawerState> key = GlobalKey();
+    final key = GlobalKey<_VxDrawerState>();
 
     VoidCallback? hide;
 
@@ -96,10 +96,7 @@ mixin VxDrawer {
     };
 
     if (autoHide) {
-      Future.delayed(
-        const Duration(milliseconds: 2000),
-        hide,
-      );
+      Future.delayed(const Duration(milliseconds: 2000), hide);
     }
 
     return hide;
@@ -107,11 +104,6 @@ mixin VxDrawer {
 }
 
 class _VxDrawer extends StatefulWidget {
-  final VxDrawerType? type;
-  final Widget? child;
-  final Function? maskTap;
-  final bool? showMask;
-
   const _VxDrawer({
     super.key,
     this.type,
@@ -119,6 +111,10 @@ class _VxDrawer extends StatefulWidget {
     this.maskTap,
     this.showMask,
   });
+  final VxDrawerType? type;
+  final Widget? child;
+  final Function? maskTap;
+  final bool? showMask;
 
   @override
   _VxDrawerState createState() => _VxDrawerState();
@@ -141,10 +137,7 @@ class _VxDrawerState extends State<_VxDrawer> with TickerProviderStateMixin {
     );
 
     offsetAnimation = Tween<double>(begin: 2000, end: 0).animate(
-      CurvedAnimation(
-        parent: controller!,
-        curve: Curves.ease,
-      ),
+      CurvedAnimation(parent: controller!, curve: Curves.ease),
     );
 
     WidgetsBinding.instance.addPostFrameCallback(getBoxHeight);
@@ -161,7 +154,7 @@ class _VxDrawerState extends State<_VxDrawer> with TickerProviderStateMixin {
 
   // Initialization
   void initAnimation() {
-    final double? size =
+    final size =
         widget.type == VxDrawerType.top || widget.type == VxDrawerType.bottom
             ? boxKey.currentContext?.size?.height
             : boxKey.currentContext?.size?.width;
@@ -172,18 +165,13 @@ class _VxDrawerState extends State<_VxDrawer> with TickerProviderStateMixin {
       case VxDrawerType.top:
       case VxDrawerType.left:
         begin = -size!;
-        break;
       case VxDrawerType.right:
       case VxDrawerType.bottom:
         begin = size!;
-        break;
     }
 
     offsetAnimation = Tween<double>(begin: begin, end: 0).animate(
-      CurvedAnimation(
-        parent: controller!,
-        curve: Curves.ease,
-      ),
+      CurvedAnimation(parent: controller!, curve: Curves.ease),
     );
     // Forward animation
     controller?.forward();
@@ -192,47 +180,38 @@ class _VxDrawerState extends State<_VxDrawer> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     Offset offset;
-    double? top = 0.0;
-    double? right = 0.0;
-    double? bottom = 0.0;
-    double? left = 0.0;
+    double? top = 0;
+    double? right = 0;
+    double? bottom = 0;
+    double? left = 0;
 
     // 判断方向
     switch (widget.type!) {
       case VxDrawerType.top:
         bottom = null;
-        break;
       case VxDrawerType.right:
         left = null;
-        break;
       case VxDrawerType.bottom:
         top = null;
-        break;
       case VxDrawerType.left:
         right = null;
-        break;
     }
     return AnimatedBuilder(
-        animation: controller!,
-        builder: (BuildContext context, Widget? child) {
-          // 方向
-          if (widget.type == VxDrawerType.top ||
-              widget.type == VxDrawerType.bottom) {
-            offset = Offset(
-              0,
-              offsetAnimation!.value,
-            );
-          } else {
-            offset = Offset(
-              offsetAnimation!.value,
-              0,
-            );
-          }
+      animation: controller!,
+      builder: (BuildContext context, Widget? child) {
+        // 方向
+        if (widget.type == VxDrawerType.top ||
+            widget.type == VxDrawerType.bottom) {
+          offset = Offset(0, offsetAnimation!.value);
+        } else {
+          offset = Offset(offsetAnimation!.value, 0);
+        }
 
-          final List<Widget> children = [];
+        final children = <Widget>[];
 
-          if (widget.showMask!) {
-            children.add(Positioned(
+        if (widget.showMask!) {
+          children.add(
+            Positioned(
               top: 0,
               right: 0,
               bottom: 0,
@@ -240,35 +219,33 @@ class _VxDrawerState extends State<_VxDrawer> with TickerProviderStateMixin {
               child: GestureDetector(
                 onTap: maskTap,
                 child: const DecoratedBox(
-                  decoration: BoxDecoration(
-                    color: Colors.black45,
-                  ),
-                ),
-              ),
-            ));
-          }
-
-          children.add(
-            Positioned(
-              top: top,
-              right: right,
-              bottom: bottom,
-              left: left,
-              child: Transform.translate(
-                offset: offset,
-                child: DecoratedBox(
-                  key: boxKey,
-                  decoration: const BoxDecoration(color: Colors.white),
-                  child: Material(
-                    child: widget.child,
-                  ),
+                  decoration: BoxDecoration(color: Colors.black45),
                 ),
               ),
             ),
           );
+        }
 
-          return Stack(children: children);
-        });
+        children.add(
+          Positioned(
+            top: top,
+            right: right,
+            bottom: bottom,
+            left: left,
+            child: Transform.translate(
+              offset: offset,
+              child: DecoratedBox(
+                key: boxKey,
+                decoration: const BoxDecoration(color: Colors.white),
+                child: Material(child: widget.child),
+              ),
+            ),
+          ),
+        );
+
+        return Stack(children: children);
+      },
+    );
   }
 
   void maskTap() {

@@ -103,19 +103,16 @@ class VxPopupMenuState extends State<VxPopupMenu> {
       builder: (context) {
         return Stack(
           key: widget.key,
-          children: <Widget>[
+          children: [
             GestureDetector(
-              onTap: () => _hideMenu(),
-              child: Container(
-                color: widget.barrierColor,
-              ),
+              onTap: _hideMenu,
+              child: Container(color: widget.barrierColor),
             ),
             Center(
               child: Container(
                 constraints: BoxConstraints(
                   maxWidth:
                       _parentBox!.size.width - 2 * widget.horizontalMargin,
-                  minWidth: 0,
                 ),
                 child: CustomMultiChildLayout(
                   delegate: _MenuLayoutDelegate(
@@ -125,12 +122,9 @@ class VxPopupMenuState extends State<VxPopupMenu> {
                     ),
                     verticalMargin: widget.verticalMargin,
                   ),
-                  children: <Widget>[
+                  children: [
                     if (widget.showArrow)
-                      LayoutId(
-                        id: _MenuLayoutId.arrow,
-                        child: arrow,
-                      ),
+                      LayoutId(id: _MenuLayoutId.arrow, child: arrow),
                     if (widget.showArrow)
                       LayoutId(
                         id: _MenuLayoutId.downArrow,
@@ -143,7 +137,7 @@ class VxPopupMenuState extends State<VxPopupMenu> {
                       id: _MenuLayoutId.content,
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
-                        children: <Widget>[
+                        children: [
                           Material(
                             color: Colors.transparent,
                             child: widget.menuBuilder(),
@@ -260,15 +254,15 @@ class _MenuLayoutDelegate extends MultiChildLayoutDelegate {
   final double? verticalMargin;
   @override
   void performLayout(Size size) {
-    Size contentSize = Size.zero;
-    Size arrowSize = Size.zero;
-    Offset contentOffset = const Offset(0, 0);
-    Offset arrowOffset = const Offset(0, 0);
+    var contentSize = Size.zero;
+    var arrowSize = Size.zero;
+    var contentOffset = const Offset(0, 0);
+    var arrowOffset = const Offset(0, 0);
 
-    final double anchorCenterX = anchorOffset!.dx + anchorSize!.width / 2;
-    final double anchorTopY = anchorOffset!.dy;
-    final double anchorBottomY = anchorTopY + anchorSize!.height;
-    _MenuPosition menuPosition = _MenuPosition.bottomCenter;
+    final anchorCenterX = anchorOffset!.dx + anchorSize!.width / 2;
+    final anchorTopY = anchorOffset!.dy;
+    final anchorBottomY = anchorTopY + anchorSize!.height;
+    var menuPosition = _MenuPosition.bottomCenter;
 
     if (hasChild(_MenuLayoutId.content)) {
       contentSize = layoutChild(
@@ -283,13 +277,10 @@ class _MenuLayoutDelegate extends MultiChildLayoutDelegate {
       );
     }
     if (hasChild(_MenuLayoutId.downArrow)) {
-      layoutChild(
-        _MenuLayoutId.downArrow,
-        BoxConstraints.loose(size),
-      );
+      layoutChild(_MenuLayoutId.downArrow, BoxConstraints.loose(size));
     }
 
-    bool isTop = false;
+    var isTop = false;
     if (anchorBottomY +
             verticalMargin! +
             arrowSize.height +
@@ -316,23 +307,24 @@ class _MenuLayoutDelegate extends MultiChildLayoutDelegate {
           anchorCenterX - contentSize.width / 2,
           anchorBottomY + verticalMargin! + arrowSize.height,
         );
-        break;
       case _MenuPosition.bottomLeft:
-        arrowOffset = Offset(anchorCenterX - arrowSize.width / 2,
-            anchorBottomY + verticalMargin!);
+        arrowOffset = Offset(
+          anchorCenterX - arrowSize.width / 2,
+          anchorBottomY + verticalMargin!,
+        );
         contentOffset = Offset(
           0,
           anchorBottomY + verticalMargin! + arrowSize.height,
         );
-        break;
       case _MenuPosition.bottomRight:
-        arrowOffset = Offset(anchorCenterX - arrowSize.width / 2,
-            anchorBottomY + verticalMargin!);
+        arrowOffset = Offset(
+          anchorCenterX - arrowSize.width / 2,
+          anchorBottomY + verticalMargin!,
+        );
         contentOffset = Offset(
           size.width - contentSize.width,
           anchorBottomY + verticalMargin! + arrowSize.height,
         );
-        break;
       case _MenuPosition.topCenter:
         arrowOffset = Offset(
           anchorCenterX - arrowSize.width / 2,
@@ -342,7 +334,6 @@ class _MenuLayoutDelegate extends MultiChildLayoutDelegate {
           anchorCenterX - contentSize.width / 2,
           anchorTopY - verticalMargin! - arrowSize.height - contentSize.height,
         );
-        break;
       case _MenuPosition.topLeft:
         arrowOffset = Offset(
           anchorCenterX - arrowSize.width / 2,
@@ -352,7 +343,6 @@ class _MenuLayoutDelegate extends MultiChildLayoutDelegate {
           0,
           anchorTopY - verticalMargin! - arrowSize.height - contentSize.height,
         );
-        break;
       case _MenuPosition.topRight:
         arrowOffset = Offset(
           anchorCenterX - arrowSize.width / 2,
@@ -362,12 +352,11 @@ class _MenuLayoutDelegate extends MultiChildLayoutDelegate {
           size.width - contentSize.width,
           anchorTopY - verticalMargin! - arrowSize.height - contentSize.height,
         );
-        break;
     }
     if (hasChild(_MenuLayoutId.content)) {
       positionChild(_MenuLayoutId.content, contentOffset);
     }
-    bool isBottom = false;
+    var isBottom = false;
     if (_MenuPosition.values.indexOf(menuPosition) < 3) {
       // bottom
       isBottom = true;
@@ -395,9 +384,10 @@ class _MenuLayoutDelegate extends MultiChildLayoutDelegate {
 }
 
 class _ArrowClipper extends CustomClipper<Path> {
+  const _ArrowClipper();
   @override
   Path getClip(Size size) {
-    final Path path = Path();
+    final path = Path();
     path.moveTo(0, size.height);
     path.lineTo(size.width / 2, size.height / 2);
     path.lineTo(size.width, size.height);

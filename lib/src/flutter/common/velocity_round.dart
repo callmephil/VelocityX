@@ -18,12 +18,6 @@ enum VxRoundType { point, round, ellipse }
 
 /// VxRound Widget for different dot indicators
 class VxRound extends StatelessWidget {
-  final VxRoundType type;
-  final double? size;
-  final Color? color;
-  final dynamic child;
-  final TextStyle? textStyle;
-
   const VxRound({
     super.key,
     this.type = VxRoundType.point,
@@ -32,11 +26,16 @@ class VxRound extends StatelessWidget {
     this.child,
     this.textStyle,
   });
+  final VxRoundType type;
+  final double? size;
+  final Color? color;
+  final dynamic child;
+  final TextStyle? textStyle;
 
   @override
   Widget build(BuildContext context) {
     if (type == VxRoundType.point) {
-      final double tempSize = size ?? 8;
+      final tempSize = size ?? 8;
       return Container(
         width: tempSize,
         height: tempSize,
@@ -46,7 +45,7 @@ class VxRound extends StatelessWidget {
         ),
       );
     } else if (type == VxRoundType.round) {
-      final double tempSize = size ?? 16;
+      final tempSize = size ?? 16;
       return Container(
         width: tempSize,
         height: tempSize,
@@ -57,24 +56,26 @@ class VxRound extends StatelessWidget {
         alignment: Alignment.center,
         child: getContent(),
       );
-    } else {
-      final double tempSize = size ?? 16;
-      final Radius radius = Radius.circular(tempSize / 2);
-      return Container(
-        constraints: BoxConstraints(
-            maxHeight: tempSize, minHeight: tempSize, minWidth: tempSize),
-        padding: const EdgeInsets.symmetric(horizontal: 4),
-        decoration: BoxDecoration(
-          color: color ?? Theme.of(context).primaryColorLight,
-          borderRadius: BorderRadius.horizontal(left: radius, right: radius),
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [getContent()!],
-        ),
-      );
     }
+    final tempSize = size ?? 16;
+    final radius = Radius.circular(tempSize / 2);
+    return Container(
+      constraints: BoxConstraints(
+        maxHeight: tempSize,
+        minHeight: tempSize,
+        minWidth: tempSize,
+      ),
+      padding: const EdgeInsets.symmetric(horizontal: 4),
+      decoration: BoxDecoration(
+        color: color ?? Theme.of(context).primaryColorLight,
+        borderRadius: BorderRadius.horizontal(left: radius, right: radius),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [getContent()!],
+      ),
+    );
   }
 
   /// Get the background color
@@ -89,12 +90,12 @@ class VxRound extends StatelessWidget {
 
   /// Get the content
   Widget? getContent() {
+    final child = this.child;
     if (child is String) {
       return Text(child, style: getTextStyle(), maxLines: 1);
     } else if (child is Widget) {
       return child;
-    } else {
-      return const Offstage();
     }
+    return const Offstage();
   }
 }

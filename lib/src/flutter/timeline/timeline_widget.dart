@@ -1,10 +1,22 @@
 import 'package:flutter/material.dart';
-
-import '../../../velocity_x.dart';
-import 'timeline_view.dart';
+import 'package:velocity_x/src/flutter/timeline/timeline_view.dart';
+import 'package:velocity_x/velocity_x.dart';
 
 /// To show a timeline view with filled dot, header and description. Great for showing something like a history
 class VxTimeline extends StatefulWidget {
+
+  const VxTimeline(
+      {super.key,
+      required this.timelineList,
+      this.lineColor,
+      this.backgroundColor,
+      this.trailingColor,
+      this.headingColor,
+      this.descriptionColor,
+      this.onItemTap,
+      this.animationDuration,
+      this.showTrailing = false,
+      this.customTrailing,});
   final List<VxTimelineModel> timelineList;
 
   final Color? lineColor;
@@ -20,19 +32,6 @@ class VxTimeline extends StatefulWidget {
   final bool showTrailing;
   final Widget? customTrailing;
 
-  const VxTimeline(
-      {super.key,
-      required this.timelineList,
-      this.lineColor,
-      this.backgroundColor,
-      this.trailingColor,
-      this.headingColor,
-      this.descriptionColor,
-      this.onItemTap,
-      this.animationDuration,
-      this.showTrailing = false,
-      this.customTrailing});
-
   @override
   VxTimelineState createState() {
     return VxTimelineState();
@@ -43,7 +42,7 @@ class VxTimelineState extends State<VxTimeline>
     with SingleTickerProviderStateMixin {
   Animation<double>? animation;
   AnimationController? controller;
-  double fraction = 0.0;
+  double fraction = 0;
 
   @override
   void initState() {
@@ -51,7 +50,7 @@ class VxTimelineState extends State<VxTimeline>
     controller = AnimationController(
         duration:
             widget.animationDuration ?? const Duration(milliseconds: 1000),
-        vsync: this);
+        vsync: this,);
     controller!.forward();
   }
 

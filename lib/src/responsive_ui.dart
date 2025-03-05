@@ -5,12 +5,11 @@ import 'package:flutter/material.dart';
 /// A class that can be queried for breakpoints based on the guidelines in
 /// https://material.io/guidelines/layout/responsive-ui.html .
 class MaterialResponsiveUiData {
+  const MaterialResponsiveUiData._(this._data);
   static MaterialResponsiveUiData of(BuildContext context) =>
       MaterialResponsiveUiData._(MediaQuery.of(context));
 
   final MediaQueryData _data;
-
-  MaterialResponsiveUiData._(this._data);
 
   /// Returns the [MobileDeviceInfo] (type and symbolic size) for the device.
   MobileDeviceInfo get deviceInfo => MobileDeviceInfo(_data);
@@ -52,9 +51,8 @@ class MaterialResponsiveUiData {
   double get gutter {
     if (_minDimension < 600.0) {
       return _width < 960.0 ? 16.0 : 24.0;
-    } else {
-      return _width < 600.0 ? 16.0 : 24.0;
     }
+    return _width < 600.0 ? 16.0 : 24.0;
   }
 
   double get _width => _data.size.width;
@@ -76,14 +74,13 @@ enum MobileDeviceSize { small, medium, large }
 
 /// Combines [MobileDeviceType] and [MobileDeviceSize].
 abstract class MobileDeviceInfo {
-  final double _width;
-
   factory MobileDeviceInfo(MediaQueryData data) =>
       data.orientation == Orientation.portrait
           ? _PortraitDeviceInfo(data.size.width)
           : _LandscapeDeviceInfo(data.size.width);
 
   MobileDeviceInfo._(this._width);
+  final double _width;
 
   /// Determines whether the device is a handset or tablet.
   ///

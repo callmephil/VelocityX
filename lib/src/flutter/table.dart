@@ -13,19 +13,20 @@
 
 import 'package:flutter/material.dart';
 
-import 'builder.dart';
-import 'velocityx_mixins/color_mixin.dart';
+import 'package:velocity_x/src/flutter/builder.dart';
+import 'package:velocity_x/src/flutter/velocityx_mixins/color_mixin.dart';
 
 /// A widget that uses the table layout algorithm for its children.
 class VxTable extends VxWidgetBuilder<Widget> with VxColorMixin<VxTable> {
-  VxTable(
-      {this.tableBorder,
-      this.columnWidths,
-      this.defaultColumnWidth = const FlexColumnWidth(1.0),
-      this.defaultVerticalAlignment = TableCellVerticalAlignment.top,
-      this.textBaseline,
-      this.textDirection,
-      this.children = const <TableRow>[]}) {
+  VxTable({
+    this.tableBorder,
+    this.columnWidths,
+    this.defaultColumnWidth = const FlexColumnWidth(),
+    this.defaultVerticalAlignment = TableCellVerticalAlignment.top,
+    this.textBaseline,
+    this.textDirection,
+    this.children = const <TableRow>[],
+  }) {
     setChildToColor(this);
   }
 
@@ -38,45 +39,51 @@ class VxTable extends VxWidgetBuilder<Widget> with VxColorMixin<VxTable> {
   final List<TableRow> children;
 
   VxTable border(TableBorder? tableBorder) {
-    tableBorder = tableBorder;
     return this;
   }
 
   VxTable get simpleBorder {
-    tableBorder = TableBorder.all(
-      color: velocityColor ?? Colors.black,
-    );
+    tableBorder = TableBorder.all(color: velocityColor ?? Colors.black);
     return this;
   }
 
   VxTable get roundedBorder {
     tableBorder = TableBorder.all(
-        color: velocityColor ?? Colors.black,
-        borderRadius: BorderRadius.circular(8.0));
+      color: velocityColor ?? Colors.black,
+      borderRadius: BorderRadius.circular(8),
+    );
     return this;
   }
 
   VxTable setColumnWidths(Map<int, TableColumnWidth>? columnWidths) {
-    columnWidths = columnWidths;
     return this;
   }
 
   VxTable withFlexFactor(double flexFactor) {
-    columnWidths = children.asMap().map((key, value) =>
-        MapEntry<int, TableColumnWidth>(key, FlexColumnWidth(flexFactor)));
+    columnWidths = children.asMap().map(
+          (key, value) =>
+              MapEntry<int, TableColumnWidth>(key, FlexColumnWidth(flexFactor)),
+        );
     return this;
   }
 
   VxTable withFixedFactor(double fixedFactor) {
-    columnWidths = children.asMap().map((key, value) =>
-        MapEntry<int, TableColumnWidth>(key, FixedColumnWidth(fixedFactor)));
+    columnWidths = children.asMap().map(
+          (key, value) => MapEntry<int, TableColumnWidth>(
+            key,
+            FixedColumnWidth(fixedFactor),
+          ),
+        );
     return this;
   }
 
   VxTable withIntrinsicFactor(double intrinsicFactor) {
-    columnWidths = children.asMap().map((key, value) =>
-        MapEntry<int, TableColumnWidth>(
-            key, IntrinsicColumnWidth(flex: intrinsicFactor)));
+    columnWidths = children.asMap().map(
+          (key, value) => MapEntry<int, TableColumnWidth>(
+            key,
+            IntrinsicColumnWidth(flex: intrinsicFactor),
+          ),
+        );
     return this;
   }
 

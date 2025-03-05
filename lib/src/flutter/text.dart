@@ -14,12 +14,11 @@
 import 'package:auto_size_text_pk/auto_size_text_pk.dart';
 import 'package:flutter/material.dart';
 import 'package:velocity_x/src/extensions/string_ext.dart';
+import 'package:velocity_x/src/flutter/builder.dart';
+import 'package:velocity_x/src/flutter/nothing.dart';
+import 'package:velocity_x/src/flutter/velocityx_mixins/color_mixin.dart';
 import 'package:velocity_x/src/flutter/velocityx_mixins/render_mixin.dart';
 import 'package:velocity_x/src/velocity_xx.dart';
-
-import 'builder.dart';
-import 'nothing.dart';
-import 'velocityx_mixins/color_mixin.dart';
 
 /// Flutter widget that automatically resizes text to fit perfectly within its bounds.
 ///
@@ -38,28 +37,31 @@ class VxTextBuilder extends VxWidgetBuilder<Widget>
     setChildToColor(this);
   }
 
-  String? _text, _fontFamily;
+  String? _text;
+  String? _fontFamily;
 
-  double? _scaleFactor,
-      _fontSize,
-      _minFontSize,
-      _letterSpacing,
-      _lineHeight,
-      _maxFontSize,
-      _stepGranularity,
-      _wordSpacing;
+  double? _scaleFactor;
+  double? _fontSize;
+  double? _minFontSize;
+  double? _letterSpacing;
+  double? _lineHeight;
+  double? _maxFontSize;
+  double? _stepGranularity;
+  double? _wordSpacing;
   int? _maxLines;
   FontWeight? _fontWeight;
   TextAlign? _textAlign;
   FontStyle? _fontStyle;
   TextDecoration? _decoration;
-  TextStyle? _textStyle, _themedStyle;
+  TextStyle? _textStyle;
+  TextStyle? _themedStyle;
   StrutStyle? _strutStyle;
   TextOverflow? _overflow;
   TextBaseline? _textBaseline;
   Widget? _replacement;
-  bool? _softWrap, _wrapWords;
-  double _shadowBlur = 0.0;
+  bool? _softWrap;
+  bool? _wrapWords;
+  double _shadowBlur = 0;
   Color _shadowColor = const Color(0xFF000000);
   Offset _shadowOffset = Offset.zero;
 
@@ -361,7 +363,7 @@ class VxTextBuilder extends VxWidgetBuilder<Widget>
       _fontSizedText(child: this, scaleFactor: value);
 
   VxTextBuilder _fontSizedText(
-      {required double scaleFactor, required VxTextBuilder child}) {
+      {required double scaleFactor, required VxTextBuilder child,}) {
     _fontSize = _fontSize ?? 14.0;
     _scaleFactor = scaleFactor;
     return this;
@@ -463,7 +465,7 @@ class VxTextBuilder extends VxWidgetBuilder<Widget>
 
   /// Sets [Shadow] as specified in request *#127*
   VxTextBuilder shadow(
-          double offsetX, double offsetY, double blurRadius, Color color) =>
+          double offsetX, double offsetY, double blurRadius, Color color,) =>
       this
         .._shadowBlur = blurRadius
         .._shadowColor = color
@@ -486,7 +488,7 @@ class VxTextBuilder extends VxWidgetBuilder<Widget>
     }
     final sdw = [
       Shadow(
-          blurRadius: _shadowBlur, color: _shadowColor, offset: _shadowOffset)
+          blurRadius: _shadowBlur, color: _shadowColor, offset: _shadowOffset,),
     ];
 
     final ts = TextStyle(
@@ -500,7 +502,7 @@ class VxTextBuilder extends VxWidgetBuilder<Widget>
         height: _lineHeight,
         textBaseline: _textBaseline ?? TextBaseline.alphabetic,
         wordSpacing: _wordSpacing,
-        shadows: _shadowBlur > 0 ? sdw : null);
+        shadows: _shadowBlur > 0 ? sdw : null,);
 
     final textWidget = _isIntrinsic
         ? Text(

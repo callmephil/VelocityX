@@ -18,6 +18,19 @@ import 'package:velocity_x/velocity_x.dart';
 /// [VxUnorderedList] is inspired from html where you can have a circular disk with an item (string)
 /// Use [VxUnorderedList] to have a list of strings with circular disk of boxes with a defined color.
 class VxUnorderedList extends StatelessWidget {
+  const VxUnorderedList(
+    this._items, {
+    super.key,
+    this.padding,
+    this.color = Colors.black,
+    this.fontSize = 14.0,
+    this.primary = false,
+    this.shrinkWrap = true,
+    this.physics,
+    this.direction = Axis.vertical,
+    this.isExpandedChild = false,
+  });
+
   /// List of strings
   final List<String> _items;
 
@@ -44,19 +57,6 @@ class VxUnorderedList extends StatelessWidget {
 
   /// If the children is wrapped with expanded widget. Default is false.
   final bool isExpandedChild;
-
-  const VxUnorderedList(
-    this._items, {
-    super.key,
-    this.padding,
-    this.color = Colors.black,
-    this.fontSize = 14.0,
-    this.primary = false,
-    this.shrinkWrap = true,
-    this.physics,
-    this.direction = Axis.vertical,
-    this.isExpandedChild = false,
-  });
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
@@ -74,7 +74,7 @@ class VxUnorderedList extends StatelessWidget {
             .size(fontSize)
             .make()
             .expand();
-        var children = [
+        final children = [
           VxBox()
               .square(fontSize! / 2.8)
               .color(color)
@@ -83,10 +83,7 @@ class VxUnorderedList extends StatelessWidget {
           10.widthBox,
           if (isExpandedChild) mainChild.expand() else mainChild,
         ];
-        return HStack(
-          children,
-          crossAlignment: CrossAxisAlignment.center,
-        ).p8();
+        return HStack(children).p8();
       },
     );
   }
@@ -101,6 +98,20 @@ enum VxListType {
 }
 
 class VxOrderedList extends StatelessWidget {
+  const VxOrderedList(
+    this.items, {
+    super.key,
+    this.type = VxListType.decimal,
+    this.padding,
+    this.color = Colors.black,
+    this.fontSize = 14.0,
+    this.primary = false,
+    this.shrinkWrap = true,
+    this.physics,
+    this.direction = Axis.vertical,
+    this.isExpandedChild = false,
+  });
+
   /// Specify the list of items
   final List<String> items;
 
@@ -131,20 +142,6 @@ class VxOrderedList extends StatelessWidget {
   /// If the children is wrapped with expanded widget. Default is false.
   final bool isExpandedChild;
 
-  const VxOrderedList(
-    this.items, {
-    super.key,
-    this.type = VxListType.decimal,
-    this.padding,
-    this.color = Colors.black,
-    this.fontSize = 14.0,
-    this.primary = false,
-    this.shrinkWrap = true,
-    this.physics,
-    this.direction = Axis.vertical,
-    this.isExpandedChild = false,
-  });
-
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
@@ -166,7 +163,6 @@ class VxOrderedList extends StatelessWidget {
             8.widthBox,
             if (isExpandedChild) mainChild.expand() else mainChild,
           ],
-          crossAlignment: CrossAxisAlignment.center,
         ).p8();
       },
     );

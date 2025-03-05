@@ -17,51 +17,50 @@ import 'dart:math';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:velocity_x/src/nav/i_vx_nav.dart';
 import 'package:velocity_x/velocity_x.dart';
-
-import 'nav/i_vx_nav.dart';
 
 /// Mixin [Vx] provides basic operations and utilities
 mixin Vx {
   /// Pixel Values
-  static const double dp0 = 0.0;
-  static const double dp1 = 1.0;
-  static const double dp2 = 2.0;
-  static const double dp3 = 3.0;
-  static const double dp4 = 4.0;
-  static const double dp5 = 5.0;
-  static const double dp6 = 6.0;
-  static const double dp8 = 8.0;
-  static const double dp10 = 10.0;
-  static const double dp12 = 12.0;
-  static const double dp14 = 14.0;
-  static const double dp16 = 16.0;
-  static const double dp20 = 20.0;
-  static const double dp24 = 24.0;
-  static const double dp32 = 32.0;
-  static const double dp40 = 40.0;
-  static const double dp48 = 48.0;
-  static const double dp56 = 56.0;
-  static const double dp64 = 64.0;
+  static const double dp0 = 0;
+  static const double dp1 = 1;
+  static const double dp2 = 2;
+  static const double dp3 = 3;
+  static const double dp4 = 4;
+  static const double dp5 = 5;
+  static const double dp6 = 6;
+  static const double dp8 = 8;
+  static const double dp10 = 10;
+  static const double dp12 = 12;
+  static const double dp14 = 14;
+  static const double dp16 = 16;
+  static const double dp20 = 20;
+  static const double dp24 = 24;
+  static const double dp32 = 32;
+  static const double dp40 = 40;
+  static const double dp48 = 48;
+  static const double dp56 = 56;
+  static const double dp64 = 64;
 
   ///Colors
-  static const String blackHex = "#000000";
-  static const String whiteHex = "#ffffff";
+  static const String blackHex = '#000000';
+  static const String whiteHex = '#ffffff';
 
   static const Color black = Color(0xFF000000);
   static const Color white = Color(0xFFFFFFFF);
 
   ///Gray Colors
-  static const String grayHex50 = "#f9fafb";
-  static const String grayHex100 = "#f3f4f6";
-  static const String grayHex200 = "#e5e7eb";
-  static const String grayHex300 = "#d1d5db";
-  static const String grayHex400 = "#9ca3af";
-  static const String grayHex500 = "#6b7280";
-  static const String grayHex600 = "#4b5563";
-  static const String grayHex700 = "#374151";
-  static const String grayHex800 = "#1f2937";
-  static const String grayHex900 = "#111827";
+  static const String grayHex50 = '#f9fafb';
+  static const String grayHex100 = '#f3f4f6';
+  static const String grayHex200 = '#e5e7eb';
+  static const String grayHex300 = '#d1d5db';
+  static const String grayHex400 = '#9ca3af';
+  static const String grayHex500 = '#6b7280';
+  static const String grayHex600 = '#4b5563';
+  static const String grayHex700 = '#374151';
+  static const String grayHex800 = '#1f2937';
+  static const String grayHex900 = '#111827';
 
   static const Color gray50 = Color(0xFFf9fafb);
   static const Color gray100 = Color(0xFFf3f4f6);
@@ -75,16 +74,16 @@ mixin Vx {
   static const Color gray900 = Color(0xFF111827);
 
   // Slate Colors
-  static const String slateHex50 = "#f8fafc";
-  static const String slateHex100 = "#f1f5f9";
-  static const String slateHex200 = "#e2e8f0";
-  static const String slateHex300 = "#cbd5e1";
-  static const String slateHex400 = "#94a3b8";
-  static const String slateHex500 = "#64748b";
-  static const String slateHex600 = "#475569";
-  static const String slateHex700 = "#334155";
-  static const String slateHex800 = "#1e293b";
-  static const String slateHex900 = "#0f172a";
+  static const String slateHex50 = '#f8fafc';
+  static const String slateHex100 = '#f1f5f9';
+  static const String slateHex200 = '#e2e8f0';
+  static const String slateHex300 = '#cbd5e1';
+  static const String slateHex400 = '#94a3b8';
+  static const String slateHex500 = '#64748b';
+  static const String slateHex600 = '#475569';
+  static const String slateHex700 = '#334155';
+  static const String slateHex800 = '#1e293b';
+  static const String slateHex900 = '#0f172a';
 
   static const Color slate50 = Color(0xFFf8fafc);
   static const Color slate100 = Color(0xFFf1f5f9);
@@ -98,16 +97,16 @@ mixin Vx {
   static const Color slate900 = Color(0xFF0f172a);
 
   // Zinc Colors
-  static const String zincHex50 = "#fafafa";
-  static const String zincHex100 = "#f4f4f5";
-  static const String zincHex200 = "#e4e4e7";
-  static const String zincHex300 = "#d4d4d8";
-  static const String zincHex400 = "#a1a1aa";
-  static const String zincHex500 = "#71717a";
-  static const String zincHex600 = "#52525b";
-  static const String zincHex700 = "#3f3f46";
-  static const String zincHex800 = "#27272a";
-  static const String zincHex900 = "#18181b";
+  static const String zincHex50 = '#fafafa';
+  static const String zincHex100 = '#f4f4f5';
+  static const String zincHex200 = '#e4e4e7';
+  static const String zincHex300 = '#d4d4d8';
+  static const String zincHex400 = '#a1a1aa';
+  static const String zincHex500 = '#71717a';
+  static const String zincHex600 = '#52525b';
+  static const String zincHex700 = '#3f3f46';
+  static const String zincHex800 = '#27272a';
+  static const String zincHex900 = '#18181b';
 
   static const Color zinc50 = Color(0xFFfafafa);
   static const Color zinc100 = Color(0xFFf4f4f5);
@@ -121,16 +120,16 @@ mixin Vx {
   static const Color zinc900 = Color(0xFF18181b);
 
   // Stone Colors
-  static const String stoneHex50 = "#FAFAF9";
-  static const String stoneHex100 = "#F5F5F4";
-  static const String stoneHex200 = "#E7E5E4";
-  static const String stoneHex300 = "#D6D3D1";
-  static const String stoneHex400 = "#A8A29E";
-  static const String stoneHex500 = "#78716C";
-  static const String stoneHex600 = "#57534E";
-  static const String stoneHex700 = "#44403C";
-  static const String stoneHex800 = "#292524";
-  static const String stoneHex900 = "#1C1917";
+  static const String stoneHex50 = '#FAFAF9';
+  static const String stoneHex100 = '#F5F5F4';
+  static const String stoneHex200 = '#E7E5E4';
+  static const String stoneHex300 = '#D6D3D1';
+  static const String stoneHex400 = '#A8A29E';
+  static const String stoneHex500 = '#78716C';
+  static const String stoneHex600 = '#57534E';
+  static const String stoneHex700 = '#44403C';
+  static const String stoneHex800 = '#292524';
+  static const String stoneHex900 = '#1C1917';
 
   static const Color stone50 = Color(0xFFFAFAF9);
   static const Color stone100 = Color(0xFFF5F5F4);
@@ -144,16 +143,16 @@ mixin Vx {
   static const Color stone900 = Color(0xFF1C1917);
 
   // Neutral Colors
-  static const String neutralHex50 = "#fafafa";
-  static const String neutralHex100 = "#f5f5f5";
-  static const String neutralHex200 = "#e5e5e5";
-  static const String neutralHex300 = "#d4d4d4";
-  static const String neutralHex400 = "#a3a3a3";
-  static const String neutralHex500 = "#737373";
-  static const String neutralHex600 = "#525252";
-  static const String neutralHex700 = "#404040";
-  static const String neutralHex800 = "#262626";
-  static const String neutralHex900 = "#171717";
+  static const String neutralHex50 = '#fafafa';
+  static const String neutralHex100 = '#f5f5f5';
+  static const String neutralHex200 = '#e5e5e5';
+  static const String neutralHex300 = '#d4d4d4';
+  static const String neutralHex400 = '#a3a3a3';
+  static const String neutralHex500 = '#737373';
+  static const String neutralHex600 = '#525252';
+  static const String neutralHex700 = '#404040';
+  static const String neutralHex800 = '#262626';
+  static const String neutralHex900 = '#171717';
 
   static const Color neutral50 = Color(0xFFfafafa);
   static const Color neutral100 = Color(0xFFf5f5f5);
@@ -167,16 +166,16 @@ mixin Vx {
   static const Color neutral900 = Color(0xFF171717);
 
   ///Red Colors
-  static const String redHex50 = "#FEF2F2";
-  static const String redHex100 = "#FEE2E2";
-  static const String redHex200 = "#FECACA";
-  static const String redHex300 = "#FCA5A5";
-  static const String redHex400 = "#F87171";
-  static const String redHex500 = "#EF4444";
-  static const String redHex600 = "#DC2626";
-  static const String redHex700 = "#B91C1C";
-  static const String redHex800 = "#991B1B";
-  static const String redHex900 = "#7F1D1D";
+  static const String redHex50 = '#FEF2F2';
+  static const String redHex100 = '#FEE2E2';
+  static const String redHex200 = '#FECACA';
+  static const String redHex300 = '#FCA5A5';
+  static const String redHex400 = '#F87171';
+  static const String redHex500 = '#EF4444';
+  static const String redHex600 = '#DC2626';
+  static const String redHex700 = '#B91C1C';
+  static const String redHex800 = '#991B1B';
+  static const String redHex900 = '#7F1D1D';
 
   static const Color red50 = Color(0xFFFEF2F2);
   static const Color red100 = Color(0xFFFEE2E2);
@@ -190,16 +189,16 @@ mixin Vx {
   static const Color red900 = Color(0xFF7F1D1D);
 
   ///Orange Colors
-  static const String orangeHex50 = "#FFF7ED";
-  static const String orangeHex100 = "#FFEDD5";
-  static const String orangeHex200 = "#FED7AA";
-  static const String orangeHex300 = "#FDBA74";
-  static const String orangeHex400 = "#FB923C";
-  static const String orangeHex500 = "#F97316";
-  static const String orangeHex600 = "#EA580C";
-  static const String orangeHex700 = "#C2410C";
-  static const String orangeHex800 = "#9A3412";
-  static const String orangeHex900 = "#7C2D12";
+  static const String orangeHex50 = '#FFF7ED';
+  static const String orangeHex100 = '#FFEDD5';
+  static const String orangeHex200 = '#FED7AA';
+  static const String orangeHex300 = '#FDBA74';
+  static const String orangeHex400 = '#FB923C';
+  static const String orangeHex500 = '#F97316';
+  static const String orangeHex600 = '#EA580C';
+  static const String orangeHex700 = '#C2410C';
+  static const String orangeHex800 = '#9A3412';
+  static const String orangeHex900 = '#7C2D12';
 
   static const Color orange50 = Color(0xFFFFF7ED);
   static const Color orange100 = Color(0xFFFFEDD5);
@@ -213,16 +212,16 @@ mixin Vx {
   static const Color orange900 = Color(0xFF7C2D12);
 
   ///Amber Colors
-  static const String amberHex50 = "#FFFBEB";
-  static const String amberHex100 = "#FEF3C7";
-  static const String amberHex200 = "#FDE68A";
-  static const String amberHex300 = "#FCD34D";
-  static const String amberHex400 = "#FBBF24";
-  static const String amberHex500 = "#F59E0B";
-  static const String amberHex600 = "#D97706";
-  static const String amberHex700 = "#B45309";
-  static const String amberHex800 = "#92400E";
-  static const String amberHex900 = "#78350F";
+  static const String amberHex50 = '#FFFBEB';
+  static const String amberHex100 = '#FEF3C7';
+  static const String amberHex200 = '#FDE68A';
+  static const String amberHex300 = '#FCD34D';
+  static const String amberHex400 = '#FBBF24';
+  static const String amberHex500 = '#F59E0B';
+  static const String amberHex600 = '#D97706';
+  static const String amberHex700 = '#B45309';
+  static const String amberHex800 = '#92400E';
+  static const String amberHex900 = '#78350F';
 
   static const Color amber50 = Color(0xFFFFFBEB);
   static const Color amber100 = Color(0xFFFEF3C7);
@@ -236,16 +235,16 @@ mixin Vx {
   static const Color amber900 = Color(0xFF78350F);
 
   ///Yellow Colors
-  static const String yellowHex50 = "#FEFCE8";
-  static const String yellowHex100 = "#FEF9C3";
-  static const String yellowHex200 = "#FEF08A";
-  static const String yellowHex300 = "#FDE047";
-  static const String yellowHex400 = "#FACC15";
-  static const String yellowHex500 = "#EAB308";
-  static const String yellowHex600 = "#CA8A04";
-  static const String yellowHex700 = "#A16207";
-  static const String yellowHex800 = "#854D0E";
-  static const String yellowHex900 = "#713F12";
+  static const String yellowHex50 = '#FEFCE8';
+  static const String yellowHex100 = '#FEF9C3';
+  static const String yellowHex200 = '#FEF08A';
+  static const String yellowHex300 = '#FDE047';
+  static const String yellowHex400 = '#FACC15';
+  static const String yellowHex500 = '#EAB308';
+  static const String yellowHex600 = '#CA8A04';
+  static const String yellowHex700 = '#A16207';
+  static const String yellowHex800 = '#854D0E';
+  static const String yellowHex900 = '#713F12';
 
   static const Color yellow50 = Color(0xFFFEFCE8);
   static const Color yellow100 = Color(0xFFFEF9C3);
@@ -259,16 +258,16 @@ mixin Vx {
   static const Color yellow900 = Color(0xFF713F12);
 
   ///Lime Colors
-  static const String limeHex50 = "#F7FEE7";
-  static const String limeHex100 = "#ECFCCB";
-  static const String limeHex200 = "#D9F99D";
-  static const String limeHex300 = "#BEF264";
-  static const String limeHex400 = "#A3E635";
-  static const String limeHex500 = "#84CC16";
-  static const String limeHex600 = "#65A30D";
-  static const String limeHex700 = "#4D7C0F";
-  static const String limeHex800 = "#3F6212";
-  static const String limeHex900 = "#365314";
+  static const String limeHex50 = '#F7FEE7';
+  static const String limeHex100 = '#ECFCCB';
+  static const String limeHex200 = '#D9F99D';
+  static const String limeHex300 = '#BEF264';
+  static const String limeHex400 = '#A3E635';
+  static const String limeHex500 = '#84CC16';
+  static const String limeHex600 = '#65A30D';
+  static const String limeHex700 = '#4D7C0F';
+  static const String limeHex800 = '#3F6212';
+  static const String limeHex900 = '#365314';
 
   static const Color lime50 = Color(0xFFF7FEE7);
   static const Color lime100 = Color(0xFFECFCCB);
@@ -282,16 +281,16 @@ mixin Vx {
   static const Color lime900 = Color(0xFF365314);
 
   ///Green Colors
-  static const String greenHex50 = "#F0FDF4";
-  static const String greenHex100 = "#DCFCE7";
-  static const String greenHex200 = "#BBF7D0";
-  static const String greenHex300 = "#86EFAC";
-  static const String greenHex400 = "#4ADE80";
-  static const String greenHex500 = "#22C55E";
-  static const String greenHex600 = "#16A34A";
-  static const String greenHex700 = "#15803D";
-  static const String greenHex800 = "#166534";
-  static const String greenHex900 = "#14532D";
+  static const String greenHex50 = '#F0FDF4';
+  static const String greenHex100 = '#DCFCE7';
+  static const String greenHex200 = '#BBF7D0';
+  static const String greenHex300 = '#86EFAC';
+  static const String greenHex400 = '#4ADE80';
+  static const String greenHex500 = '#22C55E';
+  static const String greenHex600 = '#16A34A';
+  static const String greenHex700 = '#15803D';
+  static const String greenHex800 = '#166534';
+  static const String greenHex900 = '#14532D';
 
   static const Color green50 = Color(0xFFF0FDF4);
   static const Color green100 = Color(0xFFDCFCE7);
@@ -305,16 +304,16 @@ mixin Vx {
   static const Color green900 = Color(0xFF14532D);
 
   ///Emerald Colors
-  static const String emeraldHex50 = "#ECFDF5";
-  static const String emeraldHex100 = "#D1FAE5";
-  static const String emeraldHex200 = "#A7F3D0";
-  static const String emeraldHex300 = "#6EE7B7";
-  static const String emeraldHex400 = "#34D399";
-  static const String emeraldHex500 = "#10B981";
-  static const String emeraldHex600 = "#059669";
-  static const String emeraldHex700 = "#047857";
-  static const String emeraldHex800 = "#065F46";
-  static const String emeraldHex900 = "#064E3B";
+  static const String emeraldHex50 = '#ECFDF5';
+  static const String emeraldHex100 = '#D1FAE5';
+  static const String emeraldHex200 = '#A7F3D0';
+  static const String emeraldHex300 = '#6EE7B7';
+  static const String emeraldHex400 = '#34D399';
+  static const String emeraldHex500 = '#10B981';
+  static const String emeraldHex600 = '#059669';
+  static const String emeraldHex700 = '#047857';
+  static const String emeraldHex800 = '#065F46';
+  static const String emeraldHex900 = '#064E3B';
 
   static const Color emerald50 = Color(0xFFECFDF5);
   static const Color emerald100 = Color(0xFFD1FAE5);
@@ -328,16 +327,16 @@ mixin Vx {
   static const Color emerald900 = Color(0xFF064E3B);
 
   ///Teal Colors
-  static const String tealHex50 = "#F0FDFA";
-  static const String tealHex100 = "#CCFBF1";
-  static const String tealHex200 = "#99F6E4";
-  static const String tealHex300 = "#5EEAD4";
-  static const String tealHex400 = "#2DD4BF";
-  static const String tealHex500 = "#14B8A6";
-  static const String tealHex600 = "#0D9488";
-  static const String tealHex700 = "#0F766E";
-  static const String tealHex800 = "#115E59";
-  static const String tealHex900 = "#134E4A";
+  static const String tealHex50 = '#F0FDFA';
+  static const String tealHex100 = '#CCFBF1';
+  static const String tealHex200 = '#99F6E4';
+  static const String tealHex300 = '#5EEAD4';
+  static const String tealHex400 = '#2DD4BF';
+  static const String tealHex500 = '#14B8A6';
+  static const String tealHex600 = '#0D9488';
+  static const String tealHex700 = '#0F766E';
+  static const String tealHex800 = '#115E59';
+  static const String tealHex900 = '#134E4A';
 
   static const Color teal50 = Color(0xFFF0FDFA);
   static const Color teal100 = Color(0xFFCCFBF1);
@@ -351,16 +350,16 @@ mixin Vx {
   static const Color teal900 = Color(0xFF134E4A);
 
   ///Cyan Colors
-  static const String cyanHex50 = "#ECFEFF";
-  static const String cyanHex100 = "#CFFAFE";
-  static const String cyanHex200 = "#A5F3FC";
-  static const String cyanHex300 = "#67E8F9";
-  static const String cyanHex400 = "#22D3EE";
-  static const String cyanHex500 = "#06B6D4";
-  static const String cyanHex600 = "#0891B2";
-  static const String cyanHex700 = "#0E7490";
-  static const String cyanHex800 = "#155E75";
-  static const String cyanHex900 = "#164E63";
+  static const String cyanHex50 = '#ECFEFF';
+  static const String cyanHex100 = '#CFFAFE';
+  static const String cyanHex200 = '#A5F3FC';
+  static const String cyanHex300 = '#67E8F9';
+  static const String cyanHex400 = '#22D3EE';
+  static const String cyanHex500 = '#06B6D4';
+  static const String cyanHex600 = '#0891B2';
+  static const String cyanHex700 = '#0E7490';
+  static const String cyanHex800 = '#155E75';
+  static const String cyanHex900 = '#164E63';
 
   static const Color cyan50 = Color(0xFFECFEFF);
   static const Color cyan100 = Color(0xFFCFFAFE);
@@ -374,16 +373,16 @@ mixin Vx {
   static const Color cyan900 = Color(0xFF164E63);
 
   ///Sky Colors
-  static const String skyHex50 = "#F0F9FF";
-  static const String skyHex100 = "#E0F2FE";
-  static const String skyHex200 = "#BAE6FD";
-  static const String skyHex300 = "#7DD3FC";
-  static const String skyHex400 = "#38BDF8";
-  static const String skyHex500 = "#0EA5E9";
-  static const String skyHex600 = "#0284C7";
-  static const String skyHex700 = "#0369A1";
-  static const String skyHex800 = "#075985";
-  static const String skyHex900 = "#0C4A6E";
+  static const String skyHex50 = '#F0F9FF';
+  static const String skyHex100 = '#E0F2FE';
+  static const String skyHex200 = '#BAE6FD';
+  static const String skyHex300 = '#7DD3FC';
+  static const String skyHex400 = '#38BDF8';
+  static const String skyHex500 = '#0EA5E9';
+  static const String skyHex600 = '#0284C7';
+  static const String skyHex700 = '#0369A1';
+  static const String skyHex800 = '#075985';
+  static const String skyHex900 = '#0C4A6E';
 
   static const Color sky50 = Color(0xFFF0F9FF);
   static const Color sky100 = Color(0xFFE0F2FE);
@@ -397,16 +396,16 @@ mixin Vx {
   static const Color sky900 = Color(0xFF0C4A6E);
 
   ///Blue Colors
-  static const String blueHex50 = "#EFF6FF";
-  static const String blueHex100 = "#DBEAFE";
-  static const String blueHex200 = "#BFDBFE";
-  static const String blueHex300 = "#93C5FD";
-  static const String blueHex400 = "#60A5FA";
-  static const String blueHex500 = "#3B82F6";
-  static const String blueHex600 = "#2563EB";
-  static const String blueHex700 = "#1D4ED8";
-  static const String blueHex800 = "#1E40AF";
-  static const String blueHex900 = "#1E3A8A";
+  static const String blueHex50 = '#EFF6FF';
+  static const String blueHex100 = '#DBEAFE';
+  static const String blueHex200 = '#BFDBFE';
+  static const String blueHex300 = '#93C5FD';
+  static const String blueHex400 = '#60A5FA';
+  static const String blueHex500 = '#3B82F6';
+  static const String blueHex600 = '#2563EB';
+  static const String blueHex700 = '#1D4ED8';
+  static const String blueHex800 = '#1E40AF';
+  static const String blueHex900 = '#1E3A8A';
 
   static const Color blue50 = Color(0xFFEFF6FF);
   static const Color blue100 = Color(0xFFDBEAFE);
@@ -420,16 +419,16 @@ mixin Vx {
   static const Color blue900 = Color(0xFF1E3A8A);
 
   ///Indigo Colors
-  static const String indigoHex50 = "#EEF2FF";
-  static const String indigoHex100 = "#E0E7FF";
-  static const String indigoHex200 = "#C7D2FE";
-  static const String indigoHex300 = "#A5B4FC";
-  static const String indigoHex400 = "#818CF8";
-  static const String indigoHex500 = "#6366F1";
-  static const String indigoHex600 = "#4F46E5";
-  static const String indigoHex700 = "#4338CA";
-  static const String indigoHex800 = "#3730A3";
-  static const String indigoHex900 = "#312E81";
+  static const String indigoHex50 = '#EEF2FF';
+  static const String indigoHex100 = '#E0E7FF';
+  static const String indigoHex200 = '#C7D2FE';
+  static const String indigoHex300 = '#A5B4FC';
+  static const String indigoHex400 = '#818CF8';
+  static const String indigoHex500 = '#6366F1';
+  static const String indigoHex600 = '#4F46E5';
+  static const String indigoHex700 = '#4338CA';
+  static const String indigoHex800 = '#3730A3';
+  static const String indigoHex900 = '#312E81';
 
   static const Color indigo50 = Color(0xFFEEF2FF);
   static const Color indigo100 = Color(0xFFE0E7FF);
@@ -443,16 +442,16 @@ mixin Vx {
   static const Color indigo900 = Color(0xFF312E81);
 
   ///Violet Colors
-  static const String violetHex50 = "#F5F3FF";
-  static const String violetHex100 = "#EDE9FE";
-  static const String violetHex200 = "#DDD6FE";
-  static const String violetHex300 = "#C4B5FD";
-  static const String violetHex400 = "#A78BFA";
-  static const String violetHex500 = "#8B5CF6";
-  static const String violetHex600 = "#7C3AED";
-  static const String violetHex700 = "#6D28D9";
-  static const String violetHex800 = "#5B21B6";
-  static const String violetHex900 = "#4C1D95";
+  static const String violetHex50 = '#F5F3FF';
+  static const String violetHex100 = '#EDE9FE';
+  static const String violetHex200 = '#DDD6FE';
+  static const String violetHex300 = '#C4B5FD';
+  static const String violetHex400 = '#A78BFA';
+  static const String violetHex500 = '#8B5CF6';
+  static const String violetHex600 = '#7C3AED';
+  static const String violetHex700 = '#6D28D9';
+  static const String violetHex800 = '#5B21B6';
+  static const String violetHex900 = '#4C1D95';
 
   static const Color violet50 = Color(0xFFF5F3FF);
   static const Color violet100 = Color(0xFFEDE9FE);
@@ -466,16 +465,16 @@ mixin Vx {
   static const Color violet900 = Color(0xFF4C1D95);
 
   ///Purple Colors
-  static const String purpleHex50 = "#FAF5FF";
-  static const String purpleHex100 = "#F3E8FF";
-  static const String purpleHex200 = "#E9D5FF";
-  static const String purpleHex300 = "#D8B4FE";
-  static const String purpleHex400 = "#C084FC";
-  static const String purpleHex500 = "#A855F7";
-  static const String purpleHex600 = "#9333EA";
-  static const String purpleHex700 = "#7E22CE";
-  static const String purpleHex800 = "#6B21A8";
-  static const String purpleHex900 = "#581C87";
+  static const String purpleHex50 = '#FAF5FF';
+  static const String purpleHex100 = '#F3E8FF';
+  static const String purpleHex200 = '#E9D5FF';
+  static const String purpleHex300 = '#D8B4FE';
+  static const String purpleHex400 = '#C084FC';
+  static const String purpleHex500 = '#A855F7';
+  static const String purpleHex600 = '#9333EA';
+  static const String purpleHex700 = '#7E22CE';
+  static const String purpleHex800 = '#6B21A8';
+  static const String purpleHex900 = '#581C87';
 
   static const Color purple50 = Color(0xFFFAF5FF);
   static const Color purple100 = Color(0xFFF3E8FF);
@@ -489,16 +488,16 @@ mixin Vx {
   static const Color purple900 = Color(0xFF581C87);
 
   ///Fuchsia Colors
-  static const String fuchsiaHex50 = "#FDF4FF";
-  static const String fuchsiaHex100 = "#FAE8FF";
-  static const String fuchsiaHex200 = "#F5D0FE";
-  static const String fuchsiaHex300 = "#F0ABFC";
-  static const String fuchsiaHex400 = "#E879F9";
-  static const String fuchsiaHex500 = "#D946EF";
-  static const String fuchsiaHex600 = "#C026D3";
-  static const String fuchsiaHex700 = "#A21CAF";
-  static const String fuchsiaHex800 = "#86198F";
-  static const String fuchsiaHex900 = "#701A75";
+  static const String fuchsiaHex50 = '#FDF4FF';
+  static const String fuchsiaHex100 = '#FAE8FF';
+  static const String fuchsiaHex200 = '#F5D0FE';
+  static const String fuchsiaHex300 = '#F0ABFC';
+  static const String fuchsiaHex400 = '#E879F9';
+  static const String fuchsiaHex500 = '#D946EF';
+  static const String fuchsiaHex600 = '#C026D3';
+  static const String fuchsiaHex700 = '#A21CAF';
+  static const String fuchsiaHex800 = '#86198F';
+  static const String fuchsiaHex900 = '#701A75';
 
   static const Color fuchsia50 = Color(0xFFFDF4FF);
   static const Color fuchsia100 = Color(0xFFFAE8FF);
@@ -512,16 +511,16 @@ mixin Vx {
   static const Color fuchsia900 = Color(0xFF701A75);
 
   ///Pink Colors
-  static const String pinkHex50 = "#FDF2F8";
-  static const String pinkHex100 = "#FCE7F3";
-  static const String pinkHex200 = "#FBCFE8";
-  static const String pinkHex300 = "#F9A8D4";
-  static const String pinkHex400 = "#F472B6";
-  static const String pinkHex500 = "#EC4899";
-  static const String pinkHex600 = "#DB2777";
-  static const String pinkHex700 = "#BE185D";
-  static const String pinkHex800 = "#9D174D";
-  static const String pinkHex900 = "#831843";
+  static const String pinkHex50 = '#FDF2F8';
+  static const String pinkHex100 = '#FCE7F3';
+  static const String pinkHex200 = '#FBCFE8';
+  static const String pinkHex300 = '#F9A8D4';
+  static const String pinkHex400 = '#F472B6';
+  static const String pinkHex500 = '#EC4899';
+  static const String pinkHex600 = '#DB2777';
+  static const String pinkHex700 = '#BE185D';
+  static const String pinkHex800 = '#9D174D';
+  static const String pinkHex900 = '#831843';
 
   static const Color pink50 = Color(0xFFFDF2F8);
   static const Color pink100 = Color(0xFFFCE7F3);
@@ -535,16 +534,16 @@ mixin Vx {
   static const Color pink900 = Color(0xFF831843);
 
   ///Rose Colors
-  static const String roseHex50 = "#FFF1F2";
-  static const String roseHex100 = "#FFE4E6";
-  static const String roseHex200 = "#FECDD3";
-  static const String roseHex300 = "#FDA4AF";
-  static const String roseHex400 = "#FB7185";
-  static const String roseHex500 = "#F43F5E";
-  static const String roseHex600 = "#E11D48";
-  static const String roseHex700 = "#BE123C";
-  static const String roseHex800 = "#9F1239";
-  static const String roseHex900 = "#881337";
+  static const String roseHex50 = '#FFF1F2';
+  static const String roseHex100 = '#FFE4E6';
+  static const String roseHex200 = '#FECDD3';
+  static const String roseHex300 = '#FDA4AF';
+  static const String roseHex400 = '#FB7185';
+  static const String roseHex500 = '#F43F5E';
+  static const String roseHex600 = '#E11D48';
+  static const String roseHex700 = '#BE123C';
+  static const String roseHex800 = '#9F1239';
+  static const String roseHex900 = '#881337';
 
   static const Color rose50 = Color(0xFFFFF1F2);
   static const Color rose100 = Color(0xFFFFE4E6);
@@ -572,8 +571,8 @@ mixin Vx {
   static EdgeInsets m64 = const EdgeInsets.all(dp64);
 
   /// Symmetric Fixed EdgeInsets
-  static const mV0 = EdgeInsets.symmetric(vertical: dp0);
-  static const mH0 = EdgeInsets.symmetric(horizontal: dp0);
+  static const mV0 = EdgeInsets.symmetric();
+  static const mH0 = EdgeInsets.symmetric();
   static const mV1 = EdgeInsets.symmetric(vertical: dp1);
   static const mH1 = EdgeInsets.symmetric(horizontal: dp1);
   static const mV2 = EdgeInsets.symmetric(vertical: dp2);
@@ -608,17 +607,15 @@ mixin Vx {
 
   /// [EdgeInsets] with custom symmetric [v] for vertical and [h] for horizontal value
   static EdgeInsets mSymmetric({double v = 0.0, double h = 0.0}) =>
-      EdgeInsets.symmetric(
-        vertical: v,
-        horizontal: h,
-      );
+      EdgeInsets.symmetric(vertical: v, horizontal: h);
 
   /// [EdgeInsets] with custom [left], [right], [top] & [bottom] values
-  static EdgeInsets mOnly(
-          {double left = 0.0,
-          double right = 0.0,
-          double top = 0.0,
-          double bottom = 0.0}) =>
+  static EdgeInsets mOnly({
+    double left = 0.0,
+    double right = 0.0,
+    double top = 0.0,
+    double bottom = 0.0,
+  }) =>
       EdgeInsets.only(left: left, right: right, top: top, bottom: bottom);
 
   /// [ShapeBorder] with border radius 7.5
@@ -657,25 +654,25 @@ mixin Vx {
     if (!(kDebugMode || kProfileMode)) {
       return;
     }
-    final String message = msg.toString();
+    final message = msg.toString();
     if (hasDottedLine) {
       debugPrint(
-          '👇🏻┌------------------------------------------------------------------------------👨🏻‍💻');
+        '👇🏻┌------------------------------------------------------------------------------👨🏻‍💻',
+      );
     }
-    const int limitLength = 800;
+    const limitLength = 800;
     if (message.length < limitLength) {
       debugPrint('$msg');
     } else {
-      final StringBuffer outStr = StringBuffer();
-      for (int index = 0; index < message.length; index++) {
+      final outStr = StringBuffer();
+      for (var index = 0; index < message.length; index++) {
         outStr.write(message[index]);
         if (index % limitLength == 0 && index != 0) {
           debugPrint(outStr.toString());
           outStr.clear();
-          final int lastIndex = index + 1;
+          final lastIndex = index + 1;
           if (message.length - lastIndex < limitLength) {
-            final String remainderStr =
-                message.substring(lastIndex, message.length);
+            final remainderStr = message.substring(lastIndex, message.length);
             debugPrint(remainderStr);
             break;
           }
@@ -684,7 +681,8 @@ mixin Vx {
     }
     if (hasDottedLine) {
       debugPrint(
-          '👆🏻└------------------------------------------------------------------------------👨🏻‍💻');
+        '👆🏻└------------------------------------------------------------------------------👨🏻‍💻',
+      );
     }
   }
 
@@ -741,12 +739,14 @@ mixin Vx {
 
   /// Get ascii from the hex value
   static String hexToAscii(String hex) {
-    final List<String> splitted = [];
-    for (int i = 0; i < hex.length; i = i + 2) {
+    final splitted = <String>[];
+    for (var i = 0; i < hex.length; i = i + 2) {
       splitted.add(hex.substring(i, i + 2));
     }
-    final String asciiText = List.generate(splitted.length,
-        (i) => String.fromCharCode(int.parse(splitted[i], radix: 16))).join();
+    final asciiText = List.generate(
+      splitted.length,
+      (i) => String.fromCharCode(int.parse(splitted[i], radix: 16)),
+    ).join();
     return asciiText;
   }
 
@@ -759,11 +759,11 @@ mixin Vx {
   }
 
   static MaterialColor getMaterialColor(Color color) {
-    final int red = color.red;
-    final int green = color.green;
-    final int blue = color.blue;
+    final red = color.red;
+    final green = color.green;
+    final blue = color.blue;
 
-    final Map<int, Color> shades = {
+    final shades = {
       50: Color.fromRGBO(red, green, blue, .1),
       100: Color.fromRGBO(red, green, blue, .2),
       200: Color.fromRGBO(red, green, blue, .3),
@@ -781,10 +781,10 @@ mixin Vx {
 
   /// Get Color in [int]
   static int getColorFromHex(String hexColor) {
-    hexColor = hexColor.toUpperCase().replaceAll("#", "");
+    hexColor = hexColor.toUpperCase().replaceAll('#', '');
     hexColor = hexColor.replaceAll('0X', '');
     if (hexColor.length == 6) {
-      hexColor = "FF$hexColor";
+      hexColor = 'FF$hexColor';
     }
     return int.parse(hexColor, radix: 16);
   }
@@ -799,7 +799,11 @@ mixin Vx {
 
   /// Get Random Non-Primary Color
   static Color get randomColor => Color.fromARGB(
-      100, Random().nextInt(255), Random().nextInt(255), Random().nextInt(255));
+        100,
+        Random().nextInt(255),
+        Random().nextInt(255),
+        Random().nextInt(255),
+      );
 
   /// Uses [PathUrlStrategy] on the web, which removes hashes from URLs. This
   /// must be called at app startup, before `runApp` is called.
@@ -818,8 +822,8 @@ mixin Vx {
   }
 
   /// Copy to pasteboard
-  static Future<void> toClipboard(String data) async =>
-      await Clipboard.setData(ClipboardData(text: data));
+  static Future<void> toClipboard(String data) =>
+      Clipboard.setData(ClipboardData(text: data));
 }
 
 /// [VxInternalStore] is the internal store for the app.
@@ -827,12 +831,11 @@ mixin Vx {
 typedef VxAppBuilder = Widget Function(BuildContext context, VxAppData vxData);
 
 class VxAppData {
-  static final VxAppData _singleton = VxAppData._internal();
-
   factory VxAppData() {
     return _singleton;
   }
   VxAppData._internal();
+  static final VxAppData _singleton = VxAppData._internal();
 
   // Bool to check if dark mode is enabled or not
   bool isDarkMode = false;
@@ -848,15 +851,16 @@ class VxApp extends StatefulWidget {
   State<VxApp> createState() => _VxAppState();
 }
 
-class _VxAppState<T> extends State<VxApp> {
+class _VxAppState extends State<VxApp> {
   final appData = VxAppData();
   @override
   Widget build(BuildContext context) {
     return VxState(
       store: widget.store,
       child: VxConsumer(
-          mutations: const {VxDarkModeMutation},
-          builder: (context, _, status) => widget.builder!(context, appData)),
+        mutations: const {VxDarkModeMutation},
+        builder: (context, _, status) => widget.builder!(context, appData),
+      ),
     );
   }
 }

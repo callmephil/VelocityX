@@ -11,11 +11,11 @@ void main() {
     test('Format Crypto Address', () {
       final value =
           '0x8b40f191015D205F4acFDA1861d4CF17794BA245'.formatCryptoAddress;
-      expect("0x8b4...BA245", value);
+      expect('0x8b4...BA245', value);
     });
     test('Test Strip 0x', () {
       final value = '0x8b40f191015D205F4acFDA1861d4CF17794BA245'.strip0x;
-      expect("8b40f191015D205F4acFDA1861d4CF17794BA245", value);
+      expect('8b40f191015D205F4acFDA1861d4CF17794BA245', value);
     });
 
     test('Generate n digits pin', () {

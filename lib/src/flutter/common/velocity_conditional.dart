@@ -49,6 +49,13 @@ import 'package:flutter/material.dart';
 /// ```
 
 class VxConditional extends StatelessWidget {
+  const VxConditional({
+    super.key,
+    required this.condition,
+    required this.builder,
+    this.fallback,
+  });
+
   /// Condition to control what gets rendered.
   final bool condition;
 
@@ -57,13 +64,6 @@ class VxConditional extends StatelessWidget {
 
   /// Run if [condition] is false and it is not null.
   final WidgetBuilder? fallback;
-
-  const VxConditional({
-    super.key,
-    required this.condition,
-    required this.builder,
-    this.fallback,
-  });
 
   @override
   Widget build(BuildContext context) => condition
@@ -89,7 +89,7 @@ class VxConditional extends StatelessWidget {
 ///      ),
 /// ```
 class VxConditionalSwitch {
-  VxConditionalSwitch._();
+  const VxConditionalSwitch._();
 
   /// A function which returns a single `Widget`
   ///
@@ -106,12 +106,11 @@ class VxConditionalSwitch {
     required Map<T, Widget? Function(BuildContext context)> caseBuilders,
     required Widget? Function(BuildContext context) fallbackBuilder,
   }) {
-    final T value = valueBuilder(context);
+    final value = valueBuilder(context);
     if (caseBuilders[value] != null) {
       return caseBuilders[value]!(context);
-    } else {
-      return fallbackBuilder(context);
     }
+    return fallbackBuilder(context);
   }
 
   /// A function which returns a `List<Widget>`
@@ -129,11 +128,10 @@ class VxConditionalSwitch {
     required Map<T, List<Widget> Function(BuildContext context)> caseBuilders,
     required List<Widget> Function(BuildContext context) fallbackBuilder,
   }) {
-    final T value = valueBuilder(context);
+    final value = valueBuilder(context);
     if (caseBuilders[value] != null) {
       return caseBuilders[value]!(context);
-    } else {
-      return fallbackBuilder(context);
     }
+    return fallbackBuilder(context);
   }
 }

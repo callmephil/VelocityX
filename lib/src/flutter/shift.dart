@@ -29,9 +29,7 @@ class VxShifter extends StatelessWidget {
     // this.color,
     this.child,
     required this.alignment,
-    required this.shift,
-
-    // @required this.paddingPerc,
+    required this.shift, // @required this.paddingPerc,
   });
 
   final double shift;
@@ -42,7 +40,8 @@ class VxShifter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double x, y;
+    double x;
+    double y;
     if (alignment == Alignment.topRight) {
       x = shift;
       y = -shift;
@@ -61,24 +60,12 @@ class VxShifter extends StatelessWidget {
 
     return Align(
       alignment: alignment,
-      child: Transform.translate(
-        offset: Offset(x, y),
-        child: child,
-      ),
+      child: Transform.translate(offset: Offset(x, y), child: child),
     );
   }
 }
 
 extension VxShiftWidgetExt on Widget {
-  Widget shift(
-    double shift, {
-    Key? key,
-    required Alignment alignment,
-  }) =>
-      VxShifter(
-        key: key,
-        alignment: alignment,
-        shift: shift,
-        child: this,
-      );
+  Widget shift(double shift, {Key? key, required Alignment alignment}) =>
+      VxShifter(key: key, alignment: alignment, shift: shift, child: this);
 }

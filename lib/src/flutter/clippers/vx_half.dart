@@ -1,6 +1,7 @@
 import 'package:flutter/rendering.dart';
 
 class VxHalfClipper extends CustomClipper<Path> {
+  const VxHalfClipper();
   @override
   Path getClip(Size size) {
     final path = Path();

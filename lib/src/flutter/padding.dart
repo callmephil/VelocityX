@@ -13,10 +13,9 @@
  */
 
 import 'package:flutter/material.dart';
+import 'package:velocity_x/src/flutter/builder.dart';
+import 'package:velocity_x/src/flutter/velocityx_mixins/padding_mixin.dart';
 import 'package:velocity_x/src/velocity_xx.dart';
-
-import 'builder.dart';
-import 'velocityx_mixins/padding_mixin.dart';
 
 /// A widget that insets its child by the given padding.
 ///
@@ -53,11 +52,7 @@ class VxPaddingBuilder extends VxWidgetBuilder<Widget>
 
   @override
   Widget make({Key? key}) {
-    return Padding(
-      key: key,
-      padding: velocityPadding!,
-      child: _child,
-    );
+    return Padding(key: key, padding: velocityPadding!, child: _child);
   }
 }
 
@@ -147,7 +142,7 @@ extension VxPaddingExtensions on Widget {
   /// Gives 0 padding vertically.
   Padding py0({Key? key}) => Padding(
         key: key,
-        padding: const EdgeInsets.symmetric(vertical: Vx.dp0),
+        padding: const EdgeInsets.symmetric(),
         child: this,
       );
 
@@ -222,11 +217,7 @@ extension VxPaddingExtensions on Widget {
       );
 
   /// Gives custom padding vertically.
-  Padding py(
-    double value, {
-    Key? key,
-  }) =>
-      Padding(
+  Padding py(double value, {Key? key}) => Padding(
         key: key,
         padding: EdgeInsets.symmetric(vertical: value),
         child: this,
@@ -235,7 +226,7 @@ extension VxPaddingExtensions on Widget {
   /// Gives 0 padding horizontally.
   Padding px0({Key? key}) => Padding(
         key: key,
-        padding: const EdgeInsets.symmetric(horizontal: Vx.dp0),
+        padding: const EdgeInsets.symmetric(),
         child: this,
       );
 
@@ -310,11 +301,7 @@ extension VxPaddingExtensions on Widget {
       );
 
   /// Gives custom padding horizontally.
-  Padding px(
-    double value, {
-    Key? key,
-  }) =>
-      Padding(
+  Padding px(double value, {Key? key}) => Padding(
         key: key,
         padding: EdgeInsets.symmetric(horizontal: value),
         child: this,
@@ -322,11 +309,7 @@ extension VxPaddingExtensions on Widget {
 
   /// Gives custom padding from all sides by [value].
   Padding p(double value, {Key? key}) {
-    return Padding(
-      key: key,
-      padding: EdgeInsets.all(value),
-      child: this,
-    );
+    return Padding(key: key, padding: EdgeInsets.all(value), child: this);
   }
 
   /// Gives custom padding from all sides by [left] [top] [right] [bottom].
@@ -346,20 +329,18 @@ extension VxPaddingExtensions on Widget {
   /// Gives custom padding symmetrically by [v] [h].
   Padding pSymmetric({Key? key, double v = 0.0, double h = 0.0}) => Padding(
         key: key,
-        padding: EdgeInsets.symmetric(
-          vertical: v,
-          horizontal: h,
-        ),
+        padding: EdgeInsets.symmetric(vertical: v, horizontal: h),
         child: this,
       );
 
   /// Gives custom padding by only [left] [top] [right] [bottom].
-  Padding pOnly(
-          {Key? key,
-          double left = 0.0,
-          double right = 0.0,
-          double top = 0.0,
-          double bottom = 0.0}) =>
+  Padding pOnly({
+    Key? key,
+    double left = 0.0,
+    double right = 0.0,
+    double top = 0.0,
+    double bottom = 0.0,
+  }) =>
       Padding(
         key: key,
         padding:

@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
-import 'common/velocity_round.dart';
+import 'package:velocity_x/src/flutter/common/velocity_round.dart';
 
 enum VxPreviewIndicatorAxis { horizontal, vertical }
 
@@ -40,15 +40,27 @@ mixin VxPreview {
       selectPointColor: selectPointColor,
     );
 
-    showDialog(
-      context: context,
-      barrierDismissible: true,
-      builder: (context) => child,
-    );
+    showDialog(context: context, builder: (context) => child);
   }
 }
 
 class _VxPreview extends StatefulWidget {
+  const _VxPreview({
+    super.key,
+    required this.itemCount,
+    required this.itemBuilder,
+    this.scrollDirection = Axis.horizontal,
+    this.defaultIndex = 0,
+    this.loop = true,
+    this.indicators = true,
+    this.speed = 280,
+    this.curve = Curves.bounceIn,
+    this.unSelectPointColor = Colors.white,
+    this.selectPointColor = Colors.red,
+    this.fPreviewIndicatorAxis = VxPreviewIndicatorAxis.horizontal,
+    this.onChanged,
+  })  : assert(itemCount >= 1),
+        assert(defaultIndex >= 0);
   final int itemCount;
   final Widget Function(int index) itemBuilder;
   final Axis scrollDirection;
@@ -61,23 +73,6 @@ class _VxPreview extends StatefulWidget {
   final VxPreviewIndicatorAxis fPreviewIndicatorAxis;
   final Color unSelectPointColor;
   final Color selectPointColor;
-
-  const _VxPreview(
-      {super.key,
-      required this.itemCount,
-      required this.itemBuilder,
-      this.scrollDirection = Axis.horizontal,
-      this.defaultIndex = 0,
-      this.loop = true,
-      this.indicators = true,
-      this.speed = 280,
-      this.curve = Curves.bounceIn,
-      this.unSelectPointColor = Colors.white,
-      this.selectPointColor = Colors.red,
-      this.fPreviewIndicatorAxis = VxPreviewIndicatorAxis.horizontal,
-      this.onChanged})
-      : assert(itemCount >= 1),
-        assert(defaultIndex >= 0);
 
   @override
   _VxPreviewState createState() => _VxPreviewState();
@@ -102,13 +97,10 @@ class _VxPreviewState extends State<_VxPreview> {
 
   @override
   Widget build(BuildContext context) {
-    final List<Widget> children = [];
+    final children = <Widget>[];
     children.add(_pageView());
     if (widget.indicators) {
-      children.add(Positioned(
-        bottom: 20,
-        child: _indicatorView(),
-      ));
+      children.add(Positioned(bottom: 20, child: _indicatorView()));
     }
     return Stack(alignment: Alignment.center, children: children);
   }
@@ -126,7 +118,7 @@ class _VxPreviewState extends State<_VxPreview> {
   }
 
   Widget _indicatorView() {
-    final List<Widget> children = [];
+    final children = <Widget>[];
 
     Widget child;
     double pointPaddingHorizontal = 0;
@@ -134,37 +126,32 @@ class _VxPreviewState extends State<_VxPreview> {
     double paddingHorizontal;
     double paddingVertical;
     if (widget.fPreviewIndicatorAxis == VxPreviewIndicatorAxis.horizontal) {
-      child = Row(
-        mainAxisSize: MainAxisSize.min,
-        children: children,
-      );
+      child = Row(mainAxisSize: MainAxisSize.min, children: children);
       paddingHorizontal = pointPaddingSpace! * 2;
       paddingVertical = pointPaddingSpace!;
       pointPaddingHorizontal = pointPaddingSpace!;
     } else {
-      child = Column(
-        mainAxisSize: MainAxisSize.min,
-        children: children,
-      );
+      child = Column(mainAxisSize: MainAxisSize.min, children: children);
       paddingHorizontal = pointPaddingSpace!;
       paddingVertical = pointPaddingSpace! * 2;
       pointPaddingVertical = pointPaddingSpace!;
     }
 
     List.generate(widget.itemCount, (index) {
-      children.add(Padding(
-        padding: EdgeInsets.symmetric(
-          horizontal: pointPaddingHorizontal,
-          vertical: pointPaddingVertical,
+      children.add(
+        Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: pointPaddingHorizontal,
+            vertical: pointPaddingVertical,
+          ),
+          child: VxRound(
+            size: pointSize,
+            color: index == position! % widget.itemCount
+                ? widget.selectPointColor
+                : widget.unSelectPointColor,
+          ),
         ),
-        child: VxRound(
-          type: VxRoundType.point,
-          size: pointSize,
-          color: index == position! % widget.itemCount
-              ? widget.selectPointColor
-              : widget.unSelectPointColor,
-        ),
-      ));
+      );
     });
 
     return Container(
@@ -175,9 +162,7 @@ class _VxPreviewState extends State<_VxPreview> {
       ),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.all(
-          Radius.circular(
-            pointSize! + pointPaddingSpace! * 2,
-          ),
+          Radius.circular(pointSize! + pointPaddingSpace! * 2),
         ),
         color: Colors.black12,
       ),
@@ -188,9 +173,8 @@ class _VxPreviewState extends State<_VxPreview> {
   Widget _itemBuilder(BuildContext context, int index) {
     if (widget.loop) {
       return widget.itemBuilder(index % widget.itemCount);
-    } else {
-      return widget.itemBuilder(index);
     }
+    return widget.itemBuilder(index);
   }
 
   void _onPageChanged(int index) {

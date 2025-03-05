@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 Map<String?, int> _navigatorManagerPageMap = {};
 ValueKey _createPageKey(String? name) {
-  name = name ?? "";
+  name = name ?? '';
   if (_navigatorManagerPageMap[name] != null) {
     _navigatorManagerPageMap[name] = _navigatorManagerPageMap[name]! + 1;
     name = '$name-${_navigatorManagerPageMap[name]}';
@@ -14,12 +14,6 @@ ValueKey _createPageKey(String? name) {
 }
 
 class VxRoutePage extends Page {
-  final String? pageName;
-  final Widget? child;
-  final bool maintainState;
-  final bool fullscreenDialog;
-  final bool isTransparent;
-  final Widget Function(Animation<double> animation, Widget child)? transition;
   VxRoutePage({
     this.pageName,
     this.child,
@@ -28,6 +22,12 @@ class VxRoutePage extends Page {
     this.transition,
     this.isTransparent = false,
   }) : super(key: _createPageKey(pageName));
+  final String? pageName;
+  final Widget? child;
+  final bool maintainState;
+  final bool fullscreenDialog;
+  final bool isTransparent;
+  final Widget Function(Animation<double> animation, Widget child)? transition;
 
   @override
   Route createRoute(BuildContext context) {
@@ -42,14 +42,13 @@ class VxRoutePage extends Page {
           return transition!(animation, child);
         },
       );
-    } else {
-      return PageRouteBuilder(
-        opaque: !isTransparent,
-        settings: this,
-        maintainState: maintainState,
-        fullscreenDialog: fullscreenDialog,
-        pageBuilder: (context, animation, secondaryAnimation) => child!,
-      );
     }
+    return PageRouteBuilder(
+      opaque: !isTransparent,
+      settings: this,
+      maintainState: maintainState,
+      fullscreenDialog: fullscreenDialog,
+      pageBuilder: (context, animation, secondaryAnimation) => child!,
+    );
   }
 }

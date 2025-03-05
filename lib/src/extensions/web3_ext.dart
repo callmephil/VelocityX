@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import '../velocity_xx.dart';
+import 'package:velocity_x/src/velocity_xx.dart';
 
 mixin VxWeb3 {
   /// generate 6 digit random pin
@@ -88,7 +88,7 @@ extension VxWeb3Extension on String {
 
   /// Remove Ox from any string
   String get strip0x {
-    if (startsWith('0x', 0)) {
+    if (startsWith('0x')) {
       return substring(2);
     }
     return this;

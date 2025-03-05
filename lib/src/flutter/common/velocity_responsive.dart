@@ -6,6 +6,8 @@ import 'package:velocity_x/velocity_x.dart';
 /// You can specify two widgets depends on the screen size  [mobile] and [web].
 /// They must not be null.
 class VxDevice extends StatelessWidget {
+  const VxDevice({super.key, required this.mobile, required this.web});
+
   ///
   /// For mobile size window
   ///
@@ -15,8 +17,6 @@ class VxDevice extends StatelessWidget {
   /// For non - mobile size window
   ///
   final Widget web;
-
-  const VxDevice({super.key, required this.mobile, required this.web});
   @override
   Widget build(BuildContext context) {
     return VxConditionalSwitch.single(
@@ -32,6 +32,16 @@ class VxDevice extends StatelessWidget {
 /// You can specify multiple widgets depends on the screen size like [xsmall], [small], [medium],[large],
 /// and [xlarge]. The [fallback] must not be null. It will be replaced if you don't specity any above widget.
 class VxResponsive extends StatelessWidget {
+  const VxResponsive({
+    super.key,
+    this.xsmall,
+    this.small,
+    this.medium,
+    this.large,
+    this.xlarge,
+    this.fallback,
+  });
+
   ///
   /// For window size as extra small
   ///
@@ -61,15 +71,6 @@ class VxResponsive extends StatelessWidget {
   /// if none of the above props are specified then [fallback] is used
   ///
   final Widget? fallback;
-
-  const VxResponsive(
-      {super.key,
-      this.xsmall,
-      this.small,
-      this.medium,
-      this.large,
-      this.xlarge,
-      this.fallback});
   @override
   Widget build(BuildContext context) {
     return VxConditionalSwitch.single(
@@ -95,6 +96,7 @@ class VxResponsive extends StatelessWidget {
 /// [VxLayout] is a type of [LayoutBuilder] with some additional power
 ///
 class VxLayout extends StatelessWidget {
+  const VxLayout({super.key, required this.builder, this.sizeConfig});
   final Widget Function(
     BuildContext context,
     VxWindowSize window,
@@ -103,47 +105,48 @@ class VxLayout extends StatelessWidget {
 
   final VxSizeConfig? sizeConfig;
 
-  const VxLayout({
-    super.key,
-    required this.builder,
-    this.sizeConfig,
-  });
-
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(builder: (context, boxConstraints) {
-      VxWindowSize windowSize = VxWindowSize.small;
-      if (boxConstraints.maxWidth < (sizeConfig?.xsmall ?? 600)) {
-        windowSize = VxWindowSize.xsmall;
-      } else if (boxConstraints.maxWidth < (sizeConfig?.small ?? 1024)) {
-        windowSize = VxWindowSize.small;
-      } else if (boxConstraints.maxWidth < (sizeConfig?.medium ?? 1440)) {
-        windowSize = VxWindowSize.medium;
-      } else if (boxConstraints.maxWidth < (sizeConfig?.large ?? 1920)) {
-        windowSize = VxWindowSize.large;
-      } else if (boxConstraints.maxWidth < (sizeConfig?.xlarge ?? 4096)) {
-        windowSize = VxWindowSize.xlarge;
-      } else {
-        windowSize = VxWindowSize.xlarge;
-      }
-      return builder(context, windowSize, boxConstraints);
-    });
+    return LayoutBuilder(
+      builder: (context, boxConstraints) {
+        var windowSize = VxWindowSize.small;
+        if (boxConstraints.maxWidth < (sizeConfig?.xsmall ?? 600)) {
+          windowSize = VxWindowSize.xsmall;
+        } else if (boxConstraints.maxWidth < (sizeConfig?.small ?? 1024)) {
+          windowSize = VxWindowSize.small;
+        } else if (boxConstraints.maxWidth < (sizeConfig?.medium ?? 1440)) {
+          windowSize = VxWindowSize.medium;
+        } else if (boxConstraints.maxWidth < (sizeConfig?.large ?? 1920)) {
+          windowSize = VxWindowSize.large;
+        } else {
+          windowSize = VxWindowSize.xlarge;
+        }
+        return builder(context, windowSize, boxConstraints);
+      },
+    );
   }
 }
 
 class VxSizeConfig {
+  const VxSizeConfig({
+    this.xsmall,
+    this.small,
+    this.medium,
+    this.large,
+    this.xlarge,
+  });
   final double? xsmall;
   final double? small;
   final double? medium;
   final double? large;
   final double? xlarge;
-
-  VxSizeConfig({this.xsmall, this.small, this.medium, this.large, this.xlarge});
 }
 
 /// A typedef representing a callback function used to build the UI based on the current screen adaptation settings.
 typedef VxAdaptiveChildBuilder = Widget Function(
-    BuildContext context, bool scaled);
+  BuildContext context,
+  bool scaled,
+);
 
 /// Defines the different scaling options for screen adaptation.
 enum VxAdaptiveScaleType {
@@ -184,8 +187,8 @@ class _VxAdaptiveState extends State<VxAdaptive> with WidgetsBindingObserver {
 
   @override
   void dispose() {
-    super.dispose();
     WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
   }
 
   @override
@@ -208,8 +211,7 @@ class _VxAdaptiveState extends State<VxAdaptive> with WidgetsBindingObserver {
       );
     }
 
-    final Size sceneSize =
-        context.view.physicalSize / context.view.devicePixelRatio;
+    final sceneSize = context.view.physicalSize / context.view.devicePixelRatio;
     if (widget.scaleType == VxAdaptiveScaleType.none ||
         (widget.scaleType == VxAdaptiveScaleType.auto &&
             sceneSize.width >= sceneSize.height * 1.1)) {
@@ -224,7 +226,7 @@ class _VxAdaptiveState extends State<VxAdaptive> with WidgetsBindingObserver {
       );
     }
 
-    final double scale = sceneSize.width / widget.designWidth;
+    final scale = sceneSize.width / widget.designWidth;
 
     // Apply scaling to the UI based on the scale factor
     return FractionallySizedBox(
@@ -259,7 +261,7 @@ class VxAdaptiveScope extends InheritedWidget {
       context.dependOnInheritedWidgetOfExactType<VxAdaptiveScope>()!;
 
   static VxAdaptiveScope? maybeOf(BuildContext context) =>
-      context.dependOnInheritedWidgetOfExactType<VxAdaptiveScope>();
+      context.dependOnInheritedWidgetOfExactType();
 
   @override
   bool updateShouldNotify(covariant VxAdaptiveScope oldWidget) =>
@@ -275,8 +277,8 @@ class _MediaQueryDataProvider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final VxAdaptiveScope data = VxAdaptiveScope.of(context);
-    final MediaQueryData parent = context.mq;
+    final data = VxAdaptiveScope.of(context);
+    final parent = context.mq;
     return MediaQuery(
       data: parent.copyWith(
         size: parent.size / data.scaleRatio,

@@ -15,6 +15,22 @@ import 'package:flutter/material.dart';
 
 /// VxRating widget to show ratings to the user and the user can change it too. Fully customizable
 class VxRating extends StatefulWidget {
+  const VxRating({
+    super.key,
+    this.maxRating = 10.0,
+    this.count = 5,
+    this.value = 10.0,
+    this.size = 20,
+    this.normalImage,
+    this.selectImage,
+    this.padding = 0,
+    this.normalColor = Colors.grey,
+    this.selectionColor = Colors.red,
+    this.isSelectable = true,
+    this.stepInt = false,
+    required this.onRatingUpdate,
+  });
+
   /// Stars count
   final int count;
 
@@ -51,22 +67,6 @@ class VxRating extends StatefulWidget {
   /// Use onRatingUpdate to get the selected value.
   final ValueChanged<String> onRatingUpdate;
 
-  const VxRating({
-    super.key,
-    this.maxRating = 10.0,
-    this.count = 5,
-    this.value = 10.0,
-    this.size = 20,
-    this.normalImage,
-    this.selectImage,
-    this.padding = 0,
-    this.normalColor = Colors.grey,
-    this.selectionColor = Colors.red,
-    this.isSelectable = true,
-    this.stepInt = false,
-    required this.onRatingUpdate,
-  });
-
   @override
   VxRatingState createState() => VxRatingState();
 }
@@ -84,21 +84,20 @@ class VxRatingState extends State<VxRating> {
   Widget build(BuildContext context) {
     return Listener(
       onPointerDown: (PointerDownEvent event) {
-        double x = event.localPosition.dx;
+        var x = event.localPosition.dx;
         if (x < 0) {
           x = 0;
         }
         pointValue(x);
       },
       onPointerMove: (PointerMoveEvent event) {
-        double x = event.localPosition.dx;
+        var x = event.localPosition.dx;
         if (x < 0) {
           x = 0;
         }
         pointValue(x);
       },
       onPointerUp: (_) {},
-      behavior: HitTestBehavior.deferToChild,
       child: buildRowRating(),
     );
   }
@@ -153,31 +152,23 @@ class VxRatingState extends State<VxRating> {
   }
 
   List<Widget> buildRow() {
-    final int full = fullStars();
-    final List<Widget> children = [];
-    for (int i = 0; i < full; i++) {
-      children.add(getStarItemView(
-        widget.selectImage,
-        widget.selectionColor,
-      ));
+    final full = fullStars();
+    final children = <Widget>[];
+    for (var i = 0; i < full; i++) {
+      children.add(
+        getStarItemView(widget.selectImage, widget.selectionColor),
+      );
       if (i < widget.count - 1) {
-        children.add(
-          SizedBox(
-            width: widget.padding,
-          ),
-        );
+        children.add(SizedBox(width: widget.padding));
       }
     }
     if (full < widget.count) {
-      children.add(ClipRect(
-        clipper: _VxClipper(
-          rating: star() * widget.size,
+      children.add(
+        ClipRect(
+          clipper: _VxClipper(rating: star() * widget.size),
+          child: getStarItemView(widget.selectImage, widget.selectionColor),
         ),
-        child: getStarItemView(
-          widget.selectImage,
-          widget.selectionColor,
-        ),
-      ));
+      );
     }
 
     return children;
@@ -185,11 +176,7 @@ class VxRatingState extends State<VxRating> {
 
   Widget getStarItemView(dynamic path, Color color) {
     if (path is IconData) {
-      return Icon(
-        path,
-        size: widget.size,
-        color: color,
-      );
+      return Icon(path, size: widget.size, color: color);
     } else if (path is String) {
       return Image.asset(
         path,
@@ -198,67 +185,38 @@ class VxRatingState extends State<VxRating> {
         color: color,
       );
     }
-    return Icon(
-      Icons.star,
-      size: widget.size,
-      color: color,
-    );
+    return Icon(Icons.star, size: widget.size, color: color);
   }
 
   List<Widget> buildNormalRow() {
-    final List<Widget> children = [];
-    for (int i = 0; i < widget.count; i++) {
-      children.add(
-        getStarItemView(
-          widget.normalImage,
-          widget.normalColor,
-        ),
-      );
+    final children = <Widget>[];
+    for (var i = 0; i < widget.count; i++) {
+      children.add(getStarItemView(widget.normalImage, widget.normalColor));
       if (i < widget.count - 1) {
-        children.add(
-          SizedBox(
-            width: widget.padding,
-          ),
-        );
+        children.add(SizedBox(width: widget.padding));
       }
     }
     return children;
   }
 
   Widget buildRowRating() {
-    final List<Widget> children = [];
-    children.add(
-      Row(
-        children: buildNormalRow(),
-      ),
-    );
-    children.add(
-      Row(
-        children: buildRow(),
-      ),
-    );
+    final children = <Widget>[];
+    children.add(Row(children: buildNormalRow()));
+    children.add(Row(children: buildRow()));
     return SizedBox(
       width: widget.count * widget.size + (widget.count - 1) * widget.padding,
-      child: Stack(
-        children: children,
-      ),
+      child: Stack(children: children),
     );
   }
 }
 
 class _VxClipper extends CustomClipper<Rect> {
+  const _VxClipper({required this.rating});
   final double rating;
-
-  _VxClipper({required this.rating});
 
   @override
   Rect getClip(Size size) {
-    return Rect.fromLTRB(
-      0.0,
-      0.0,
-      rating,
-      size.height,
-    );
+    return Rect.fromLTRB(0, 0, rating, size.height);
   }
 
   @override

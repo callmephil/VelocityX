@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class VxInformationParser extends RouteInformationParser<Uri> {
+  const VxInformationParser();
   @override
   Future<Uri> parseRouteInformation(RouteInformation routeInformation) async {
     return routeInformation.uri;

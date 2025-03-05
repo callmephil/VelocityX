@@ -23,17 +23,6 @@ const double _kDefaultTextFontSize = 16;
 
 /// VxStepper widget to have a input enabled counter with 2 buttons, one for addition and one for subtraction with good level of customization.
 class VxStepper extends StatefulWidget {
-  final num defaultValue;
-  final int min;
-  final int max;
-  final int step;
-  final bool disableInput;
-  final ValueChanged<int>? onChange;
-  final Color? inputBoxColor,
-      inputTextColor,
-      actionButtonColor,
-      actionIconColor;
-
   const VxStepper({
     super.key,
     this.defaultValue = 0,
@@ -48,6 +37,16 @@ class VxStepper extends StatefulWidget {
     this.actionIconColor,
   })  : assert(max >= min),
         assert(step >= 1);
+  final num defaultValue;
+  final int min;
+  final int max;
+  final int step;
+  final bool disableInput;
+  final ValueChanged<int>? onChange;
+  final Color? inputBoxColor;
+  final Color? inputTextColor;
+  final Color? actionButtonColor;
+  final Color? actionIconColor;
 
   @override
   VxStepperState createState() => VxStepperState();
@@ -73,67 +72,70 @@ class VxStepperState extends State<VxStepper> {
 
   @override
   Widget build(BuildContext context) {
-    final List<Widget> children = [];
+    final children = <Widget>[];
 
-    children.add(SizedBox(
-      height: _kDefaultButtonSize,
-      width: _kDefaultButtonSize,
-      child: FilledButton(
-        style: FilledButton.styleFrom(
-          shape: const CircleBorder(),
-          backgroundColor: widget.actionButtonColor,
-          padding: EdgeInsets.zero,
-        ),
-        onPressed: enableMin ? onRemove : null,
-        child: Icon(
-          Icons.remove,
-          color: widget.actionIconColor,
-          size: _kDefaultTextFontSize,
+    children.add(
+      SizedBox(
+        height: _kDefaultButtonSize,
+        width: _kDefaultButtonSize,
+        child: FilledButton(
+          style: FilledButton.styleFrom(
+            shape: const CircleBorder(),
+            backgroundColor: widget.actionButtonColor,
+            padding: EdgeInsets.zero,
+          ),
+          onPressed: enableMin ? onRemove : null,
+          child: Icon(
+            Icons.remove,
+            color: widget.actionIconColor,
+            size: _kDefaultTextFontSize,
+          ),
         ),
       ),
-    ));
+    );
 
     children.add(const SizedBox(width: _kDefaultSpace));
 
-    children.add(TextField(
-      controller: controller,
-      textAlign: TextAlign.center,
-      enabled: !widget.disableInput,
-      style: TextStyle(color: widget.inputTextColor),
-      keyboardType: TextInputType.number,
-      inputFormatters: [
-        FilteringTextInputFormatter.allow(RegExp("[-0-9]")),
-        LengthLimitingTextInputFormatter(3),
-      ],
-      decoration: const InputDecoration(
-        border: InputBorder.none,
-      ),
-      onEditingComplete: inputComplete,
-    ).wh(_kDefaultButtonSize, _kDefaultButtonSize * 1.7));
+    children.add(
+      TextField(
+        controller: controller,
+        textAlign: TextAlign.center,
+        enabled: !widget.disableInput,
+        style: TextStyle(color: widget.inputTextColor),
+        keyboardType: TextInputType.number,
+        inputFormatters: [
+          FilteringTextInputFormatter.allow(RegExp('[-0-9]')),
+          LengthLimitingTextInputFormatter(3),
+        ],
+        decoration: const InputDecoration(border: InputBorder.none),
+        onEditingComplete: inputComplete,
+      ).wh(_kDefaultButtonSize, _kDefaultButtonSize * 1.7),
+    );
 
     children.add(const SizedBox(width: _kDefaultSpace));
-    children.add(SizedBox(
-      height: _kDefaultButtonSize,
-      width: _kDefaultButtonSize,
-      child: FilledButton(
-        style: FilledButton.styleFrom(
-          shape: const CircleBorder(),
-          backgroundColor: widget.actionButtonColor,
-          padding: EdgeInsets.zero,
-        ),
-        onPressed: enableMax ? onAdd : null,
-        child: Icon(
-          Icons.add,
-          color: widget.actionIconColor,
-          size: _kDefaultTextFontSize,
+    children.add(
+      SizedBox(
+        height: _kDefaultButtonSize,
+        width: _kDefaultButtonSize,
+        child: FilledButton(
+          style: FilledButton.styleFrom(
+            shape: const CircleBorder(),
+            backgroundColor: widget.actionButtonColor,
+            padding: EdgeInsets.zero,
+          ),
+          onPressed: enableMax ? onAdd : null,
+          child: Icon(
+            Icons.add,
+            color: widget.actionIconColor,
+            size: _kDefaultTextFontSize,
+          ),
         ),
       ),
-    ));
+    );
 
     return Row(
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
       children: children,
     );
   }
@@ -146,11 +148,8 @@ class VxStepperState extends State<VxStepper> {
 
   void onRemove() {
     unFocus();
-    int number = getNumber();
-    number = math.max(
-      widget.min,
-      number - widget.step,
-    );
+    var number = getNumber();
+    number = math.max(widget.min, number - widget.step);
     if (number != recordNumber) {
       updateControllerValue(number);
     }
@@ -158,23 +157,19 @@ class VxStepperState extends State<VxStepper> {
 
   void onAdd() {
     unFocus();
-    int number = getNumber();
-    number = math.min(
-      widget.max,
-      number + widget.step,
-    );
+    var number = getNumber();
+    number = math.min(widget.max, number + widget.step);
     if (number != recordNumber) {
       updateControllerValue(number);
     }
   }
 
   int getNumber() {
-    final String temp = controller!.text;
+    final temp = controller!.text;
     if (temp.isEmpty) {
       return widget.min;
-    } else {
-      return math.min(widget.max, num.parse(temp) as int);
     }
+    return math.min(widget.max, num.parse(temp) as int);
   }
 
   void updateControllerValue(num number) {
@@ -198,14 +193,14 @@ class VxStepperState extends State<VxStepper> {
 
   void inputComplete() {
     unFocus();
-    final int temp = getNumber();
+    final temp = getNumber();
     controller!.text = '$temp';
     recordNumber = temp;
   }
 
   void callBackNumber() {
     if (widget.onChange != null) {
-      final int temp = getNumber();
+      final temp = getNumber();
       widget.onChange!(temp);
     }
   }

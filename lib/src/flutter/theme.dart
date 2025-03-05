@@ -21,10 +21,7 @@ extension VxThemeExtension on Widget {
   ///
   /// Extension method to directly access dark [Theme] with any widget without wrapping or with dot operator.
   ///
-  Theme darkTheme({Key? key}) => Theme(
-        data: ThemeData.dark(),
-        child: this,
-      );
+  Theme darkTheme({Key? key}) => Theme(data: ThemeData.dark(), child: this);
 
   ///
   /// Extension method to directly access light [Theme] with any widget without wrapping or with dot operator.

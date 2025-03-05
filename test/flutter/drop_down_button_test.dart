@@ -34,7 +34,7 @@ void main() {
               .centered(),
         ),
       ),
-    ));
+    ),);
 
     // Expects one widget with Text HEY
     expect(find.text('HEY'), findsOneWidget);

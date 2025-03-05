@@ -1,4 +1,4 @@
-import 'i_vx_nav.dart';
+import 'package:velocity_x/src/nav/i_vx_nav.dart';
 
 mixin VxNav {
   static HistoryProvider? historyProvider;

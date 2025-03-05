@@ -599,7 +599,7 @@ class VxUniversal extends StatelessWidget {
           alignment: alignment!,
           widthFactor: widthFactor,
           heightFactor: heightFactor,
-          child: current);
+          child: current,);
     }
     if (intrinsicWidth) {
       current = IntrinsicWidth(child: current);
@@ -618,7 +618,7 @@ class VxUniversal extends StatelessWidget {
       current = clipWidget(current,
           clipper: _DecorationClipper(
               textDirection: Directionality.of(context),
-              decoration: decoration!));
+              decoration: decoration!,),);
     }
     if (decoration != null && !addInkWell) {
       current = DecoratedBox(decoration: decoration!, child: current);
@@ -627,7 +627,7 @@ class VxUniversal extends StatelessWidget {
       current = DecoratedBox(
           decoration: foregroundDecoration!,
           position: DecorationPosition.foreground,
-          child: current);
+          child: current,);
     }
     if (transform != null) {
       current =
@@ -678,7 +678,7 @@ class VxUniversal extends StatelessWidget {
     }
     if (left != null || top != null || right != null || bottom != null) {
       current = Positioned(
-          left: left, top: top, right: right, bottom: bottom, child: current);
+          left: left, top: top, right: right, bottom: bottom, child: current,);
     }
     if (gaussian) {
       backdropFilter(current);
@@ -704,20 +704,20 @@ class VxUniversal extends StatelessWidget {
           top: safeTop,
           right: safeRight,
           bottom: safeBottom,
-          child: current);
+          child: current,);
     }
     return current;
   }
 
   Widget annotatedRegionWidget(Widget current) =>
       AnnotatedRegion<SystemUiOverlayStyle>(
-          sized: sized, value: systemOverlayStyle!, child: current);
+          sized: sized, value: systemOverlayStyle!, child: current,);
 
   Widget fittedBox(Widget current) => FittedBox(
       fit: fit!,
       alignment: alignment ?? Alignment.center,
       clipBehavior: clipBehavior ?? Clip.none,
-      child: current);
+      child: current,);
 
   Widget builderWidget(Widget current) {
     if (builder is StatefulWidgetBuilder) {
@@ -737,7 +737,7 @@ class VxUniversal extends StatelessWidget {
   Widget backdropFilter(Widget current) => BackdropFilter(
       filter:
           filter ?? ImageFilter.blur(sigmaX: fuzzyDegree, sigmaY: fuzzyDegree),
-      child: current);
+      child: current,);
 
   Widget offstageWidget(Widget current) =>
       Offstage(offstage: offstage, child: current);
@@ -746,23 +746,23 @@ class VxUniversal extends StatelessWidget {
   Widget clipWidget(Widget current, {CustomClipper<dynamic>? clipper}) {
     if (isOval) {
       return ClipOval(
-          clipBehavior: clipBehavior ?? Clip.antiAlias, child: current);
+          clipBehavior: clipBehavior ?? Clip.antiAlias, child: current,);
     } else if (clipper is CustomClipper<Rect> || isClipRect) {
       return ClipRect(
           clipper: clipper is CustomClipper<Rect> ? clipper : null,
           clipBehavior: clipBehavior ?? Clip.hardEdge,
-          child: current);
+          child: current,);
     } else if (clipper is CustomClipper<Path>) {
       return ClipPath(
           clipper: clipper,
           clipBehavior: clipBehavior ?? Clip.antiAlias,
-          child: current);
+          child: current,);
     } else if (clipper is CustomClipper<RRect> || isClipRRect) {
       return ClipRRect(
           borderRadius: borderRadius,
           clipper: clipper is CustomClipper<RRect> ? clipper : null,
           clipBehavior: clipBehavior ?? Clip.antiAlias,
-          child: current);
+          child: current,);
     }
     return current;
   }
@@ -775,7 +775,7 @@ class VxUniversal extends StatelessWidget {
       radius: radius,
       minRadius: minRadius,
       maxRadius: maxRadius,
-      child: current);
+      child: current,);
 
   Widget heroWidget(Widget current) => Hero(
       tag: heroTag!,
@@ -783,7 +783,7 @@ class VxUniversal extends StatelessWidget {
       flightShuttleBuilder: flightShuttleBuilder,
       placeholderBuilder: placeholderBuilder,
       transitionOnUserGestures: transitionOnUserGestures,
-      child: current);
+      child: current,);
 
   Widget visibilityWidget(Widget current) => Visibility(
       replacement: replacement,
@@ -793,16 +793,16 @@ class VxUniversal extends StatelessWidget {
       maintainSize: maintainSize,
       maintainSemantics: maintainSemantics,
       maintainInteractivity: maintainInteractivity,
-      child: current);
+      child: current,);
 
   Widget flexibleWidget(Widget current) => Flexible(
       flex: flex ?? 1,
       fit: expanded ? FlexFit.tight : FlexFit.loose,
-      child: current);
+      child: current,);
 
   Widget cardWidget(Widget current, BuildContext context) {
-    final ThemeData theme = Theme.of(context);
-    final CardThemeData cardTheme = CardTheme.of(context);
+    final theme = Theme.of(context);
+    final cardTheme = CardTheme.of(context);
     return material(current,
         mType: MaterialType.card,
         mShadowColor: shadowColor ?? cardTheme.shadowColor ?? theme.shadowColor,
@@ -813,9 +813,9 @@ class VxUniversal extends StatelessWidget {
             RoundedRectangleBorder(
                 borderRadius: borderRadius == BorderRadius.zero
                     ? BorderRadius.circular(4)
-                    : borderRadius),
+                    : borderRadius,),
         mClipBehavior: clipBehavior ?? cardTheme.clipBehavior ?? Clip.none,
-        mBorderOnForeground: true);
+        mBorderOnForeground: true,);
   }
 
   Material material(Widget current,
@@ -827,7 +827,7 @@ class VxUniversal extends StatelessWidget {
           BorderRadiusGeometry? mBorderRadius,
           ShapeBorder? mShape,
           required bool mBorderOnForeground,
-          required Clip mClipBehavior}) =>
+          required Clip mClipBehavior,}) =>
       Material(
           color: mColor,
           type: mType,
@@ -838,7 +838,7 @@ class VxUniversal extends StatelessWidget {
           shape: mShape ?? shape,
           borderOnForeground: mBorderOnForeground,
           clipBehavior: mClipBehavior,
-          child: current);
+          child: current,);
 
   Widget inkWellWidget(Widget current) => Ink(
       decoration: decoration,
@@ -858,13 +858,13 @@ class VxUniversal extends StatelessWidget {
           radius: radius,
           borderRadius: borderRadius,
           customBorder: customBorder,
-          enableFeedback: enableFeedback,
+          enableFeedback: enableFeedback ?? true,
           excludeFromSemantics: excludeFromSemantics,
           focusNode: focusNode,
           canRequestFocus: canRequestFocus,
           onFocusChange: onFocusChange,
           autofocus: autoFocus,
-          child: current));
+          child: current,),);
 
   Widget singleChildScrollViewWidget(Widget current) => SingleChildScrollView(
       physics: physics,
@@ -874,7 +874,7 @@ class VxUniversal extends StatelessWidget {
       controller: scrollController,
       scrollDirection: scrollDirection ?? direction,
       clipBehavior: clipBehavior ?? Clip.hardEdge,
-      child: current);
+      child: current,);
 
   Widget flexWidget(List<Widget> children) => Flex(
       mainAxisAlignment: mainAxisAlignment,
@@ -884,7 +884,7 @@ class VxUniversal extends StatelessWidget {
       verticalDirection: verticalDirection,
       textDirection: textDirection,
       mainAxisSize: mainAxisSize,
-      children: children);
+      children: children,);
 
   Widget wrapWidget(List<Widget> children) => Wrap(
       direction: direction,
@@ -896,14 +896,14 @@ class VxUniversal extends StatelessWidget {
       clipBehavior: clipBehavior ?? Clip.none,
       verticalDirection: verticalDirection,
       textDirection: textDirection,
-      children: children);
+      children: children,);
 
   Widget stackWidget(List<Widget> children) => Stack(
       alignment: alignment ?? AlignmentDirectional.topStart,
       textDirection: textDirection,
       fit: stackFit,
       clipBehavior: clipBehavior ?? Clip.hardEdge,
-      children: children);
+      children: children,);
 
   Widget gestureDetectorWidget(Widget current) => GestureDetector(
       onTapDown: onTapDown,
@@ -950,7 +950,7 @@ class VxUniversal extends StatelessWidget {
       behavior: behavior,
       excludeFromSemantics: excludeFromSemantics,
       dragStartBehavior: dragStartBehavior,
-      child: current);
+      child: current,);
 
   Widget universal(Widget current, {GestureTapCallback? onTap}) => VxUniversal(
       heroTag: heroTag,
@@ -971,7 +971,7 @@ class VxUniversal extends StatelessWidget {
       decoration: decoration,
       padding: padding,
       alignment: alignment,
-      child: current);
+      child: current,);
 }
 
 /// A clipper that uses [Decoration.getClipPath] to clip.

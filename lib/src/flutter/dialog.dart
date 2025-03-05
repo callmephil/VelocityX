@@ -3,16 +3,15 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:velocity_x/src/flutter/divider.dart';
 
-double _circular = 5.0;
+double _circular = 5;
 BorderRadius _borderRadius = BorderRadius.circular(_circular);
 
 Widget getView(dynamic child, Color? textColor) {
   if (child is String) {
     if (textColor == null) {
       return Text(child);
-    } else {
-      return Text(child, style: TextStyle(color: textColor));
     }
+    return Text(child, style: TextStyle(color: textColor));
   } else if (child is Widget) {
     return child;
   }
@@ -32,26 +31,27 @@ mixin VxDialog {
     bool barrierDismissible = true,
   }) {
     showDialog(
-        context: context,
-        barrierDismissible: barrierDismissible,
-        builder: (context) {
-          return WillPopScope(
-            onWillPop: () async => barrierDismissible,
-            child: AlertDialog(
-              contentPadding: EdgeInsets.zero,
-              content: _VxDialog(
-                title: title,
-                showClose: showClose,
-                content: content,
-                cancel: confirm,
-                cancelBgColor: confirmBgColor,
-                cancelOnPress: onPressed,
-                cancelTextColor: actionTextColor,
-              ),
-              shape: RoundedRectangleBorder(borderRadius: _borderRadius),
+      context: context,
+      barrierDismissible: barrierDismissible,
+      builder: (context) {
+        return WillPopScope(
+          onWillPop: () async => barrierDismissible,
+          child: AlertDialog(
+            contentPadding: EdgeInsets.zero,
+            content: _VxDialog(
+              title: title,
+              showClose: showClose,
+              content: content,
+              cancel: confirm,
+              cancelBgColor: confirmBgColor,
+              cancelOnPress: onPressed,
+              cancelTextColor: actionTextColor,
             ),
-          );
-        });
+            shape: RoundedRectangleBorder(borderRadius: _borderRadius),
+          ),
+        );
+      },
+    );
   }
 
   static void showConfirmation(
@@ -70,30 +70,31 @@ mixin VxDialog {
     bool barrierDismissible = true,
   }) {
     showDialog(
-        context: context,
-        barrierDismissible: barrierDismissible,
-        builder: (context) {
-          return WillPopScope(
-            onWillPop: () async => barrierDismissible,
-            child: AlertDialog(
-              contentPadding: EdgeInsets.zero,
-              content: _VxDialog(
-                title: title,
-                showClose: showClose,
-                content: content,
-                cancel: cancel,
-                confirm: confirm,
-                cancelBgColor: cancelBgColor,
-                confirmBgColor: confirmBgColor,
-                cancelOnPress: onCancelPress,
-                confirmOnPress: onConfirmPress,
-                confirmTextColor: confirmTextColor,
-                cancelTextColor: cancelTextColor,
-              ),
-              shape: RoundedRectangleBorder(borderRadius: _borderRadius),
+      context: context,
+      barrierDismissible: barrierDismissible,
+      builder: (context) {
+        return WillPopScope(
+          onWillPop: () async => barrierDismissible,
+          child: AlertDialog(
+            contentPadding: EdgeInsets.zero,
+            content: _VxDialog(
+              title: title,
+              showClose: showClose,
+              content: content,
+              cancel: cancel,
+              confirm: confirm,
+              cancelBgColor: cancelBgColor,
+              confirmBgColor: confirmBgColor,
+              cancelOnPress: onCancelPress,
+              confirmOnPress: onConfirmPress,
+              confirmTextColor: confirmTextColor,
+              cancelTextColor: cancelTextColor,
             ),
-          );
-        });
+            shape: RoundedRectangleBorder(borderRadius: _borderRadius),
+          ),
+        );
+      },
+    );
   }
 
   static void showTicker(
@@ -109,27 +110,28 @@ mixin VxDialog {
     bool barrierDismissible = true,
   }) {
     showDialog(
-        context: context,
-        barrierDismissible: barrierDismissible,
-        builder: (context) {
-          return WillPopScope(
-            onWillPop: () async => barrierDismissible,
-            child: AlertDialog(
-              contentPadding: EdgeInsets.zero,
-              content: _VxDialog(
-                title: title,
-                showClose: showClose,
-                content: content,
-                cancel: action,
-                cancelBgColor: actionBgColor,
-                cancelOnPress: onActionPress,
-                cancelTextColor: actionTextColor,
-                second: secondsToAction,
-              ),
-              shape: RoundedRectangleBorder(borderRadius: _borderRadius),
+      context: context,
+      barrierDismissible: barrierDismissible,
+      builder: (context) {
+        return WillPopScope(
+          onWillPop: () async => barrierDismissible,
+          child: AlertDialog(
+            contentPadding: EdgeInsets.zero,
+            content: _VxDialog(
+              title: title,
+              showClose: showClose,
+              content: content,
+              cancel: action,
+              cancelBgColor: actionBgColor,
+              cancelOnPress: onActionPress,
+              cancelTextColor: actionTextColor,
+              second: secondsToAction,
             ),
-          );
-        });
+            shape: RoundedRectangleBorder(borderRadius: _borderRadius),
+          ),
+        );
+      },
+    );
   }
 
   static void showCustom(
@@ -138,28 +140,16 @@ mixin VxDialog {
     bool barrierDismissible = true,
   }) {
     showDialog(
-        context: context,
-        barrierDismissible: barrierDismissible,
-        builder: (context) {
-          return _VxCustomDialog(child: child);
-        });
+      context: context,
+      barrierDismissible: barrierDismissible,
+      builder: (context) {
+        return _VxCustomDialog(child: child);
+      },
+    );
   }
 }
 
 class _VxDialog extends StatelessWidget {
-  final String? title;
-  final bool showClose;
-  final dynamic content;
-  final dynamic cancel;
-  final dynamic confirm;
-  final Color? cancelBgColor;
-  final Color? confirmBgColor;
-  final Color? confirmTextColor;
-  final Color? cancelTextColor;
-  final VoidCallback? cancelOnPress;
-  final VoidCallback? confirmOnPress;
-  final int? second;
-
   const _VxDialog({
     required this.content,
     this.title,
@@ -174,10 +164,22 @@ class _VxDialog extends StatelessWidget {
     this.cancelTextColor,
     this.second,
   });
+  final String? title;
+  final bool showClose;
+  final dynamic content;
+  final dynamic cancel;
+  final dynamic confirm;
+  final Color? cancelBgColor;
+  final Color? confirmBgColor;
+  final Color? confirmTextColor;
+  final Color? cancelTextColor;
+  final VoidCallback? cancelOnPress;
+  final VoidCallback? confirmOnPress;
+  final int? second;
 
   @override
   Widget build(BuildContext context) {
-    final List<Widget> children = [];
+    final children = <Widget>[];
     children.add(_titleView(context));
     children.add(Flexible(child: _contentView()));
     children.add(const VxDivider());
@@ -203,17 +205,18 @@ class _VxDialog extends StatelessWidget {
     );
 
     if (showClose) {
-      final List<Widget> children = [];
+      final children = <Widget>[];
       children.add(const SizedBox(width: 40, height: 40));
       children.add(Expanded(child: titleView));
-      children.add(IconButton(
-        icon: const Icon(Icons.close, size: 20),
-        onPressed: () => hide(context),
-      ));
+      children.add(
+        IconButton(
+          icon: const Icon(Icons.close, size: 20),
+          onPressed: () => hide(context),
+        ),
+      );
       return Row(children: children);
-    } else {
-      return titleView;
     }
+    return titleView;
   }
 
   Widget _contentView() {
@@ -251,42 +254,48 @@ class _VxDialog extends StatelessWidget {
         ),
       );
     }
-    final List<Widget> children = [];
-    children.add(Expanded(
-      child: InkWell(
-        onTap: () => onCancel(context),
-        child: Container(
-          decoration: BoxDecoration(
-            color: cancelBgColor ?? Theme.of(context).colorScheme.surface,
-            borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(_circular),
+    final children = <Widget>[];
+    children.add(
+      Expanded(
+        child: InkWell(
+          onTap: () => onCancel(context),
+          child: Container(
+            decoration: BoxDecoration(
+              color: cancelBgColor ?? Theme.of(context).colorScheme.surface,
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(_circular),
+              ),
             ),
+            height: 42,
+            alignment: Alignment.center,
+            child: getView(cancel, cancelTextColor),
           ),
-          height: 42,
-          alignment: Alignment.center,
-          child: getView(cancel, cancelTextColor),
         ),
       ),
-    ));
-    children.add(const SizedBox(
-      height: 42,
-      child: VxDivider(type: VxDividerType.vertical),
-    ));
-    children.add(Expanded(
-      child: InkWell(
-        onTap: () => onConfirm(context),
-        child: Container(
-          decoration: BoxDecoration(
-            color: confirmBgColor ?? Theme.of(context).colorScheme.surface,
-            borderRadius:
-                BorderRadius.only(bottomRight: Radius.circular(_circular)),
+    );
+    children.add(
+      const SizedBox(
+        height: 42,
+        child: VxDivider(type: VxDividerType.vertical),
+      ),
+    );
+    children.add(
+      Expanded(
+        child: InkWell(
+          onTap: () => onConfirm(context),
+          child: Container(
+            decoration: BoxDecoration(
+              color: confirmBgColor ?? Theme.of(context).colorScheme.surface,
+              borderRadius:
+                  BorderRadius.only(bottomRight: Radius.circular(_circular)),
+            ),
+            alignment: Alignment.center,
+            height: 42,
+            child: getView(confirm, confirmTextColor),
           ),
-          alignment: Alignment.center,
-          height: 42,
-          child: getView(confirm, confirmTextColor),
         ),
       ),
-    ));
+    );
 
     return Row(children: children);
   }
@@ -315,12 +324,6 @@ class _VxDialog extends StatelessWidget {
 
 ///Read button
 class VxTimerButton extends StatefulWidget {
-  final int? second;
-  final Color? bgColor;
-  final Color? textColor;
-  final dynamic button;
-  final VoidCallback? tap;
-
   const VxTimerButton({
     super.key,
     this.second,
@@ -329,6 +332,11 @@ class VxTimerButton extends StatefulWidget {
     this.button,
     this.tap,
   });
+  final int? second;
+  final Color? bgColor;
+  final Color? textColor;
+  final dynamic button;
+  final VoidCallback? tap;
 
   @override
   VxTimerButtonState createState() => VxTimerButtonState();
@@ -398,13 +406,12 @@ class VxTimerButtonState extends State<VxTimerButton> {
 
 // Custom VxDialog
 class _VxCustomDialog extends StatelessWidget {
-  final Widget child;
-
   const _VxCustomDialog({required this.child});
+  final Widget child;
 
   @override
   Widget build(BuildContext context) {
-    final List<Widget> children = [];
+    final children = <Widget>[];
     children.add(child);
     return Stack(alignment: Alignment.center, children: children);
   }

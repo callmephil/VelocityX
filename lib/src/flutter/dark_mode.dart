@@ -4,9 +4,8 @@ import 'package:velocity_x/velocity_x.dart';
 enum VxThemeMode { light, dark }
 
 class VxDarkModeMutation extends VxMutation {
-  final bool isDarkMode;
-
   VxDarkModeMutation(this.isDarkMode);
+  final bool isDarkMode;
   @override
   void perform() {
     VxAppData().isDarkMode = isDarkMode;
@@ -14,11 +13,12 @@ class VxDarkModeMutation extends VxMutation {
 }
 
 class VxDarkModeButton extends StatelessWidget {
-  const VxDarkModeButton(
-      {super.key,
-      this.style,
-      this.showSelectedIcon = false,
-      this.showSingleIcon = false});
+  const VxDarkModeButton({
+    super.key,
+    this.style,
+    this.showSelectedIcon = false,
+    this.showSingleIcon = false,
+  });
 
   final ButtonStyle? style;
   final bool showSelectedIcon;
@@ -26,8 +26,7 @@ class VxDarkModeButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    VxThemeMode theme =
-        VxAppData().isDarkMode ? VxThemeMode.dark : VxThemeMode.light;
+    var theme = VxAppData().isDarkMode ? VxThemeMode.dark : VxThemeMode.light;
     VxState.watch(context, on: [VxDarkModeMutation]);
     return showSingleIcon
         ? IconButton(
@@ -40,7 +39,7 @@ class VxDarkModeButton extends StatelessWidget {
           )
         : SegmentedButton(
             style: style,
-            selected: <VxThemeMode>{theme},
+            selected: {theme},
             onSelectionChanged: (themeSet) {
               theme = themeSet.first;
               VxDarkModeMutation(theme == VxThemeMode.dark);
@@ -48,9 +47,13 @@ class VxDarkModeButton extends StatelessWidget {
             showSelectedIcon: showSelectedIcon,
             segments: const [
               ButtonSegment(
-                  value: VxThemeMode.light, icon: Icon(Icons.light_mode)),
+                value: VxThemeMode.light,
+                icon: Icon(Icons.light_mode),
+              ),
               ButtonSegment(
-                  value: VxThemeMode.dark, icon: Icon(Icons.dark_mode))
+                value: VxThemeMode.dark,
+                icon: Icon(Icons.dark_mode),
+              ),
             ],
           );
   }

@@ -23,16 +23,17 @@ typedef VxToggleBuilder = Widget Function(Widget child);
 
 /// VxToggleRotate to rotate and animate any widget
 class VxToggleRotate extends StatefulWidget {
-  const VxToggleRotate(
-      {super.key,
-      required this.child,
-      this.onTap,
-      this.rad = math.pi / 2,
-      this.clockwise = true,
-      this.duration = const Duration(milliseconds: 200),
-      this.curve = Curves.fastOutSlowIn,
-      this.toggleBuilder,
-      this.isRotate = false});
+  const VxToggleRotate({
+    super.key,
+    required this.child,
+    this.onTap,
+    this.rad = math.pi / 2,
+    this.clockwise = true,
+    this.duration = const Duration(milliseconds: 200),
+    this.curve = Curves.fastOutSlowIn,
+    this.toggleBuilder,
+    this.isRotate = false,
+  });
 
   final Widget child;
 
@@ -71,11 +72,11 @@ class _VxToggleRotateState extends State<VxToggleRotate>
 
   @override
   void initState() {
+    super.initState();
     _controller = AnimationController(duration: widget.duration, vsync: this)
       ..addListener(listener)
       ..addStatusListener(statusListener);
     _rotate = CurvedAnimation(parent: _controller, curve: widget.curve);
-    super.initState();
   }
 
   void statusListener(AnimationStatus status) {
@@ -86,8 +87,10 @@ class _VxToggleRotateState extends State<VxToggleRotate>
 
   void listener() {
     if (mounted) {
-      setState(() =>
-          _rad = (_rotated ? (1 - _rotate.value) : _rotate.value) * widget.rad);
+      setState(
+        () => _rad =
+            (_rotated ? (1 - _rotate.value) : _rotate.value) * widget.rad,
+      );
     }
   }
 
@@ -111,29 +114,31 @@ class _VxToggleRotateState extends State<VxToggleRotate>
   @override
   Widget build(BuildContext context) {
     Widget current = Transform(
-        transform: Matrix4.rotationZ(widget.clockwise ? _rad : -_rad),
-        alignment: Alignment.center,
-        child: widget.child);
+      transform: Matrix4.rotationZ(widget.clockwise ? _rad : -_rad),
+      alignment: Alignment.center,
+      child: widget.child,
+    );
     if (widget.toggleBuilder != null) {
       current = widget.toggleBuilder!(current);
     }
     if (widget.onTap != null) {
-      current = current.onTap(widget.onTap!);
+      current = current.onTap(widget.onTap);
     }
     return current;
   }
 }
 
 extension VxToggleExtension on Widget {
-  Widget toggleRotate(
-          {Key? key,
-          GestureTapCallback? onTap,
-          double rad = math.pi / 2,
-          bool clockwise = true,
-          Duration duration = const Duration(milliseconds: 200),
-          Curve curve = Curves.fastOutSlowIn,
-          VxToggleBuilder? toggleBuilder,
-          bool isRotate = false}) =>
+  Widget toggleRotate({
+    Key? key,
+    GestureTapCallback? onTap,
+    double rad = math.pi / 2,
+    bool clockwise = true,
+    Duration duration = const Duration(milliseconds: 200),
+    Curve curve = Curves.fastOutSlowIn,
+    VxToggleBuilder? toggleBuilder,
+    bool isRotate = false,
+  }) =>
       VxToggleRotate(
         key: key,
         clockwise: clockwise,
@@ -161,8 +166,11 @@ extension VxTransformExtension on Widget {
       );
 
   /// Extension method to set an offset of any widget
-  Widget offset(
-      {Key? key, required Offset offset, bool transformHitTests = true}) {
+  Widget offset({
+    Key? key,
+    required Offset offset,
+    bool transformHitTests = true,
+  }) {
     return Transform.translate(
       key: key,
       transformHitTests: transformHitTests,
@@ -219,8 +227,12 @@ extension VxTransformExtension on Widget {
   ///
   /// Extension method to rotate any widget by specified [degrees] without wrapping or with dot operator.
   ///
-  Widget rotate(double degrees,
-          {Key? key, Alignment alignment = Alignment.center, Offset? origin}) =>
+  Widget rotate(
+    double degrees, {
+    Key? key,
+    Alignment alignment = Alignment.center,
+    Offset? origin,
+  }) =>
       Transform.rotate(
         key: key,
         angle: _degreeToRad(degrees),
@@ -304,11 +316,12 @@ extension VxTransformExtension on Widget {
   ///
   /// Extension method to scale any widget by specified [scalevalue] without wrapping or with dot operator.
   ///
-  Widget scale(
-          {Key? key,
-          double? scaleValue,
-          Offset? origin,
-          Alignment alignment = Alignment.center}) =>
+  Widget scale({
+    Key? key,
+    double? scaleValue,
+    Offset? origin,
+    Alignment alignment = Alignment.center,
+  }) =>
       Transform.scale(
         key: key,
         scale: scaleValue ?? 0,
@@ -403,7 +416,7 @@ extension VxTransformExtension on Widget {
   ///
   Widget scale200({Key? key}) => Transform.scale(
         key: key,
-        scale: 2.0,
+        scale: 2,
         child: this,
       );
 }

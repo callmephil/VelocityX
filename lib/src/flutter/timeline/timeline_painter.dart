@@ -15,6 +15,21 @@ limitations under the License. */
 import 'package:flutter/material.dart';
 
 class VxTimelinePainter extends CustomPainter {
+
+  VxTimelinePainter(
+      {required this.lineColor,
+      required this.backgroundColor,
+      required this.trailingColor,
+      this.firstElement = false,
+      this.lastElement = false,
+      required this.controller,})
+      : height = Tween(begin: 0, end: 1).animate(
+          CurvedAnimation(
+            parent: controller,
+            curve: const Interval(0.45, 1, curve: Curves.ease),
+          ),
+        ),
+        super(repaint: controller);
   final Color lineColor;
   final Color backgroundColor;
   final Color trailingColor;
@@ -23,28 +38,13 @@ class VxTimelinePainter extends CustomPainter {
   final Animation<double> controller;
   final Animation<double> height;
 
-  VxTimelinePainter(
-      {required this.lineColor,
-      required this.backgroundColor,
-      required this.trailingColor,
-      this.firstElement = false,
-      this.lastElement = false,
-      required this.controller})
-      : height = Tween(begin: 0.0, end: 1.0).animate(
-          CurvedAnimation(
-            parent: controller,
-            curve: const Interval(0.45, 1.0, curve: Curves.ease),
-          ),
-        ),
-        super(repaint: controller);
-
   @override
   void paint(Canvas canvas, Size size) {
     _centerElementPaint(canvas, size);
   }
 
   void _centerElementPaint(Canvas canvas, Size size) {
-    final Paint lineStroke = Paint()
+    final lineStroke = Paint()
       ..color = lineColor
       ..strokeCap = StrokeCap.round
       ..strokeWidth = 2.0
@@ -52,30 +52,30 @@ class VxTimelinePainter extends CustomPainter {
     if (firstElement && lastElement) {
       // Do nothing
     } else if (firstElement) {
-      final Offset offsetCenter = size.center(const Offset(0.0, -4.0));
-      final Offset offsetBottom = size.bottomCenter(const Offset(0.0, 0.0));
-      final Offset renderOffset = Offset(
-          offsetBottom.dx, offsetBottom.dy * (0.5 + (controller.value / 2)));
+      final offsetCenter = size.center(const Offset(0, -4));
+      final offsetBottom = size.bottomCenter(const Offset(0, 0));
+      final renderOffset = Offset(
+          offsetBottom.dx, offsetBottom.dy * (0.5 + (controller.value / 2)),);
       canvas.drawLine(offsetCenter, renderOffset, lineStroke);
     } else if (lastElement) {
-      final Offset offsetTopCenter = size.topCenter(const Offset(0.0, 0.0));
-      final Offset offsetCenter = size.center(const Offset(0.0, -4.0));
-      final Offset renderOffset =
+      final offsetTopCenter = size.topCenter(const Offset(0, 0));
+      final offsetCenter = size.center(const Offset(0, -4));
+      final renderOffset =
           Offset(offsetCenter.dx, offsetCenter.dy * controller.value);
       canvas.drawLine(offsetTopCenter, renderOffset, lineStroke);
     } else {
-      final Offset offsetTopCenter = size.topCenter(const Offset(0.0, 0.0));
-      final Offset offsetBottom = size.bottomCenter(const Offset(0.0, 0.0));
-      final Offset renderOffset =
+      final offsetTopCenter = size.topCenter(const Offset(0, 0));
+      final offsetBottom = size.bottomCenter(const Offset(0, 0));
+      final renderOffset =
           Offset(offsetBottom.dx, offsetBottom.dy * controller.value);
       canvas.drawLine(offsetTopCenter, renderOffset, lineStroke);
     }
 
-    final Paint circleFill = Paint()
+    final circleFill = Paint()
       ..color = lineColor
       ..style = PaintingStyle.fill;
 
-    canvas.drawCircle(size.center(const Offset(0.0, -8.0)), 6.0, circleFill);
+    canvas.drawCircle(size.center(const Offset(0, -8)), 6, circleFill);
   }
 
   @override

@@ -14,8 +14,7 @@ enum VxCurve {
 /// [VxNeumorph] class to accept list of shadows and a [Gradient]
 ///
 class VxNeumorph {
+  const VxNeumorph(this.shadows, this.gradient);
   final List<BoxShadow> shadows;
   final Gradient? gradient;
-
-  VxNeumorph(this.shadows, this.gradient);
 }

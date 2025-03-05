@@ -12,9 +12,23 @@
  */
 
 import 'dart:ui';
+
 import 'package:flutter/material.dart';
 
 class VxGlassmorphic extends StatelessWidget {
+  const VxGlassmorphic({
+    super.key,
+    this.opacity = 0.05,
+    this.child,
+    this.blur = 5,
+    this.border,
+    this.height,
+    this.width,
+    this.borderRadius,
+    this.circularRadius = 10.0,
+    this.shadowStrength = 4,
+  });
+
   ///[opacity] is used to control the glass frosted effect\n
   ///[opacity] should be between 0 and 1\n
   ///1 means full opaque\n
@@ -55,52 +69,37 @@ class VxGlassmorphic extends StatelessWidget {
 
   ///[border] example\n
   ///Border.all(\n
-  ///   color: Colors.white.withOpacity(0.3),\n
+  ///   color: Colors.white.withValues(alpha: 0.3),\n
   ///   width: 0.3,\n
   ///   style: BorderStyle.solid,\n
   ///),
   ///default is same as above example\n
   final BoxBorder? border;
 
-  const VxGlassmorphic(
-      {super.key,
-      this.opacity = 0.05,
-      this.child,
-      this.blur = 5,
-      this.border,
-      this.height,
-      this.width,
-      this.borderRadius,
-      this.circularRadius = 10.0,
-      this.shadowStrength = 4});
-
   @override
   Widget build(BuildContext context) {
     return CustomPaint(
-      painter: _PaintShadow(shadowStrength: shadowStrength!),
+      painter: _PaintShadow(shadowStrength: shadowStrength),
       child: Container(
         height: height,
         foregroundDecoration: BoxDecoration(
           borderRadius: borderRadius ?? BorderRadius.circular(circularRadius!),
           border: border ??
               Border.all(
-                  color: Colors.white.withOpacity(0.3),
-                  width: 0.3,
-                  style: BorderStyle.solid),
+                color: Colors.white.withValues(alpha: 0.3),
+                width: 0.3,
+              ),
         ),
         width: width,
         child: ClipRRect(
           borderRadius: borderRadius ?? BorderRadius.circular(circularRadius!),
           child: BackdropFilter(
-            filter: ImageFilter.blur(
-              sigmaX: blur!,
-              sigmaY: blur!,
-            ),
+            filter: ImageFilter.blur(sigmaX: blur!, sigmaY: blur!),
             child: Container(
               decoration: BoxDecoration(
                 borderRadius:
                     borderRadius ?? BorderRadius.circular(circularRadius!),
-                color: Colors.grey[100]?.withOpacity(opacity!),
+                color: Colors.grey[100]?.withValues(alpha: opacity),
               ),
               child: child,
             ),
@@ -112,9 +111,7 @@ class VxGlassmorphic extends StatelessWidget {
 }
 
 class _PaintShadow extends CustomPainter {
-  _PaintShadow({
-    this.shadowStrength = 1,
-  });
+  const _PaintShadow({this.shadowStrength = 1});
 
   final double? shadowStrength;
 
@@ -122,20 +119,19 @@ class _PaintShadow extends CustomPainter {
     return radius * 0.57735 + 0.5;
   }
 
-  Paint customPainter(
-      {double? blurStrength,
-      Color? color,
-      double? opacity,
-      double? strokeWidth}) {
+  Paint customPainter({
+    double? blurStrength,
+    Color? color,
+    double? opacity,
+    double? strokeWidth,
+  }) {
     return Paint()
       ..style = PaintingStyle.stroke
-      ..color = color!.withOpacity(0.24)
+      ..color = color!.withValues(alpha: 0.24)
       ..strokeWidth = strokeWidth!
       ..maskFilter = MaskFilter.blur(
         BlurStyle.normal,
-        convertRadiusToSigma(
-          blurStrength!,
-        ),
+        convertRadiusToSigma(blurStrength!),
       );
   }
 
@@ -144,21 +140,22 @@ class _PaintShadow extends CustomPainter {
     if (shadowStrength == 0) {
       return;
     }
-    final RRect rect = RRect.fromRectAndRadius(
-        Rect.fromPoints(
-          Offset(-shadowStrength! / 2, -shadowStrength! / 2),
-          Offset(
-            size.width + shadowStrength! / 2,
-            size.height + shadowStrength! / 2,
-          ),
+    final rect = RRect.fromRectAndRadius(
+      Rect.fromPoints(
+        Offset(-shadowStrength! / 2, -shadowStrength! / 2),
+        Offset(
+          size.width + shadowStrength! / 2,
+          size.height + shadowStrength! / 2,
         ),
-        const Radius.circular(10));
+      ),
+      const Radius.circular(10),
+    );
     canvas.drawRRect(
       rect,
       customPainter(
         color: const Color(0xff333333),
         blurStrength: 20,
-        strokeWidth: shadowStrength!,
+        strokeWidth: shadowStrength,
         opacity: 0.24,
       ),
     );
@@ -178,10 +175,10 @@ extension VxGlassWidgetExtension on Widget {
     double? height,
     BoxBorder? border,
     BorderRadius? borderRadius,
-    double? opacity = 0.05,
-    double? shadowStrength = 4,
-    double? circularRadius = 10,
-    double? blur = 5,
+    double opacity = 0.05,
+    double shadowStrength = 4,
+    double circularRadius = 10,
+    double blur = 5,
   }) =>
       VxGlassmorphic(
         blur: blur,

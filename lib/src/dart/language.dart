@@ -1,7 +1,7 @@
 abstract class Language {
+  Language(this.shortForm);
   /// flag for short form e.g(1 min) | long form e.g(1 minute ago)
   bool? shortForm;
-  Language(this.shortForm);
 
   String prefixAgo();
   String prefixFromNow();
@@ -30,12 +30,12 @@ abstract class Language {
 
 /// To use [English] language for timeAgo. More languages can be added in the future.
 class English implements Language {
-  @override
-  bool? shortForm;
   English({bool shortForm = false}) {
     // ignore: prefer_initializing_formals
     this.shortForm = shortForm;
   }
+  @override
+  bool? shortForm;
 
   @override
   String prefixAgo() => '';

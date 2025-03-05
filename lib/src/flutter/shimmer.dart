@@ -94,12 +94,12 @@ class VxShimmerState extends State<VxShimmer>
 
   @override
   void didUpdateWidget(VxShimmer oldWidget) {
+    super.didUpdateWidget(oldWidget);
     if (widget.showAnimation) {
       _controller.forward();
     } else {
       _controller.stop();
     }
-    super.didUpdateWidget(oldWidget);
   }
 
   @override
@@ -111,21 +111,15 @@ class VxShimmerState extends State<VxShimmer>
               ? widget.gradient
               : LinearGradient(
                   begin: Alignment.topLeft,
-                  end: Alignment.centerRight,
-                  colors: <Color>[
-                      widget.primaryColor,
-                      widget.primaryColor,
-                      widget.secondaryColor ?? Vx.gray200,
-                      widget.primaryColor,
-                      widget.primaryColor
-                    ],
-                  stops: const <double>[
-                      0,
-                      0.3,
-                      0.5,
-                      0.7,
-                      1
-                    ]),
+                  colors: [
+                    widget.primaryColor,
+                    widget.primaryColor,
+                    widget.secondaryColor ?? Vx.gray200,
+                    widget.primaryColor,
+                    widget.primaryColor,
+                  ],
+                  stops: const [0, 0.3, 0.5, 0.7, 1],
+                ),
           controllerValue: _controller.value,
           showShimmerEffect: widget.showAnimation,
           child: child,
@@ -159,9 +153,10 @@ class _VxShimmer extends SingleChildRenderObjectWidget {
 
   @override
   _VxShimmerFilter createRenderObject(BuildContext context) => _VxShimmerFilter(
-      value: controllerValue,
-      gradient: gradient,
-      showAnimation: showShimmerEffect);
+        value: controllerValue,
+        gradient: gradient,
+        showAnimation: showShimmerEffect,
+      );
 
   @override
   void updateRenderObject(BuildContext context, _VxShimmerFilter shimmer) {
@@ -215,9 +210,10 @@ class _VxShimmerFilter extends RenderProxyBox {
     context.canvas.saveLayer(offset & child!.size, initialPaint);
     context.paintChild(child!, offset);
     Rect rect;
-    double dx, dy;
-    final double width = child!.size.width;
-    final double height = child!.size.height;
+    double dx;
+    double dy;
+    final width = child!.size.width;
+    final height = child!.size.height;
     dx = _offset(-width, width, value!);
     dy = 0.0;
     rect = Rect.fromLTWH(offset.dx - width, offset.dy, 3 * width, height);

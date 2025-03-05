@@ -13,17 +13,16 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:velocity_x/src/flutter/builder.dart';
 import 'package:velocity_x/src/flutter/velocityx_mixins/alignment_mixin.dart';
+import 'package:velocity_x/src/flutter/velocityx_mixins/color_mixin.dart';
 import 'package:velocity_x/src/flutter/velocityx_mixins/gradient_mixin.dart';
 import 'package:velocity_x/src/flutter/velocityx_mixins/neu_mixin.dart';
+import 'package:velocity_x/src/flutter/velocityx_mixins/padding_mixin.dart';
 import 'package:velocity_x/src/flutter/velocityx_mixins/render_mixin.dart';
+import 'package:velocity_x/src/flutter/velocityx_mixins/round_mixin.dart';
 import 'package:velocity_x/src/flutter/velocityx_mixins/shadow_mixin.dart';
 import 'package:velocity_x/velocity_x.dart';
-
-import 'builder.dart';
-import 'velocityx_mixins/color_mixin.dart';
-import 'velocityx_mixins/padding_mixin.dart';
-import 'velocityx_mixins/round_mixin.dart';
 
 /// A convenience widget that combines common painting, positioning, and sizing
 /// widgets.
@@ -89,7 +88,8 @@ class VxBox extends VxWidgetBuilder<Widget>
 
   DecorationImage? _bgImage;
 
-  BoxDecoration? _decoration, _foregroundDecoration;
+  BoxDecoration? _decoration;
+  BoxDecoration? _foregroundDecoration;
   BoxConstraints? _constraints;
 
   ///
@@ -115,7 +115,7 @@ class VxBox extends VxWidgetBuilder<Widget>
   VxBox sizePCT(
           {required BuildContext context,
           required double widthPCT,
-          required double heightPCT}) =>
+          required double heightPCT,}) =>
       this
         .._width = context.percentWidth * widthPCT
         .._height = context.percentHeight * heightPCT;
@@ -197,11 +197,9 @@ class VxBox extends VxWidgetBuilder<Widget>
   VxBox shadowOutline({Color? outlineColor}) {
     _boxShadow = [
       BoxShadow(
-        color: outlineColor?.withOpacity(0.5) ??
+        color: outlineColor?.withValues(alpha: 0.5) ??
             const Color.fromRGBO(66, 153, 225, 0.5),
-        blurRadius: 0.0,
-        spreadRadius: 3.0,
-        offset: const Offset(0.0, 0.0),
+        spreadRadius: 3,
       ),
     ];
 
@@ -214,7 +212,7 @@ class VxBox extends VxWidgetBuilder<Widget>
   VxBox border(
       {Color color = Colors.black,
       double width = 1.0,
-      BorderStyle style = BorderStyle.solid}) {
+      BorderStyle style = BorderStyle.solid,}) {
     _border = Border.all(color: color, width: width, style: style);
     return this;
   }
@@ -227,7 +225,7 @@ class VxBox extends VxWidgetBuilder<Widget>
           AlignmentGeometry end = Alignment.centerRight,
           List<double>? stops,
           TileMode tileMode = TileMode.clamp,
-          GradientTransform? transform}) =>
+          GradientTransform? transform,}) =>
       this
         .._gradient = LinearGradient(
             colors: colors,
@@ -235,7 +233,7 @@ class VxBox extends VxWidgetBuilder<Widget>
             stops: stops,
             end: end,
             tileMode: tileMode,
-            transform: transform);
+            transform: transform,);
 
   ///
   /// Sets the radial gradient to the decorated box.
@@ -247,7 +245,7 @@ class VxBox extends VxWidgetBuilder<Widget>
           TileMode tileMode = TileMode.clamp,
           AlignmentGeometry? focal,
           double focalRadius = 0.0,
-          GradientTransform? transform}) =>
+          GradientTransform? transform,}) =>
       this
         .._gradient = RadialGradient(
             colors: colors,
@@ -257,7 +255,7 @@ class VxBox extends VxWidgetBuilder<Widget>
             stops: stops,
             focal: focal,
             tileMode: tileMode,
-            transform: transform);
+            transform: transform,);
 
   ///
   /// Sets the sweep gradient to the decorated box.
@@ -268,7 +266,7 @@ class VxBox extends VxWidgetBuilder<Widget>
           double endAngle = pi * 2,
           List<double>? stops,
           TileMode tileMode = TileMode.clamp,
-          GradientTransform? transform}) =>
+          GradientTransform? transform,}) =>
       this
         .._gradient = SweepGradient(
             colors: colors,
@@ -277,7 +275,7 @@ class VxBox extends VxWidgetBuilder<Widget>
             startAngle: startAngle,
             stops: stops,
             tileMode: tileMode,
-            transform: transform);
+            transform: transform,);
 
   ///
   /// Sets the defined gradient to the decorated box.
@@ -296,7 +294,7 @@ class VxBox extends VxWidgetBuilder<Widget>
   VxBox neumorphic(
           {Color? color,
           VxCurve curve = VxCurve.concave,
-          double elevation = 12.0}) =>
+          double elevation = 12.0,}) =>
       this
         .._velocityNeumorph = velocityDecoration(
           (color ?? velocityColor)!,

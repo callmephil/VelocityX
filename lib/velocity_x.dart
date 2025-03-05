@@ -1,4 +1,3 @@
-library;
 
 export 'package:vxstate/vxstate.dart';
 

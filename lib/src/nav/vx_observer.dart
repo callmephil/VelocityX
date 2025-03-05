@@ -14,9 +14,9 @@ abstract class VxObserver extends NavigatorObserver {
 
 /// Passes on navigation events to a list of [NavigatorObserver] objects.
 class VxRelayingNavigatorObserver extends NavigatorObserver {
-  final Iterable<NavigatorObserver> Function() getObservers;
 
   VxRelayingNavigatorObserver(this.getObservers);
+  final Iterable<NavigatorObserver> Function() getObservers;
 
   @override
   void didPush(Route<dynamic> route, Route<dynamic>? previousRoute) {
@@ -48,7 +48,7 @@ class VxRelayingNavigatorObserver extends NavigatorObserver {
 
   @override
   void didStartUserGesture(
-      Route<dynamic> route, Route<dynamic>? previousRoute) {
+      Route<dynamic> route, Route<dynamic>? previousRoute,) {
     for (final observer in getObservers().toList()) {
       observer.didStartUserGesture(route, previousRoute);
     }

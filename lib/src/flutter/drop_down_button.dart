@@ -156,7 +156,7 @@ class VxTextDropDown extends VxWidgetBuilder<StatefulBuilder> {
               .map<DropdownMenuItem<String>>((item) => DropdownMenuItem<String>(
                     value: item,
                     child: item.text.make(),
-                  ))
+                  ),)
               .toList(),
           onChanged: (String? value) {
             setState(() {
@@ -177,6 +177,6 @@ extension VxDropDownExtension on List<String> {
   /// The [selectedValue] should be a part of the list of strings.
   VxTextDropDown textDropDown(
           {required String selectedValue,
-          required ValueChanged<String?> onChanged}) =>
+          required ValueChanged<String?> onChanged,}) =>
       VxTextDropDown(this, selectedValue: selectedValue, onChanged: onChanged);
 }

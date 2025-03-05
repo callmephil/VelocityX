@@ -33,6 +33,8 @@ import 'package:flutter/material.dart';
 /// [Column], consider using [Align] or [Center] to position the child.
 ///
 class VxBlock extends Flex {
+  const
+
   /// Use Block to create a block-level element.
   ///
   /// The [direction], [mainAxisAlignment],
@@ -42,19 +44,22 @@ class VxBlock extends Flex {
   /// to be necessary to disambiguate `start` or `end` values for the
   /// [crossAxisAlignment], the [textDirection] must not be null.
   // ignore: prefer_const_constructors_in_immutables
-  VxBlock(
-      {super.key,
-      super.mainAxisAlignment,
-      super.textDirection,
-      super.verticalDirection,
-      super.textBaseline,
-      super.children,
-      super.direction = Axis.vertical,
-      super.mainAxisSize = MainAxisSize.min,
-      super.crossAxisAlignment = CrossAxisAlignment.stretch});
+  VxBlock({
+    super.key,
+    super.mainAxisAlignment,
+    super.textDirection,
+    super.verticalDirection,
+    super.textBaseline,
+    super.children,
+    super.direction = Axis.vertical,
+    super.mainAxisSize = MainAxisSize.min,
+    super.crossAxisAlignment = CrossAxisAlignment.stretch,
+  });
 }
 
 class VxInlineBlock extends Flex {
+  const
+
   /// Use Block to create a block-level element.
   ///
   /// The [direction], [mainAxisAlignment],
@@ -64,16 +69,17 @@ class VxInlineBlock extends Flex {
   /// to be necessary to disambiguate `start` or `end` values for the
   /// [crossAxisAlignment], the [textDirection] must not be null.
   // ignore: prefer_const_constructors_in_immutables
-  VxInlineBlock(
-      {super.key,
-      super.textDirection,
-      super.verticalDirection,
-      super.textBaseline,
-      super.children,
-      super.direction = Axis.horizontal,
-      super.mainAxisSize = MainAxisSize.max,
-      super.mainAxisAlignment = MainAxisAlignment.start,
-      super.crossAxisAlignment = CrossAxisAlignment.start});
+  VxInlineBlock({
+    super.key,
+    super.textDirection,
+    super.verticalDirection,
+    super.textBaseline,
+    super.children,
+    super.direction = Axis.horizontal,
+    super.mainAxisSize = MainAxisSize.max,
+    super.mainAxisAlignment = MainAxisAlignment.start,
+    super.crossAxisAlignment = CrossAxisAlignment.start,
+  });
 }
 
 /// A widget that displays its children in a vertical array.
@@ -192,9 +198,9 @@ class VStack extends StatelessWidget {
   }
 
   List<Widget> _addSpacingBetweenChildren() {
-    List<Widget> spacedChildren = [];
-    final int totalChildren = children.length;
-    for (int i = 0; i < totalChildren; i++) {
+    final spacedChildren = <Widget>[];
+    final totalChildren = children.length;
+    for (var i = 0; i < totalChildren; i++) {
       spacedChildren.add(children[i]);
       if (i != totalChildren - 1) {
         spacedChildren.add(SizedBox(height: spacing));
@@ -299,9 +305,9 @@ class HStack extends StatelessWidget {
   }
 
   List<Widget> _addSpacingBetweenChildren() {
-    List<Widget> spacedChildren = [];
-    final int totalChildren = children.length;
-    for (int i = 0; i < totalChildren; i++) {
+    final spacedChildren = <Widget>[];
+    final totalChildren = children.length;
+    for (var i = 0; i < totalChildren; i++) {
       spacedChildren.add(children[i]);
       if (i != totalChildren - 1) {
         spacedChildren.add(SizedBox(width: spacing));
@@ -373,11 +379,13 @@ class HStack extends StatelessWidget {
 /// {@end-tool}
 ///
 class ZStack extends StatelessWidget {
-  const ZStack(this.children,
-      {super.key,
-      this.alignment = AlignmentDirectional.topStart,
-      this.fit = StackFit.loose,
-      this.clip = Clip.none});
+  const ZStack(
+    this.children, {
+    super.key,
+    this.alignment = AlignmentDirectional.topStart,
+    this.fit = StackFit.loose,
+    this.clip = Clip.none,
+  });
 
   /// List of widgets in the stack.
   final List<Widget> children;
@@ -420,15 +428,26 @@ class ZStack extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Stack(
-        key: key,
-        alignment: alignment ?? AlignmentDirectional.topStart,
-        fit: fit ?? StackFit.loose,
-        clipBehavior: clip ?? Clip.hardEdge,
-        children: children);
+      key: key,
+      alignment: alignment ?? AlignmentDirectional.topStart,
+      fit: fit ?? StackFit.loose,
+      clipBehavior: clip ?? Clip.hardEdge,
+      children: children,
+    );
   }
 }
 
 class AStack extends StatelessWidget {
+  const AStack({
+    super.key,
+    required this.children,
+    this.clipBehavior = Clip.none,
+    this.overflowAlignment = OverflowBarAlignment.start,
+    this.overflowDirection = VerticalDirection.down,
+    this.overflowSpacing = 0.0,
+    this.spacing = 0.0,
+    this.textDirection,
+  });
   final Clip clipBehavior;
   final OverflowBarAlignment overflowAlignment;
   final VerticalDirection overflowDirection;
@@ -436,16 +455,6 @@ class AStack extends StatelessWidget {
   final double spacing;
   final TextDirection? textDirection;
   final List<Widget> children;
-
-  const AStack(
-      {super.key,
-      required this.children,
-      this.clipBehavior = Clip.none,
-      this.overflowAlignment = OverflowBarAlignment.start,
-      this.overflowDirection = VerticalDirection.down,
-      this.overflowSpacing = 0.0,
-      this.spacing = 0.0,
-      this.textDirection});
 
   @override
   Widget build(BuildContext context) {

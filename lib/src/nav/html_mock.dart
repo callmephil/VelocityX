@@ -8,6 +8,7 @@ class Window {
 }
 
 class History {
+  const History();
   void replaceState(dynamic data, String title, String? url) {}
 }
 

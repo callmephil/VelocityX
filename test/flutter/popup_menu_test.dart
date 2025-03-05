@@ -16,15 +16,15 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class ItemModel {
+  ItemModel(this.title, this.icon);
   String title;
   IconData icon;
-  ItemModel(this.title, this.icon);
 }
 
 void main() {
-  group("Popup Menu test", () {
-    testWidgets("Popup Menu widget test", (WidgetTester tester) async {
-      const Key key = Key('key');
+  group('Popup Menu test', () {
+    testWidgets('Popup Menu widget test', (WidgetTester tester) async {
+      const key = Key('key');
       await tester.pumpWidget(MaterialApp(
           home: VxPopupMenu(
         key: key,
@@ -34,13 +34,13 @@ void main() {
             child: VStack(
               [
                 ItemModel(
-                  "Chat",
+                  'Chat',
                   Icons.chat_bubble,
                 ),
                 ItemModel(
-                  "Add",
+                  'Add',
                   Icons.group_add,
-                )
+                ),
               ]
                   .map(
                     (item) => GestureDetector(
@@ -88,7 +88,7 @@ void main() {
           padding: Vx.m20,
           child: const Icon(Icons.menu),
         ),
-      )));
+      ),),);
 
       expect(find.byKey(key), findsOneWidget);
       await tester.tap(find.byKey(key));

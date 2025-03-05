@@ -16,14 +16,9 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
-import '../extensions/context_ext.dart';
+import 'package:velocity_x/src/extensions/context_ext.dart';
 
 class VxMarquee extends StatefulWidget {
-  final String text;
-  final TextStyle? textStyle;
-  final Axis scrollAxis;
-  final double ratioOfBlankToScreen;
-
   const VxMarquee({
     super.key,
     required this.text,
@@ -31,6 +26,10 @@ class VxMarquee extends StatefulWidget {
     this.scrollAxis = Axis.horizontal,
     this.ratioOfBlankToScreen = 0.25,
   });
+  final String text;
+  final TextStyle? textStyle;
+  final Axis scrollAxis;
+  final double ratioOfBlankToScreen;
 
   @override
   VxMarqueeState createState() => VxMarqueeState();
@@ -41,9 +40,9 @@ class VxMarqueeState extends State<VxMarquee>
   ScrollController? scrollController;
   double? blankWidth;
   double? blankHeight;
-  double position = 0.0;
+  double position = 0;
   late Timer timer;
-  final double _moveDistance = 3.0;
+  final double _moveDistance = 3;
   int duration = 100;
   final GlobalKey _key = GlobalKey();
 
@@ -57,42 +56,38 @@ class VxMarqueeState extends State<VxMarquee>
   }
 
   void startTimer() {
-    final double widgetWidth =
+    final widgetWidth =
         _key.currentContext!.findRenderObject()!.paintBounds.size.width;
-    final double widgetHeight =
+    final widgetHeight =
         _key.currentContext!.findRenderObject()!.paintBounds.size.height;
 
-    timer = Timer.periodic(
-      Duration(milliseconds: duration),
-      (timer) {
-        final double maxScrollExtent =
-            scrollController!.position.maxScrollExtent;
-        final double pixels = scrollController!.position.pixels;
-        //When the distance of animateTo is greater than the maximum sliding distance, return to the specific position of the first child so that the end is exactly on the right side, and then continue to roll, creating the illusion of marquee
-        if (pixels + _moveDistance >= maxScrollExtent) {
-          if (widget.scrollAxis == Axis.horizontal) {
-            //maxScrollExtent is the maximum sliding distance, the non-slidable distance is not counted (that is, the width of the ListView control), maxScrollExtent + widgetWidth is the true width of the children
-            //(maxScrollExtent+widgetWidth-blankWidth)/2 can calculate the length of a TextView control, and then subtract widgetWidth. Calculate the offset required for the first child to shift to the rightmost
-            //When animateTo slides to the end, but there is still a distance from the end, this distance should be taken into account when jumpingTo pixels-maxScrollExtent
-            //The original calculation formula (maxScrollExtent+widgetWidth-blankWidth)/2 -widgetWidth + pixels- maxScrollExtent, the following calculation formula is simplified
-            position = (maxScrollExtent - blankWidth! - widgetWidth) / 2 +
-                pixels -
-                maxScrollExtent;
-          } else {
-            position = (maxScrollExtent - blankHeight! - widgetHeight) / 2 +
-                pixels -
-                maxScrollExtent;
-          }
-          scrollController!.jumpTo(position);
+    timer = Timer.periodic(Duration(milliseconds: duration), (timer) {
+      final maxScrollExtent = scrollController!.position.maxScrollExtent;
+      final pixels = scrollController!.position.pixels;
+      //When the distance of animateTo is greater than the maximum sliding distance, return to the specific position of the first child so that the end is exactly on the right side, and then continue to roll, creating the illusion of marquee
+      if (pixels + _moveDistance >= maxScrollExtent) {
+        if (widget.scrollAxis == Axis.horizontal) {
+          //maxScrollExtent is the maximum sliding distance, the non-slidable distance is not counted (that is, the width of the ListView control), maxScrollExtent + widgetWidth is the true width of the children
+          //(maxScrollExtent+widgetWidth-blankWidth)/2 can calculate the length of a TextView control, and then subtract widgetWidth. Calculate the offset required for the first child to shift to the rightmost
+          //When animateTo slides to the end, but there is still a distance from the end, this distance should be taken into account when jumpingTo pixels-maxScrollExtent
+          //The original calculation formula (maxScrollExtent+widgetWidth-blankWidth)/2 -widgetWidth + pixels- maxScrollExtent, the following calculation formula is simplified
+          position = (maxScrollExtent - blankWidth! - widgetWidth) / 2 +
+              pixels -
+              maxScrollExtent;
+        } else {
+          position = (maxScrollExtent - blankHeight! - widgetHeight) / 2 +
+              pixels -
+              maxScrollExtent;
         }
-        position += _moveDistance;
-        scrollController!.animateTo(
-          position,
-          duration: Duration(milliseconds: duration),
-          curve: Curves.linear,
-        );
-      },
-    );
+        scrollController!.jumpTo(position);
+      }
+      position += _moveDistance;
+      scrollController!.animateTo(
+        position,
+        duration: Duration(milliseconds: duration),
+        curve: Curves.linear,
+      );
+    });
   }
 
   @override
@@ -105,7 +100,7 @@ class VxMarqueeState extends State<VxMarquee>
 
   Widget getBothEndsChild() {
     if (widget.scrollAxis == Axis.vertical) {
-      final String newString = widget.text.split("").join("\n");
+      final newString = widget.text.split('').join('\n');
       return Center(
         child: Text(
           newString,
@@ -114,24 +109,14 @@ class VxMarqueeState extends State<VxMarquee>
         ),
       );
     }
-    return Center(
-      child: Text(
-        widget.text,
-        style: widget.textStyle,
-      ),
-    );
+    return Center(child: Text(widget.text, style: widget.textStyle));
   }
 
   Widget getCenterChild() {
     if (widget.scrollAxis == Axis.horizontal) {
-      return Container(
-        width: blankWidth,
-      );
-    } else {
-      return Container(
-        height: blankHeight,
-      );
+      return Container(width: blankWidth);
     }
+    return Container(height: blankHeight);
   }
 
   @override
@@ -141,18 +126,14 @@ class VxMarqueeState extends State<VxMarquee>
       scrollDirection: widget.scrollAxis,
       controller: scrollController,
       physics: const NeverScrollableScrollPhysics(),
-      children: <Widget>[
-        getBothEndsChild(),
-        getCenterChild(),
-        getBothEndsChild(),
-      ],
+      children: [getBothEndsChild(), getCenterChild(), getBothEndsChild()],
     );
   }
 
   @override
   void dispose() {
-    super.dispose();
     timer.cancel();
+    super.dispose();
   }
 }
 

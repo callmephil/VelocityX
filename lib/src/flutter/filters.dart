@@ -13,7 +13,7 @@
 
 import 'package:flutter/material.dart';
 
-import 'builder.dart';
+import 'package:velocity_x/src/flutter/builder.dart';
 
 /// [VxColorFilter] contains enums for different color filters.
 enum VxColorFilter {
@@ -60,7 +60,7 @@ class VxFilter extends VxWidgetBuilder<Widget> {
     0,
     0,
     1,
-    0
+    0,
   ];
 
   final List<double> _noFilter = [
@@ -83,7 +83,7 @@ class VxFilter extends VxWidgetBuilder<Widget> {
     0,
     0,
     1,
-    0
+    0,
   ];
 
   final List<double> _blue = [
@@ -106,7 +106,7 @@ class VxFilter extends VxWidgetBuilder<Widget> {
     0,
     1.7,
     1,
-    0
+    0,
   ];
 
   final List<double> _yellow = [
@@ -129,7 +129,7 @@ class VxFilter extends VxWidgetBuilder<Widget> {
     0,
     0,
     1,
-    0
+    0,
   ];
 
   final List<double> _pink = [
@@ -152,7 +152,7 @@ class VxFilter extends VxWidgetBuilder<Widget> {
     0,
     0,
     1,
-    0.2
+    0.2,
   ];
   final List<double> _blackAndWhite = [
     0,
@@ -174,7 +174,7 @@ class VxFilter extends VxWidgetBuilder<Widget> {
     1,
     0,
     1,
-    0
+    0,
   ];
 
   final List<double> _oldTimes = [
@@ -197,7 +197,7 @@ class VxFilter extends VxWidgetBuilder<Widget> {
     0,
     0,
     1,
-    0
+    0,
   ];
 
   final List<double> _coldLife = [
@@ -220,7 +220,7 @@ class VxFilter extends VxWidgetBuilder<Widget> {
     0,
     0,
     1,
-    0
+    0,
   ];
 
   final List<double> _purple = [
@@ -243,7 +243,7 @@ class VxFilter extends VxWidgetBuilder<Widget> {
     0,
     0,
     1,
-    0
+    0,
   ];
 
   final List<double> _milk = [
@@ -266,7 +266,7 @@ class VxFilter extends VxWidgetBuilder<Widget> {
     0,
     0,
     1,
-    0
+    0,
   ];
 
   final List<double> _sepia = [
@@ -328,37 +328,26 @@ class VxFilter extends VxWidgetBuilder<Widget> {
     switch (filter) {
       case VxColorFilter.noFilter:
         myMatrix = _noFilter;
-        break;
       case VxColorFilter.purple:
         myMatrix = _purple;
-        break;
       case VxColorFilter.yellow:
         myMatrix = _yellow;
-        break;
       case VxColorFilter.pink:
         myMatrix = _pink;
-        break;
       case VxColorFilter.blackAndWhite:
         myMatrix = _blackAndWhite;
-        break;
       case VxColorFilter.oldTimes:
         myMatrix = _oldTimes;
-        break;
       case VxColorFilter.coldLife:
         myMatrix = _coldLife;
-        break;
       case VxColorFilter.blue:
         myMatrix = _blue;
-        break;
       case VxColorFilter.milk:
         myMatrix = _milk;
-        break;
       case VxColorFilter.sepia:
         myMatrix = _sepia;
-        break;
       case VxColorFilter.polaroid:
         myMatrix = _polaroid;
-        break;
     }
     return this;
   }
@@ -445,13 +434,12 @@ class VxFilter extends VxWidgetBuilder<Widget> {
         colorFilter: ColorFilter.mode(_colorModeColor, _blendMode),
         child: child,
       );
-    } else {
-      return ColorFiltered(
-        key: key,
-        colorFilter: ColorFilter.matrix(myMatrix),
-        child: child,
-      );
     }
+    return ColorFiltered(
+      key: key,
+      colorFilter: ColorFilter.matrix(myMatrix),
+      child: child,
+    );
   }
 }
 
