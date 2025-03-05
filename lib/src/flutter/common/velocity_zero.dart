@@ -69,7 +69,7 @@ class VxZeroCard extends StatefulWidget {
 class VxZeroCardState extends State<VxZeroCard>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
-  Animation<double>? animation;
+  late Animation<double> animation;
 
   @override
   void initState() {
@@ -83,7 +83,7 @@ class VxZeroCardState extends State<VxZeroCard>
       CurvedAnimation(curve: Curves.easeInOutSine, parent: _controller),
     );
 
-    animation!.addStatusListener((status) {
+    animation.addStatusListener((status) {
       if (status == AnimationStatus.completed ||
           status == AnimationStatus.dismissed) {
         _controller.repeat();
@@ -103,8 +103,8 @@ class VxZeroCardState extends State<VxZeroCard>
   @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
-      animation: animation!,
-      builder: (context, child) {
+      animation: animation,
+      builder: (_, child) {
         return Padding(
           padding: const EdgeInsets.all(16),
           child: ColoredBox(
@@ -176,7 +176,7 @@ class VxZeroCardState extends State<VxZeroCard>
 class _VxLine extends StatelessWidget {
   const _VxLine(this.widthRatio, this.heightRatio, this.animation, this.isDark);
 
-  final Animation<double>? animation;
+  final Animation<double> animation;
   final double widthRatio;
   final double heightRatio;
   final bool isDark;
@@ -222,7 +222,7 @@ class VxZeroList extends StatelessWidget {
       physics: const NeverScrollableScrollPhysics(),
       itemCount: length,
       shrinkWrap: true,
-      itemBuilder: (BuildContext context, int index) {
+      itemBuilder: (_, int index) {
         return VxZeroCard(
           isCircularImage: isCircularImage,
           isBottomLinesActive: isBottomLinesActive,

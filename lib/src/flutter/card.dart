@@ -268,7 +268,7 @@ class VxFlipState extends State<VxFlip> with SingleTickerProviderStateMixin {
     );
     _frontRotation = TweenSequence([
       TweenSequenceItem<double>(
-        tween: Tween(begin: 0, end: pi / 2)
+        tween: Tween<double>(begin: 0, end: pi / 2)
             .chain(CurveTween(curve: Curves.easeIn)),
         weight: 50,
       ),
@@ -283,7 +283,7 @@ class VxFlipState extends State<VxFlip> with SingleTickerProviderStateMixin {
         weight: 50,
       ),
       TweenSequenceItem<double>(
-        tween: Tween(begin: -pi / 2, end: 0)
+        tween: Tween<double>(begin: -pi / 2, end: 0)
             .chain(CurveTween(curve: Curves.easeOut)),
         weight: 50,
       ),
@@ -359,7 +359,7 @@ class VxFlipState extends State<VxFlip> with SingleTickerProviderStateMixin {
   Widget _animationCard(Widget child, Animation<double> animation) =>
       AnimatedBuilder(
         animation: animation,
-        builder: (_, Widget? child) {
+        builder: (_, __) {
           final transform = Matrix4.identity();
           transform.setEntry(3, 2, 0.001);
           if (widget.direction == Axis.vertical) {

@@ -15,15 +15,14 @@ limitations under the License. */
 import 'package:flutter/material.dart';
 
 class VxTimelinePainter extends CustomPainter {
-
-  VxTimelinePainter(
-      {required this.lineColor,
-      required this.backgroundColor,
-      required this.trailingColor,
-      this.firstElement = false,
-      this.lastElement = false,
-      required this.controller,})
-      : height = Tween(begin: 0, end: 1).animate(
+  VxTimelinePainter({
+    required this.lineColor,
+    required this.backgroundColor,
+    required this.trailingColor,
+    this.firstElement = false,
+    this.lastElement = false,
+    required this.controller,
+  })  : height = Tween<double>(begin: 0, end: 1).animate(
           CurvedAnimation(
             parent: controller,
             curve: const Interval(0.45, 1, curve: Curves.ease),
@@ -55,7 +54,9 @@ class VxTimelinePainter extends CustomPainter {
       final offsetCenter = size.center(const Offset(0, -4));
       final offsetBottom = size.bottomCenter(const Offset(0, 0));
       final renderOffset = Offset(
-          offsetBottom.dx, offsetBottom.dy * (0.5 + (controller.value / 2)),);
+        offsetBottom.dx,
+        offsetBottom.dy * (0.5 + (controller.value / 2)),
+      );
       canvas.drawLine(offsetCenter, renderOffset, lineStroke);
     } else if (lastElement) {
       final offsetTopCenter = size.topCenter(const Offset(0, 0));

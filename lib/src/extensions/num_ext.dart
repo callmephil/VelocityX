@@ -199,8 +199,8 @@ extension VxIntExtension on int {
     final count = ((end - this).abs() / by).ceil();
     // Explicit type declaration required for function argument.
     final generator = this >= end
-        ? (index) => this - (by * index)
-        : (index) => this + (by * index);
+        ? (int index) => this - (by * index)
+        : (int index) => this + (by * index);
     return Iterable.generate(count, generator);
   }
 
